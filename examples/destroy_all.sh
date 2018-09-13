@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 set -e
-cd pubsub/ && terraform init && terraform destroy --var-file=../variables.tfvars
-cd ../storage/ && terraform init && terraform destroy --var-file=../variables.tfvars
-cd ../bigquery/ && terraform init && terraform destroy --var-file=../variables.tfvars
-#cd ../base/ && terraform init && terraform destroy --var-file=../variables.tfvars
+cd pubsub/ && terraform init && terraform destroy --var-file=../example.tfvars
+cd ../storage/ && terraform init && terraform destroy --var-file=../example.tfvars
+cd ../bigquery/ && terraform init && terraform destroy --var-file=../example.tfvars
+#cd ../base/ && terraform init && terraform destroy --var-file=../example.tfvars

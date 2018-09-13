@@ -63,9 +63,9 @@ locals {
 
   # API map
   api_map = {
-    pubsub   = "pubsub.googlapis.com"
+    pubsub   = "pubsub.googleapis.com"
     bigquery = "bigquery-json.googleapis.com"
-    storage  = "storage.googleapis.com"
+    storage  = "storage-component.googleapis.com"
   }
 
   # Destination console URLs based on the sink destination type
@@ -98,12 +98,10 @@ locals {
 #---------------------#
 # Logsink destination #
 #---------------------#
-
-# Enable destination API
-resource "null_resource" "enable_destination_api" {
-  provisioner "local-exec" {
-    command = "sh ${path.module}/scripts/enable-api.sh ${local.destination_api} ${local.destination_project}"
-  }
+resource "google_project_service" "enable_destination_api" {
+  project            = "${local.destination_project}"
+  service            = "${local.destination_api}"
+  disable_on_destroy = false
 }
 
 # Pub/Sub topic
@@ -113,7 +111,7 @@ resource "google_pubsub_topic" "topic" {
   project = "${local.destination_project}"
 
   depends_on = [
-    "null_resource.enable_destination_api",
+    "google_project_service.enable_destination_api",
   ]
 }
 
@@ -124,14 +122,14 @@ resource "google_bigquery_dataset" "dataset" {
   project    = "${local.destination_project}"
 
   # Delete all tables in dataset on destroy.
-  # This is required because a dataset cannot be deleted if it contains data
+  # This is required because a dataset cannot be deleted if it contains any data.
   provisioner "local-exec" {
     when    = "destroy"
     command = "sh ${path.module}/scripts/delete-bq-tables.sh ${local.destination_project} ${local.destination_name}"
   }
 
   depends_on = [
-    "null_resource.enable_destination_api",
+    "google_project_service.enable_destination_api",
   ]
 }
 
@@ -145,7 +143,7 @@ resource "google_storage_bucket" "bucket" {
   force_destroy = true
 
   depends_on = [
-    "null_resource.enable_destination_api",
+    "google_project_service.enable_destination_api",
   ]
 }
 
@@ -201,72 +199,42 @@ resource "google_logging_organization_sink" "sink" {
   ]
 }
 
-# Billing-level
-# resource "google_logging_billing_account_sink" "sink" {
-#   count           = "${local.is_billing_level ? 1 : 0}"
-#   name            = "${var.name}"
-#   billing_account = "${var.billing_id}"
-#   filter          = "${var.filter}"
-#   destination     = "${local.destination_uri}"
-#
-#   depends_on = [
-#     "google_storage_bucket.bucket",
-#     "google_pubsub_topic.topic",
-#     "google_bigquery_dataset.dataset",
-#   ]
-# }
-
-#------------------------------#
-# Service account IAM bindings #
-#------------------------------#
-
-# Org-level
-resource "google_project_iam_member" "sink_member_org" {
-  count   = "${local.is_org_level ? 1 : 0}"
+#---------------------------------#
+# Service account IAM memberships #
+#---------------------------------#
+resource "google_pubsub_topic_iam_member" "pubsub_sink_member" {
+  count   = "${local.is_pubsub ? 1 : 0}"
   project = "${local.destination_project}"
+  topic   = "${local.destination_name}"
   role    = "${local.role}"
-  member  = "${google_logging_organization_sink.sink.writer_identity}"
+  member  = "${local.sink_output["writer"]}"
 
   depends_on = [
-    "google_logging_organization_sink.sink",
+    "google_pubsub_topic.topic",
   ]
 }
 
-# Folder-level
-resource "google_project_iam_member" "sink_member_folder" {
-  count   = "${local.is_folder_level ? 1 : 0}"
-  project = "${local.destination_project}"
-  role    = "${local.role}"
-  member  = "${google_logging_folder_sink.sink.writer_identity}"
+resource "google_storage_bucket_iam_member" "storage_sink_member" {
+  count  = "${local.is_storage ? 1 : 0}"
+  bucket = "${local.destination_name}"
+  role   = "${local.role}"
+  member = "${local.sink_output["writer"]}"
 
   depends_on = [
-    "google_logging_folder_sink.sink",
+    "google_storage_bucket.bucket",
   ]
 }
 
-# Project-level
-resource "google_project_iam_member" "sink_member_project" {
-  count   = "${local.is_project_level ? 1 : 0}"
+resource "google_project_iam_member" "bigquery_sink_member" {
+  count   = "${local.is_bigquery ? 1 : 0}"
   project = "${local.destination_project}"
   role    = "${local.role}"
-  member  = "${google_logging_project_sink.sink.writer_identity}"
+  member  = "${local.sink_output["writer"]}"
 
   depends_on = [
-    "google_logging_project_sink.sink",
+    "google_bigquery_dataset.dataset",
   ]
 }
-
-# Billing-level
-# resource "google_project_iam_member" "sink_member_billing_account" {
-#   count   = "${local.is_billing_level ? 1 : 0}"
-#   project = "${local.destination_project}"
-#   role    = "${local.role}"
-#   member  = "${google_logging_billing_account_sink.sink.writer_identity}"
-#
-#   depends_on = [
-#     "google_logging_billing_account_sink.sink",
-#   ]
-# }
 
 #-----------------------------------------------#
 # Pub/Sub topic subscription (for integrations) #
@@ -278,37 +246,37 @@ resource "google_service_account" "pubsub_subscriber" {
   project      = "${local.destination_project}"
 }
 
-resource "google_project_iam_binding" "pubsub_subscriber_binding" {
+resource "google_pubsub_topic_iam_member" "pubsub_subscriber_role" {
   count   = "${lookup(local.destination, "create_subscriber", false) ? 1 : 0}"
   role    = "roles/pubsub.subscriber"
   project = "${local.destination_project}"
-
-  members = [
-    "serviceAccount:${google_service_account.pubsub_subscriber.email}",
-  ]
+  topic   = "${local.destination_name}"
+  member  = "serviceAccount:${google_service_account.pubsub_subscriber.email}"
 
   depends_on = [
-    "google_service_account.pubsub_subscriber",
+    "google_pubsub_topic.topic",
   ]
 }
 
-resource "google_project_iam_binding" "pubsub_viewer_binding" {
+resource "google_pubsub_topic_iam_member" "pubsub_viewer_role" {
   count   = "${lookup(local.destination, "create_subscriber", false) ? 1 : 0}"
   role    = "roles/pubsub.viewer"
   project = "${local.destination_project}"
-
-  members = [
-    "serviceAccount:${google_service_account.pubsub_subscriber.email}",
-  ]
+  topic   = "${local.destination_name}"
+  member  = "serviceAccount:${google_service_account.pubsub_subscriber.email}"
 
   depends_on = [
-    "google_service_account.pubsub_subscriber",
+    "google_pubsub_topic.topic",
   ]
 }
 
 resource "google_pubsub_subscription" "pubsub_subscription" {
   count   = "${lookup(local.destination, "create_subscriber", false) ? 1 : 0}"
   name    = "${local.destination_name}-subscription"
-  topic   = "${google_pubsub_topic.topic.id}"
+  topic   = "${local.destination_name}"
   project = "${local.destination_project}"
+
+  depends_on = [
+    "google_pubsub_topic.topic",
+  ]
 }

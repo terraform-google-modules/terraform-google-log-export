@@ -50,7 +50,7 @@ variable "include_children" {
 
 variable "unique_writer_identity" {
   description = "Whether or not to create a unique identity associated with this sink. If false (default), then the writer_identity used is serviceAccount:cloud-logs@system.gserviceaccount.com."
-  default     = false
+  default     = true
 }
 
 variable "bigquery" {

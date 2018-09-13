@@ -27,11 +27,13 @@ module "org_sink" {
 
   bigquery = {
     name    = "org_sink"
-    project = "${var.project_name}"
+    project = "${var.project_id}"
   }
 }
 
 # Example of a folder-level sink to a BigQuery dataset
+# Note that this uses a root-level folder, but can be applied with any nested
+# folder. 
 data "google_active_folder" "folder" {
   display_name = "${var.folder_name}"
   parent       = "organizations/${var.org_id}"
@@ -45,7 +47,7 @@ module "folder_sink" {
 
   bigquery = {
     name    = "folder_sink"
-    project = "${var.project_name}"
+    project = "${var.project_id}"
   }
 }
 
@@ -53,10 +55,10 @@ module "folder_sink" {
 module "project_sink" {
   source  = "../../"
   name    = "test-project-sink-bigquery"
-  project = "${var.project_name}"
+  project = "${var.project_id}"
 
   bigquery = {
     name    = "project_sink"
-    project = "${var.project_name}"
+    project = "${var.project_id}"
   }
 }

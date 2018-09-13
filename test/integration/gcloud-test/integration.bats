@@ -44,8 +44,8 @@
   run gcloud config set project $PROJECT_ID
   result=$(gcloud services list | grep bigquery-json.googleapis.com)
   [ "$result" = "bigquery-json.googleapis.com" ]
-  result=$(gcloud services list | grep storage-api.googleapis.com)
-  [ "$result" = "storage-api.googleapis.com" ]
+  result=$(gcloud services list | grep storage-component.googleapis.com)
+  [ "$result" = "storage-component.googleapis.com" ]
   result=$(gcloud services list | grep pubsub.googleapis.com)
   [ "$result" = "pubsub.googleapis.com" ]
 }
@@ -97,8 +97,9 @@
 @test "Test if service account has correct permissions to write to Pub/Sub logsink" {
   export PROJECT_ID="$(terraform output project_id)"
   export SINK_WRITER="$(terraform output pubsub_sink_writer)"
+  export TOPIC_ID="$(terraform output pubsub_sink_name)"
 
-  run gcloud projects get-iam-policy $PROJECT_ID --flatten='bindings[].members' --format='table(bindings.role)' --filter=bindings.members:$SINK_WRITER
+  run gcloud beta pubsub topics get-iam-policy $TOPIC_ID --project=$PROJECT_ID --flatten='bindings[].members' --format='table(bindings.role)' --filter=bindings.members:$SINK_WRITER
   [ "$status" -eq 0 ]
   [[ "${lines[1]}" = "roles/pubsub.publisher" ]]
 }
@@ -106,10 +107,9 @@
 @test "Test if service account has correct permissions to write to Storage logsink" {
   export PROJECT_ID="$(terraform output project_id)"
   export SINK_WRITER="$(terraform output storage_sink_writer)"
-
-  run gcloud projects get-iam-policy $PROJECT_ID --flatten='bindings[].members' --format='table(bindings.role)' --filter=bindings.members:$SINK_WRITER
-  [ "$status" -eq 0 ]
-  [[ "${lines[1]}" = "roles/storage.objectCreator" ]]
+  export BUCKET_NAME="$(terraform output storage_sink_name)"
+  result=$(gsutil iam get gs://$BUCKET_NAME | jq --arg SINK_WRITER "$SINK_WRITER" '.bindings[] | select(.members[0]==$SINK_WRITER)' | jq .role)
+  [ "$result" == "roles/storage.objectCreator" ]
 }
 
 @test "Test if service account has correct permissions to write to BigQuery logsink" {

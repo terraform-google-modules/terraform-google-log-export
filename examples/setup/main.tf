@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-variable "credentials_path" {
-  description = "Path to a Service Account credentials file with permissions documented in the readme"
+provider "google" {
+  credentials = "${file(var.credentials_path)}"
 }
 
-variable "org_id" {
-  description = "The organization id"
+resource "google_folder" "folder" {
+  display_name = "${var.folder_name}"
+  parent       = "organizations/${var.org_id}"
 }
 
-variable "billing_id" {
-  description = "The billing account id"
-}
+resource "google_project" "project" {
+  name            = "${var.project_id}"
+  project_id      = "${var.project_id}"
+  folder_id       = "${google_folder.folder.name}"
+  billing_account = "${var.billing_id}"
 
-variable "project_name" {
-  description = "The project name to be created"
-}
-
-variable "folder_name" {
-  description = "The folder name to be created"
+  depends_on = [
+    "google_folder.folder",
+  ]
 }
