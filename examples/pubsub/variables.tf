@@ -26,11 +26,11 @@ variable "billing_id" {
   description = "The billing id (for billing-level sink)"
 }
 
-variable "project_name" {
+variable "project_id" {
   description = "The project name (for project-level sink)"
 }
 
-variable "alt_project_name" {
+variable "destination_project_id" {
   description = "The alternative project to create a destination in. Used to test creating destinations in other projects"
 }
 

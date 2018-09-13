@@ -26,8 +26,8 @@ module "org_sink" {
   filter = "severity > WARNING"
 
   storage = {
-    name    = "${var.gcs_bucket_prefix}-org-sink-${var.gcs_bucket_suffix}"
-    project = "${var.project_name}"
+    name    = "${var.gcs_bucket_name}-org-sink"
+    project = "${var.project_id}"
   }
 }
 
@@ -44,8 +44,8 @@ module "folder_sink" {
   filter = "severity > WARNING"
 
   storage = {
-    name    = "${var.gcs_bucket_prefix}-folder-sink-${var.gcs_bucket_suffix}"
-    project = "${var.project_name}"
+    name    = "${var.gcs_bucket_name}-folder-sink"
+    project = "${var.project_id}"
   }
 }
 
@@ -53,10 +53,10 @@ module "folder_sink" {
 module "project_sink" {
   source  = "../../"
   name    = "test-project-sink-gcs"
-  project = "${var.project_name}"
+  project = "${var.project_id}"
 
   storage = {
-    name    = "${var.gcs_bucket_prefix}-project-sink-${var.gcs_bucket_suffix}"
-    project = "${var.project_name}"
+    name    = "${var.gcs_bucket_name}-project-sink"
+    project = "${var.project_id}"
   }
 }

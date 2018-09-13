@@ -12,21 +12,20 @@ Examples
 --------
 Examples are structured as follows:
 
-* ***base/*** creates a test folder identified by the variable `folder_name` and a test project identified by the variable `project_name`. This example **only** creates the structure required to run the other examples.
-Skip running this if you already have a test folder and a test project created.
-
 * ***pubsub/*** creates 3 sinks (org-level, folder-level and project-level) with a Cloud Pub/Sub topic as the destination.
 
 * ***gcs/*** creates 3 sinks (org-level, folder-level and project-level) with a Cloud Storage bucket as the destination. For testing purposes, the `gcs_bucket_prefix` and `gcs_bucket_suffix` are configurable.
 
 * ***bigquery/*** creates 3 sinks (org-level, folder-level and project-level) with a BigQuery dataset as the destination.
 
+* ***setup/*** creates a test folder identified by the variable `folder_name` and a test project identified by the variable `project_id`. This example **only** creates the structure required to run the other examples.
+Skip running this if you already have a test folder and a test project created.
 
 Each example can be run individually by going to each folder and running:
 
 ```
 terraform init
-terraform apply --var-file=../variables.tfvars
+terraform apply --var-file=../example.tfvars
 ```
 
 Scripts

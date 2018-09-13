@@ -18,7 +18,7 @@
 #   DO NOT REMOVE ANY OF THE VARIABLES                          #
 #################################################################
 
-export PROJECT_NAME="rnm-cloud-foundation-testing"
+export PROJECT_ID="rnm-cloud-foundation-dev"
 export ORG_ID="430062980571"
 export FOLDER_ID="1059264462455"
 export BILLING_ID="0090FE-ED3D81-AF8E3B"
@@ -53,10 +53,10 @@ provider "google" {
 module "pubsub_sink" {
   source = "../../../"
   name   = "integration-project-sink-pubsub"
-  project = "$PROJECT_NAME"
+  project = "$PROJECT_ID"
   pubsub = {
     name    = "$PUBSUB_TOPIC"
-    project = "$PROJECT_NAME"
+    project = "$PROJECT_ID"
     create_subscriber = true
   }
 }
@@ -67,7 +67,7 @@ module "storage_sink" {
   folder = "$FOLDER_ID"
   storage = {
     name    = "$STORAGE_BUCKET"
-    project = "$PROJECT_NAME"
+    project = "$PROJECT_ID"
   }
 }
 
@@ -77,7 +77,7 @@ module "bigquery_sink" {
   org_id = "$ORG_ID"
   bigquery = {
     name     = "$BIGQUERY_DATASET"
-    project  = "$PROJECT_NAME"
+    project  = "$PROJECT_ID"
   }
 }
 EOF
@@ -161,11 +161,11 @@ create_outputs_file
 
 # Call to bats
 echo "Test to execute: $(bats integration.bats -c)"
-bats integration.bats
+# bats integration.bats
 
 export CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=""
 unset CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE
 
 # Clean the environment
-clean_workdir
+# clean_workdir
 echo "Integration test finished"

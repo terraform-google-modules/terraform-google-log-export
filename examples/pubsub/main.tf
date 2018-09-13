@@ -27,22 +27,9 @@ module "org_sink" {
 
   pubsub = {
     name    = "org-sink"
-    project = "${var.alt_project_name}"
+    project = "${var.destination_project_id}"
   }
 }
-
-# Example of an organization-level sink to Pub/Sub topic
-# module "billing_sink" {
-#   source     = "../../"
-#   name       = "test-billing-sink-pubsub"
-#   billing_id = "${var.billing_id}"
-#   filter     = "severity > WARNING"
-#
-#   pubsub = {
-#     name    = "billing-sink"
-#     project = "${var.alt_project_name}"
-#   }
-# }
 
 # Example of a folder-level sink to Pub/Sub topic
 data "google_active_folder" "folder" {
@@ -58,7 +45,7 @@ module "folder_sink" {
 
   pubsub = {
     name    = "folder-sink"
-    project = "${var.project_name}"
+    project = "${var.project_id}"
   }
 }
 
@@ -66,12 +53,12 @@ module "folder_sink" {
 module "project_sink" {
   source                 = "../../"
   name                   = "test-project-sink-pubsub"
-  project                = "${var.project_name}"
+  project                = "${var.project_id}"
   unique_writer_identity = true
 
   pubsub = {
     name              = "project-sink"
-    project           = "${var.project_name}"
+    project           = "${var.project_id}"
     create_subscriber = true
   }
 }

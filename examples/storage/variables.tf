@@ -22,11 +22,11 @@ variable "org_id" {
   description = "The organization id (for org-level sink)"
 }
 
-variable "project_name" {
+variable "project_id" {
   description = "The project name (for project-level sink)"
 }
 
-variable "alt_project_name" {
+variable "destination_project_id" {
   description = "The alternative project to create a destination in. Used to test creating destinations in other projects"
 }
 
@@ -34,10 +34,6 @@ variable "folder_name" {
   description = "The folder name (for folder-level sink)"
 }
 
-variable "gcs_bucket_prefix" {
-  description = "The GCS bucket name prefix"
-}
-
-variable "gcs_bucket_suffix" {
-  description = "The GCS bucket name suffix"
+variable "gcs_bucket_name" {
+  description = "The GCS bucket name (will be suffixed by the sink level)"
 }
