@@ -5,28 +5,24 @@ Examples to create logsinks on Google Cloud Platform using the `logsink` module.
 
 Variables
 ---------
-The Terraform variables for all the examples are defined in the `variables.tfvars` in the `examples/`
+The Terraform variables for all the examples are defined in the `example.tfvars` in the [examples](./examples)
 directory. Replace the variables by your own before running the examples.
 
 Examples
 --------
 Examples are structured as follows:
 
-* ***base/*** creates a test folder identified by the variable `folder_name` and a test project identified by the variable `project_name`. This example **only** creates the structure required to run the other examples.
-Skip running this if you already have a test folder and a test project created.
+* ***project-sink/*** creates 3 project-level sinks (Pub/Sub, Cloud Storage, BigQuery)
 
-* ***pubsub/*** creates 3 sinks (org-level, folder-level and project-level) with a Cloud Pub/Sub topic as the destination.
+* ***folder-sink/*** creates 3 folder-level aggregated sinks (Pub/Sub, Cloud Storage, BigQuery)
 
-* ***gcs/*** creates 3 sinks (org-level, folder-level and project-level) with a Cloud Storage bucket as the destination. For testing purposes, the `gcs_bucket_prefix` and `gcs_bucket_suffix` are configurable.
-
-* ***bigquery/*** creates 3 sinks (org-level, folder-level and project-level) with a BigQuery dataset as the destination.
-
+* ***org-sink/*** creates 3 organization-level aggregated sinks (Pub/Sub, Cloud Storage, BigQuery)
 
 Each example can be run individually by going to each folder and running:
 
 ```
 terraform init
-terraform apply --var-file=../variables.tfvars
+terraform apply --var-file=../example.tfvars
 ```
 
 Scripts

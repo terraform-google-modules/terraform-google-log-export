@@ -18,45 +18,42 @@ provider "google" {
   credentials = "${file(var.credentials_path)}"
 }
 
-# Example of a org-level sink to a BigQuery dataset
-module "org_sink" {
-  source = "../../"
-  name   = "test-org-sink-bigquery"
-  org_id = "${var.org_id}"
-  filter = "severity > WARNING"
+# Example of an project-level sink to a Pub/Sub topic
+module "pubsub-sink" {
+  source  = "../../"
+  name    = "test-project-sink-pubsub"
+  project = "${var.project_id}"
+  filter  = "severity > WARNING"
 
-  bigquery = {
-    name    = "org_sink"
-    project = "${var.project_name}"
+  pubsub = {
+    name              = "pubsub-project-sink"
+    project           = "${var.destination_project_id}"
+    create_subscriber = true
   }
 }
 
-# Example of a folder-level sink to a BigQuery dataset
-data "google_active_folder" "folder" {
-  display_name = "${var.folder_name}"
-  parent       = "organizations/${var.org_id}"
-}
+# Example of a project-level sink to a Cloud Storage bucket
+module "storage-sink" {
+  source  = "../../"
+  name    = "test-project-sink-gcs"
+  project = "${var.project_id}"
+  filter  = "logName = /logs/cloudaudit.googleapis.com"
 
-module "folder_sink" {
-  source = "../../"
-  name   = "test-folder-sink-bigquery"
-  folder = "${data.google_active_folder.folder.name}"
-  filter = "severity > WARNING"
-
-  bigquery = {
-    name    = "folder_sink"
-    project = "${var.project_name}"
+  storage = {
+    name    = "${var.gcs_bucket_name}-project-sink"
+    project = "${var.project_id}"
   }
 }
 
 # Example of a project-level sink to a BigQuery dataset
-module "project_sink" {
+module "bigquery-sink" {
   source  = "../../"
   name    = "test-project-sink-bigquery"
-  project = "${var.project_name}"
+  project = "${var.project_id}"
+  filter  = "resource.type = gce_instance"
 
   bigquery = {
     name    = "project_sink"
-    project = "${var.project_name}"
+    project = "${var.project_id}"
   }
 }
