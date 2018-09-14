@@ -13,7 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 set -e
-cd setup/ && terraform init && terraform apply --var-file=../example.tfvars
-cd ../pubsub/ && terraform init && terraform apply --var-file=../example.tfvars
-cd ../storage/ && terraform init && terraform apply --var-file=../example.tfvars
-cd ../bigquery/ && terraform init && terraform apply --var-file=../example.tfvars
+cd project-sink/ && terraform init && terraform apply --var-file=../example.tfvars
+cd ../folder-sink/ && terraform init && terraform apply --var-file=../example.tfvars
+cd ../org-sink/ && terraform init && terraform apply --var-file=../example.tfvars
