@@ -19,21 +19,13 @@ variable "credentials_path" {
 }
 
 variable "org_id" {
-  description = "The organization id (for org-level sink)"
-}
-
-variable "billing_id" {
-  description = "The billing id (for billing-level sink)"
-}
-
-variable "project_id" {
-  description = "The project name (for project-level sink)"
+  description = "The org id (for org-level sink)"
 }
 
 variable "destination_project_id" {
   description = "The alternative project to create a destination in. Used to test creating destinations in other projects"
 }
 
-variable "folder_name" {
-  description = "The folder name (for folder-level sink)"
+variable "gcs_bucket_name" {
+  description = "The GCS bucket name (will be suffixed by the sink level)"
 }

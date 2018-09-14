@@ -14,22 +14,18 @@
  * limitations under the License.
  */
 
-provider "google" {
-  credentials = "${file(var.credentials_path)}"
+variable "credentials_path" {
+  description = "Path to a Service Account credentials file with permissions documented in the readme"
 }
 
-resource "google_folder" "folder" {
-  display_name = "${var.folder_name}"
-  parent       = "organizations/${var.org_id}"
+variable "project_id" {
+  description = "The project name (for project-level sink)"
 }
 
-resource "google_project" "project" {
-  name            = "${var.project_id}"
-  project_id      = "${var.project_id}"
-  folder_id       = "${google_folder.folder.name}"
-  billing_account = "${var.billing_id}"
+variable "destination_project_id" {
+  description = "The alternative project to create a destination in. Used to test creating destinations in other projects"
+}
 
-  depends_on = [
-    "google_folder.folder",
-  ]
+variable "gcs_bucket_name" {
+  description = "The GCS bucket name (will be suffixed by the sink level)"
 }

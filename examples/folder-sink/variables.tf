@@ -18,18 +18,14 @@ variable "credentials_path" {
   description = "Path to a Service Account credentials file with permissions documented in the readme"
 }
 
-variable "org_id" {
-  description = "The organization id"
+variable "folder_id" {
+  description = "The folder id (for folder-level sink)"
 }
 
-variable "billing_id" {
-  description = "The billing account id"
+variable "destination_project_id" {
+  description = "The alternative project to create a destination in. Used to test creating destinations in other projects"
 }
 
-variable "project_id" {
-  description = "The project name to be created"
-}
-
-variable "folder_name" {
-  description = "The folder name to be created"
+variable "gcs_bucket_name" {
+  description = "The GCS bucket name (will be suffixed by the sink level)"
 }

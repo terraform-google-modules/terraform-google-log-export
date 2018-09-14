@@ -13,7 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 set -e
-cd pubsub/ && terraform init && terraform destroy --var-file=../example.tfvars
-cd ../storage/ && terraform init && terraform destroy --var-file=../example.tfvars
-cd ../bigquery/ && terraform init && terraform destroy --var-file=../example.tfvars
-#cd ../base/ && terraform init && terraform destroy --var-file=../example.tfvars
+cd project-sink/ && terraform init && terraform destroy --var-file=../example.tfvars
+cd ../folder-sink/ && terraform init && terraform destroy --var-file=../example.tfvars
+cd ../org-sink/ && terraform init && terraform destroy --var-file=../example.tfvars
