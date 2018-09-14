@@ -14,26 +14,18 @@
  * limitations under the License.
  */
 
-output "org_sink" {
-  value = "${module.org_sink.sink}"
+variable "credentials_path" {
+  description = "Path to a Service Account credentials file with permissions documented in the readme"
 }
 
-output "org_sink_destination" {
-  value = "${module.org_sink.destination}"
+variable "folder_id" {
+  description = "The folder id (for folder-level sink)"
 }
 
-output "folder_sink" {
-  value = "${module.folder_sink.sink}"
+variable "destination_project_id" {
+  description = "The alternative project to create a destination in. Used to test creating destinations in other projects"
 }
 
-output "folder_sink_destination" {
-  value = "${module.folder_sink.destination}"
-}
-
-output "project_sink" {
-  value = "${module.project_sink.sink}"
-}
-
-output "project_sink_destination" {
-  value = "${module.project_sink.destination}"
+variable "gcs_bucket_name" {
+  description = "The GCS bucket name (will be suffixed by the sink level)"
 }

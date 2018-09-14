@@ -21,3 +21,7 @@ output "sink" {
 output "destination" {
   value = "${local.destination_output}"
 }
+
+output "pubsub_subscriber" {
+  value = "${local.pubsub_subscriber}"
+}

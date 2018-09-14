@@ -18,7 +18,7 @@
 #   DO NOT REMOVE ANY OF THE VARIABLES                          #
 #################################################################
 
-export PROJECT_NAME="rnm-cloud-foundation-testing"
+export PROJECT_ID="rnm-cloud-foundation-dev"
 export ORG_ID="430062980571"
 export FOLDER_ID="1059264462455"
 export BILLING_ID="0090FE-ED3D81-AF8E3B"
@@ -53,10 +53,10 @@ provider "google" {
 module "pubsub_sink" {
   source = "../../../"
   name   = "integration-project-sink-pubsub"
-  project = "$PROJECT_NAME"
+  project = "$PROJECT_ID"
   pubsub = {
     name    = "$PUBSUB_TOPIC"
-    project = "$PROJECT_NAME"
+    project = "$PROJECT_ID"
     create_subscriber = true
   }
 }
@@ -67,7 +67,7 @@ module "storage_sink" {
   folder = "$FOLDER_ID"
   storage = {
     name    = "$STORAGE_BUCKET"
-    project = "$PROJECT_NAME"
+    project = "$PROJECT_ID"
   }
 }
 
@@ -77,7 +77,7 @@ module "bigquery_sink" {
   org_id = "$ORG_ID"
   bigquery = {
     name     = "$BIGQUERY_DATASET"
-    project  = "$PROJECT_NAME"
+    project  = "$PROJECT_ID"
   }
 }
 EOF
@@ -110,12 +110,20 @@ function create_outputs_file() {
     value = "${module.pubsub_sink.sink["writer"]}"
   }
 
+  output "pubsub_sink_subscriber" {
+    value = "${module.pubsub_sink.pubsub_subscriber}"
+  }
+
   output "pubsub_sink_destination_link" {
     value = "${module.pubsub_sink.destination["self_link"]}"
   }
 
   output "pubsub_sink_destination_project" {
     value = "${module.pubsub_sink.destination["project"]}"
+  }
+
+  output "pubsub_sink_destination_name" {
+    value = "${module.pubsub_sink.destination["name"]}"
   }
 
   # Storage
@@ -135,6 +143,10 @@ function create_outputs_file() {
     value = "${module.storage_sink.destination["project"]}"
   }
 
+  output "storage_sink_destination_name" {
+    value = "${module.storage_sink.destination["name"]}"
+  }
+
   # BigQuery
   output "bigquery_sink_name" {
     value = "${module.bigquery_sink.sink["name"]}"
@@ -150,6 +162,10 @@ function create_outputs_file() {
 
   output "bigquery_sink_destination_project" {
     value = "${module.bigquery_sink.destination["project"]}"
+  }
+
+  output "bigquery_sink_destination_name" {
+    value = "${module.bigquery_sink.destination["name"]}"
   }
 EOF
 }
@@ -167,5 +183,5 @@ export CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=""
 unset CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE
 
 # Clean the environment
-clean_workdir
+# clean_workdir
 echo "Integration test finished"
