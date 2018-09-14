@@ -36,6 +36,10 @@ locals {
   destination_uri          = "${local.uri_map[local.destination_type]}"
   destination_api          = "${local.api_map[local.destination_type]}"
 
+  # Additional options for specific destinations
+  pubsub_create_subscriber = "${lookup(local.destination, "create_subscriber", false)}"
+  pubsub_subscriber        = "${element(concat(google_service_account.pubsub_subscriber.*.email, list("")), 0)}"
+
   # Role assigned to sink writer and sink level
   role  = "${local.role_map[local.destination_type]}"
   level = "${local.is_project_level ? "project" : local.is_folder_level ? "folder" : local.is_org_level ? "organization" : local.is_billing_level ? "billing" : ""}"
@@ -91,6 +95,7 @@ locals {
     self_link    = "${local.destination_uri}"
     console_link = "${local.destination_console_link}"
     type         = "${local.destination_type}"
+    name         = "${local.destination_name}"
     project      = "${local.is_pubsub ? element(concat(google_pubsub_topic.topic.*.project, list("")), 0) : local.is_bigquery ? element(concat(google_bigquery_dataset.dataset.*.project, list("")), 0) : local.is_storage ? element(concat(google_storage_bucket.bucket.*.project, list("")), 0) : ""}"
   }
 }
@@ -240,14 +245,14 @@ resource "google_project_iam_member" "bigquery_sink_member" {
 # Pub/Sub topic subscription (for integrations) #
 #-----------------------------------------------#
 resource "google_service_account" "pubsub_subscriber" {
-  count        = "${lookup(local.destination, "create_subscriber", false) ? 1 : 0}"
+  count        = "${local.pubsub_create_subscriber ? 1 : 0}"
   account_id   = "${local.destination_name}-subscriber"
   display_name = "${local.destination_name} Topic Subscriber"
   project      = "${local.destination_project}"
 }
 
 resource "google_pubsub_topic_iam_member" "pubsub_subscriber_role" {
-  count   = "${lookup(local.destination, "create_subscriber", false) ? 1 : 0}"
+  count   = "${local.pubsub_create_subscriber ? 1 : 0}"
   role    = "roles/pubsub.subscriber"
   project = "${local.destination_project}"
   topic   = "${local.destination_name}"
@@ -259,7 +264,7 @@ resource "google_pubsub_topic_iam_member" "pubsub_subscriber_role" {
 }
 
 resource "google_pubsub_topic_iam_member" "pubsub_viewer_role" {
-  count   = "${lookup(local.destination, "create_subscriber", false) ? 1 : 0}"
+  count   = "${local.pubsub_create_subscriber ? 1 : 0}"
   role    = "roles/pubsub.viewer"
   project = "${local.destination_project}"
   topic   = "${local.destination_name}"
@@ -271,7 +276,7 @@ resource "google_pubsub_topic_iam_member" "pubsub_viewer_role" {
 }
 
 resource "google_pubsub_subscription" "pubsub_subscription" {
-  count   = "${lookup(local.destination, "create_subscriber", false) ? 1 : 0}"
+  count   = "${local.pubsub_create_subscriber ? 1 : 0}"
   name    = "${local.destination_name}-subscription"
   topic   = "${local.destination_name}"
   project = "${local.destination_project}"
