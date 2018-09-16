@@ -38,7 +38,7 @@ The service account should have the following roles:
 - `roles/iam.admin` on the destination project (to grant write permissions to the destination project)
 - `roles/serviceusage.admin` on **both** the logsink project / folder / organization and the destination project (to enable API for destinations)
 
-##### Pub/Sub
+#### Pub/Sub roles
 To use a Google Cloud Pub/Sub topic as the destination:
 - `roles/pubsub.editor` on the destination project (to create a pub/sub topic)
 
