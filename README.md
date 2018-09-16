@@ -11,7 +11,7 @@ You can go to the [examples](./examples) folder to see all the use cases, howeve
 
 ```
 module "logsink" {
-  source = "./"
+  source = "github.com/terraform-google-modules/terraform-google-log-export"
   name   = "my-logsink"
   folder = "2165468435"
   filter = "severity >= ERROR"
