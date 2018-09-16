@@ -47,7 +47,7 @@ To integrate the logsink with Splunk, you'll need a topic subscriber (service ac
 
 #### Storage role
 To use a Google Cloud Storage bucket as the destination:
-- `roles/storage.editor` on the destination project (to create a storage bucket)
+- `roles/storage.admin` on the destination project (to create a storage bucket)
 
 #### BigQuery role
 To use a BigQuery dataset as the destination, one must grant:
