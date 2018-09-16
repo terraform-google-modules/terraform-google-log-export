@@ -183,5 +183,5 @@ export CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=""
 unset CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE
 
 # Clean the environment
-# clean_workdir
+clean_workdir
 echo "Integration test finished"
