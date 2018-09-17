@@ -34,7 +34,7 @@ In order to execute this module you must have a Service Account with the followi
 #### Roles
 The service account should have the following roles:
 - `roles/logging.configWriter` on the logsink's project, folder, or organization (to create the logsink)
-- `roles/iam.admin` on the destination project (to grant write permissions to the destination project)
+- `roles/iam.admin` on the destination project (to grant write permissions for logsink service account)
 - `roles/serviceusage.admin` on the destination project (to enable destination API)
 
 #### Pub/Sub roles
