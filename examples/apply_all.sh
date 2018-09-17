@@ -13,6 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 set -e
-cd project-sink/ && terraform init && terraform apply --var-file=../example.tfvars
-cd ../folder-sink/ && terraform init && terraform apply --var-file=../example.tfvars
-cd ../org-sink/ && terraform init && terraform apply --var-file=../example.tfvars
+cd project-sink/ && terraform init -upgrade && terraform apply --var-file=../example.tfvars
+cd ../folder-sink/ && terraform init -upgrade && terraform apply --var-file=../example.tfvars
+cd ../org-sink/ && terraform init -upgrade && terraform apply --var-file=../example.tfvars
