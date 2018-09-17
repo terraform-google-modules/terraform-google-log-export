@@ -39,7 +39,7 @@ The service account should have the following roles:
 
 #### Pub/Sub roles
 To use a Google Cloud Pub/Sub topic as the destination:
-- `roles/pubsub.editor` on the destination project (to create a pub/sub topic)
+- `roles/pubsub.admin` on the destination project (to create a pub/sub topic)
 
 To integrate the logsink with Splunk, you'll need a topic subscriber (service account):
 - `roles/serviceAccount.admin` on the destination project (to create a service account for the logsink subscriber)
