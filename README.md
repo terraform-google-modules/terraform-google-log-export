@@ -2,9 +2,9 @@
 This module allows you to create log exports at the project, folder, or organization level.
 
 The resources/services/activations/deletions that this module will create/trigger are:
-- Aggregated log export (project, folder, or organization)
-- Service account (logsink writer)
-- Destination (GCS bucket, Pub/Sub topic, BigQuery dataset)
+- An **Aggregated log export** on the project-level, folder-level, or organization-level
+- A **Service account** (logsink writer)
+- A **Destination** (Cloud Storage bucket, Cloud Pub/Sub topic, BigQuery dataset)
 
 ## Usage
 You can go to the [examples](./examples) folder to see all the use cases, however the usage of the module could be like this in your own `main.tf` file:
