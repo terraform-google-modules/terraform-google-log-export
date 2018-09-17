@@ -2,9 +2,9 @@
 This module allows you to create log exports at the project, folder, or organization level.
 
 The resources/services/activations/deletions that this module will create/trigger are:
-- Log export
-- Service account (logsink writer)
-- Destination (GCS bucket, Pub/Sub topic, BigQuery dataset)
+- An **Aggregated log export** on the project-level, folder-level, or organization-level
+- A **Service account** (logsink writer)
+- A **Destination** (Cloud Storage bucket, Cloud Pub/Sub topic, BigQuery dataset)
 
 ## Usage
 You can go to the [examples](./examples) folder to see all the use cases, however the usage of the module could be like this in your own `main.tf` file:
@@ -34,13 +34,12 @@ In order to execute this module you must have a Service Account with the followi
 #### Roles
 The service account should have the following roles:
 - `roles/logging.configWriter` on the logsink's project, folder, or organization (to create the logsink)
-- `roles/serviceAccount.admin` on the logsink's project, folder, or organization (to create a service account for the logsink)
-- `roles/iam.admin` on the destination project (to grant write permissions to the destination project)
-- `roles/serviceusage.admin` on **both** the logsink project / folder / organization and the destination project (to enable API for destinations)
+- `roles/iam.admin` on the destination project (to grant write permissions for logsink service account)
+- `roles/serviceusage.admin` on the destination project (to enable destination API)
 
 #### Pub/Sub roles
 To use a Google Cloud Pub/Sub topic as the destination:
-- `roles/pubsub.editor` on the destination project (to create a pub/sub topic)
+- `roles/pubsub.admin` on the destination project (to create a pub/sub topic)
 
 To integrate the logsink with Splunk, you'll need a topic subscriber (service account):
 - `roles/serviceAccount.admin` on the destination project (to create a service account for the logsink subscriber)
