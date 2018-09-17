@@ -2,7 +2,7 @@
 This module allows you to create log exports at the project, folder, or organization level.
 
 The resources/services/activations/deletions that this module will create/trigger are:
-- Log export
+- Aggregated log export (project, folder, or organization)
 - Service account (logsink writer)
 - Destination (GCS bucket, Pub/Sub topic, BigQuery dataset)
 
