@@ -11,7 +11,7 @@ You can go to the [examples](./examples) folder to see all the use cases, howeve
 
 ```
 module "logsink" {
-  source = "./"
+  source = "github.com/terraform-google-modules/terraform-google-log-export"
   name   = "my-logsink"
   folder = "2165468435"
   filter = "severity >= ERROR"
@@ -38,7 +38,7 @@ The service account should have the following roles:
 - `roles/iam.admin` on the destination project (to grant write permissions to the destination project)
 - `roles/serviceusage.admin` on **both** the logsink project / folder / organization and the destination project (to enable API for destinations)
 
-##### Pub/Sub
+#### Pub/Sub roles
 To use a Google Cloud Pub/Sub topic as the destination:
 - `roles/pubsub.editor` on the destination project (to create a pub/sub topic)
 
@@ -47,7 +47,7 @@ To integrate the logsink with Splunk, you'll need a topic subscriber (service ac
 
 #### Storage role
 To use a Google Cloud Storage bucket as the destination:
-- `roles/storage.editor` on the destination project (to create a storage bucket)
+- `roles/storage.admin` on the destination project (to create a storage bucket)
 
 #### BigQuery role
 To use a BigQuery dataset as the destination, one must grant:
