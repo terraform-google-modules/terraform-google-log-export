@@ -53,7 +53,7 @@ module "bigquery-sink" {
   filter = "resource.type = gce_instance"
 
   bigquery = {
-    name    = "project_sink"
+    name    = "org_sink"
     project = "${var.destination_project_id}"
   }
 }
