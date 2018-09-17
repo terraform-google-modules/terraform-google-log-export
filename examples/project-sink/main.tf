@@ -41,7 +41,7 @@ module "storage-sink" {
 
   storage = {
     name    = "${var.gcs_bucket_name}-project-sink"
-    project = "${var.project_id}"
+    project = "${var.destination_project_id}"
   }
 }
 
@@ -54,6 +54,6 @@ module "bigquery-sink" {
 
   bigquery = {
     name    = "project_sink"
-    project = "${var.project_id}"
+    project = "${var.destination_project_id}"
   }
 }
