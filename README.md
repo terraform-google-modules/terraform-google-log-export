@@ -9,7 +9,7 @@ The resources/services/activations/deletions that this module will create/trigge
 ## Usage
 You can go to the [examples](./examples) folder to see all the use cases, however the usage of the module could be like this in your own `main.tf` file:
 
-```
+```hcl
 module "logsink" {
   source           = "github.com/terraform-google-modules/terraform-google-log-export"
   name             = "my-logsink"
