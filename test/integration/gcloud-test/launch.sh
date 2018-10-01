@@ -18,14 +18,14 @@
 #   DO NOT REMOVE ANY OF THE VARIABLES                          #
 #################################################################
 
-export PROJECT_ID="rnm-cloud-foundation-dev"
-export ORG_ID="430062980571"
-export FOLDER_ID="1059264462455"
-export BILLING_ID="0090FE-ED3D81-AF8E3B"
-export CREDENTIALS_PATH="/Users/ocervello/rnm-shared-devops-fd8a7717d6e8.json"
+export PROJECT_ID="XXXXXXXXX"
+export ORG_ID="XXXXXXXXXXXX"
+export FOLDER_ID="XXXXXXXXXXXXX"
+export BILLING_ID="XXXXXX-XXXXXX-XXXXXX"
+export CREDENTIALS_PATH="XXXXXX"
 export CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=$CREDENTIALS_PATH
 export SINK_NAME="integration-sink"
-export STORAGE_BUCKET="rnm-integration-sink"
+export STORAGE_BUCKET="<PREFIX>-integration-sink"
 export BIGQUERY_DATASET="integration_sink"
 export PUBSUB_TOPIC="integration-sink"
 
