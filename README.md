@@ -11,7 +11,7 @@ You can go to the [examples](./examples) folder to see all the use cases, howeve
 
 ```hcl
 module "logsink" {
-  source           = "github.com/terraform-google-modules/terraform-google-log-export"
+  source           = "terraform-google-modules/log-export/google"
   name             = "my-logsink"
   folder           = "2165468435"
   filter           = "severity >= ERROR"
