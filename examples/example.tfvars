@@ -8,4 +8,4 @@ project_id="<PROJECT_ID>"
 
 destination_project_id="<DESTINATION_PROJECT_ID>"
 
-gcs_bucket_name="<GCS_BUCKET_NAME>
+gcs_bucket_name="<GCS_BUCKET_NAME>"
