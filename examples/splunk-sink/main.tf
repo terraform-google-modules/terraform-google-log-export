@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-output "sink" {
-  value = "${local.sink_output}"
+provider "google" {
+  credentials = "${file(var.credentials_path)}"
 }
 
-output "destination" {
-  value = "${local.destination_output}"
-}
+module "splunk-sink" {
+  source  = "../../"
+  name    = "test-splunk-sink"
+  project = "${var.project_id}"
 
-output "pubsub_subscriber" {
-  value = "${local.pubsub_subscriber}"
-}
-
-output "pubsub_subscription" {
-  value = "${local.pubsub_subscription}"
+  pubsub = {
+    name              = "splunk-sink"
+    project           = "${var.project_id}"
+    create_subscriber = true
+  }
 }
