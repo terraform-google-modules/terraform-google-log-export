@@ -14,18 +14,14 @@
  * limitations under the License.
  */
 
-output "sink" {
-  value = "${local.sink_output}"
+variable "credentials_path" {
+  description = "Path to a Service Account credentials file with permissions documented in the readme"
 }
 
-output "destination" {
-  value = "${local.destination_output}"
+variable "project_id" {
+  description = "The project name (for project-level sink)"
 }
 
-output "pubsub_subscriber" {
-  value = "${local.pubsub_subscriber}"
-}
-
-output "pubsub_subscription" {
-  value = "${local.pubsub_subscription}"
+variable "gcs_bucket_name" {
+  description = "The GCS bucket name (will be suffixed by the sink level)"
 }

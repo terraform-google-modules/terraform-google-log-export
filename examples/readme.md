@@ -18,6 +18,8 @@ Examples are structured as follows:
 
 * ***org-sink/*** creates 3 organization-level aggregated sinks (Pub/Sub, Cloud Storage, BigQuery)
 
+* ***splunk-sink/*** creates 1 project-level sink to Pub/Sub in order to be ingested to Splunk
+
 Each example can be run individually by going to each folder and running:
 
 ```
