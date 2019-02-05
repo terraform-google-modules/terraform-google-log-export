@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 set -e
-cd project-sink/ && terraform init && terraform apply -auto-approve
-cd ../folder-sink/ && terraform init && terraform apply -auto-approve
-cd ../org-sink/ && terraform init && terraform apply -auto-approve
-cd ../splunk-sink/ && terraform init && terraform apply -auto-approve
+cd project-sink/ && terraform init && terraform apply -auto-approve -var-file=terraform.tfvars.sample
+cd ../folder-sink/ && terraform init && terraform apply -auto-approve -var-file=terraform.tfvars.sample
+cd ../org-sink/ && terraform init && terraform apply -auto-approve -var-file=terraform.tfvars.sample
+cd ../splunk-sink/ && terraform init && terraform apply -auto-approve -var-file=terraform.tfvars.sample

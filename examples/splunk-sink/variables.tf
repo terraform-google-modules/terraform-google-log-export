@@ -21,7 +21,3 @@ variable "credentials_path" {
 variable "project_id" {
   description = "The project name (for project-level sink)"
 }
-
-variable "gcs_bucket_name" {
-  description = "The GCS bucket name (will be suffixed by the sink level)"
-}
