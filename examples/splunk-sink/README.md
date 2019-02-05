@@ -6,7 +6,7 @@ The example is for a project-level sink, but it can be easily be adapted for agg
 
 ## Instructions
 
-1. Fill the required variables in the `example.auto.tfvars` file located in the `examples/` directory.
+1. Fill the required variables in the `terraform.tfvars.sample` file located in the `examples/` directory.
 
 2. Verify the IAM roles for your Terraform service account:
     - `roles/logging.configWriter` on the project (to create the logsink)
