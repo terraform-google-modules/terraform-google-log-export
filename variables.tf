@@ -54,16 +54,19 @@ variable "unique_writer_identity" {
 }
 
 variable "bigquery" {
-  type    = "map"
-  default = {}
+  description = "BigQuery dataset configuration"
+  type        = "map"
+  default     = {}
 }
 
 variable "storage" {
-  type    = "map"
-  default = {}
+  description = "Cloud Storage bucket configuration"
+  type        = "map"
+  default     = {}
 }
 
 variable "pubsub" {
-  type    = "map"
-  default = {}
+  description = "Pub/Sub topic configuration"
+  type        = "map"
+  default     = {}
 }
