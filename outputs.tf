@@ -15,17 +15,21 @@
  */
 
 output "sink" {
-  value = "${local.sink_output}"
+  description = "Log sink data map"
+  value       = "${local.sink_output}"
 }
 
 output "destination" {
-  value = "${local.destination_output}"
+  description = "Destination data map"
+  value       = "${local.destination_output}"
 }
 
 output "pubsub_subscriber" {
-  value = "${local.pubsub_subscriber}"
+  description = "Pub/Sub subscriber email (if any)"
+  value       = "${local.pubsub_subscriber}"
 }
 
 output "pubsub_subscription" {
-  value = "${local.pubsub_subscription}"
+  description = "Pub/Sub subscription id (if any)"
+  value       = "${local.pubsub_subscription}"
 }
