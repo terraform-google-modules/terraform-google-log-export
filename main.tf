@@ -39,6 +39,7 @@ locals {
   # Additional options for specific destinations
   pubsub_create_subscriber = "${lookup(local.destination, "create_subscriber", false)}"
   pubsub_subscriber        = "${element(concat(google_service_account.pubsub_subscriber.*.email, list("")), 0)}"
+  pubsub_subscription      = "${element(concat(google_pubsub_subscription.pubsub_subscription.*.id, list("")), 0)}"
 
   # Role assigned to sink writer and sink level
   role  = "${local.role_map[local.destination_type]}"

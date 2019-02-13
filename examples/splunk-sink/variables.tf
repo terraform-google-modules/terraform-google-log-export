@@ -14,22 +14,10 @@
  * limitations under the License.
  */
 
-output "sink" {
-  description = "Log sink data map"
-  value       = "${local.sink_output}"
+variable "credentials_path" {
+  description = "Path to a Service Account credentials file with permissions documented in the readme"
 }
 
-output "destination" {
-  description = "Destination data map"
-  value       = "${local.destination_output}"
-}
-
-output "pubsub_subscriber" {
-  description = "Pub/Sub subscriber email (if any)"
-  value       = "${local.pubsub_subscriber}"
-}
-
-output "pubsub_subscription" {
-  description = "Pub/Sub subscription id (if any)"
-  value       = "${local.pubsub_subscription}"
+variable "project_id" {
+  description = "The project name (for project-level sink)"
 }
