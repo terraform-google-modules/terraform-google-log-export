@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-output "sink" {
-  description = "Log sink data map"
-  value       = "${local.sink_output}"
+output "pubsub_topic_name" {
+  description = "Pub/Sub topic name"
+  value       = "projects/${module.splunk-sink.destination["project"]}/topics/${module.splunk-sink.destination["name"]}"
 }
 
-output "destination" {
-  description = "Destination data map"
-  value       = "${local.destination_output}"
+output "pubsub_topic_project" {
+  description = "Pub/Sub topic project id"
+  value       = "${module.splunk-sink.destination["project"]}"
+}
+
+output "pubsub_subscription_name" {
+  description = "Pub/Sub topic subscription name"
+  value       = "${module.splunk-sink.pubsub_subscription}"
 }
 
 output "pubsub_subscriber" {
-  description = "Pub/Sub subscriber email (if any)"
-  value       = "${local.pubsub_subscriber}"
-}
-
-output "pubsub_subscription" {
-  description = "Pub/Sub subscription id (if any)"
-  value       = "${local.pubsub_subscription}"
+  description = "Pub/Sub topic subscriber email"
+  value       = "${module.splunk-sink.pubsub_subscriber}"
 }

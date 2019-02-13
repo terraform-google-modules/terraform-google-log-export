@@ -14,22 +14,18 @@
  * limitations under the License.
  */
 
-output "sink" {
-  description = "Log sink data map"
-  value       = "${local.sink_output}"
+provider "google" {
+  credentials = "${file(var.credentials_path)}"
 }
 
-output "destination" {
-  description = "Destination data map"
-  value       = "${local.destination_output}"
-}
+module "splunk-sink" {
+  source  = "../../"
+  name    = "test-splunk-sink"
+  project = "${var.project_id}"
 
-output "pubsub_subscriber" {
-  description = "Pub/Sub subscriber email (if any)"
-  value       = "${local.pubsub_subscriber}"
-}
-
-output "pubsub_subscription" {
-  description = "Pub/Sub subscription id (if any)"
-  value       = "${local.pubsub_subscription}"
+  pubsub = {
+    name              = "splunk-sink"
+    project           = "${var.project_id}"
+    create_subscriber = true
+  }
 }
