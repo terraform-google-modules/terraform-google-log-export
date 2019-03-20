@@ -1,3 +1,26 @@
+# OSX leaves these everywhere on SMB shares
+._*
+
+# OSX trash
+.DS_Store
+
+# Python
+*.pyc
+
+# Emacs save files
+*~
+\#*\#
+.\#*
+
+# Vim-related files
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+
+### https://raw.github.com/github/gitignore/90f149de451a5433aebd94d02d11b0e28843a1af/Terraform.gitignore
+
 # Local .terraform directories
 **/.terraform/*
 
@@ -8,13 +31,18 @@
 # Crash log files
 crash.log
 
-# Ignore override files as they are usually used to override resources locally and so
-# are not checked in
-override.tf
-override.tf.json
-*_override.tf
-*_override.tf.json
+# Kitchen files
+**/inspec.lock
+**/.kitchen
+**/.kitchen.local.yml
+**/Gemfile.lock
 
-# Include override files you do wish to add to version control using negated pattern
+# Ignore any .tfvars files that are generated automatically for each Terraform run. Most
+# .tfvars files are managed as part of configuration and so should be included in
+# version control.
 #
-# !example_override.tf
+# example.tfvars
+test/fixtures/shared/terraform.tfvars
+
+credentials.json
+
