@@ -60,3 +60,23 @@ The example is for a project-level sink, but it can be easily be adapted for agg
     ![screen shot 2019-01-25 at 1 42 25 pm](https://user-images.githubusercontent.com/9629314/51768902-33ab4380-20a7-11e9-8f91-22d4eed777e7.png)
 
 10. **Congratulations !** Your Stackdriver-to-Splunk logging pipeline is up and running !
+
+[^]: (autogen_docs_start)
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|:----:|:-----:|:-----:|
+| parent\_resource\_id | The ID of the project in which pubsub topic destination will be created. | string | n/a | yes |
+| project\_id | The ID of the project in which the log export will be created. | string | n/a | yes |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| pubsub\_subscriber | Pub/Sub topic subscriber email |
+| pubsub\_subscription\_name | Pub/Sub topic subscription name |
+| pubsub\_topic\_name | Pub/Sub topic name |
+| pubsub\_topic\_project | Pub/Sub topic project id |
+
+[^]: (autogen_docs_end)

@@ -1,27 +1,42 @@
 # Terraform Log Export Module
-This module allows you to create log exports at the project, folder, or organization level.
 
-The resources/services/activations/deletions that this module will create/trigger are:
-- An **Aggregated log export** on the project-level, folder-level, or organization-level
+This module allows you to create log exports at the project, folder, or
+organization level. Submodules are also available to configure the
+destination resource that will store all exported logs. The
+resources/services/activations/deletions that this module will create/trigger
+are:
+
+- An **Aggregated log export** on the project-level, folder-level, organization-level, or billing-account-level
 - A **Service account** (logsink writer)
 - A **Destination** (Cloud Storage bucket, Cloud Pub/Sub topic, BigQuery dataset)
 
 ## Usage
-You can go to the [examples](./examples) folder to see all the use cases, however the usage of the module could be like this in your own `main.tf` file:
+
+The [examples](./examples) directory contains directories for each destination, and within each destination directory are directories for each parent resource level. Consider the following
+example that will configure a Cloud Storage destination and a log export at the project level:
 
 ```hcl
-module "logsink" {
-  source           = "terraform-google-modules/log-export/google"
-  name             = "my-logsink"
-  folder           = "2165468435"
-  filter           = "severity >= ERROR"
-  include_children = true
-  pubsub = {
-    name    = "my-logsink-pubsub"
-    project = "my-pubsub-project"
-  }
+module "log_export" {
+  source                 = "terraform-google-modules/log-export/google"
+  destination_uri        = "${module.destination.destination_uri}"
+  filter                 = "severity >= ERROR"
+  log_sink_name          = "storage_example_logsink"
+  parent_resource_id     = "sample-project"
+  parent_resource_type   = "project"
+  unique_writer_identity = "true"
+}
+
+module "destination" {
+  source                   = "terraform-google-modules/log-export/google//modules/storage"
+  project_id               = "sample-project"
+  storage_bucket_name      = "storage_example_bucket"
+  log_sink_writer_identity = "${module.log_export.writer_identity}"
 }
 ```
+
+At first glance that example seems like a circular dependency as each module declaration is
+using an output from the other, however Terraform is able to collect and order all the resources
+so that all dependencies are met.
 
 ## Requirements
 ### Terraform plugins
@@ -64,7 +79,7 @@ In order to operate with the Service Account you must activate the following API
 ## Install
 
 ### Terraform
-Be sure you have the correct Terraform version (0.10.x), you can choose the binary here:
+Be sure you have the correct Terraform version (0.11.x), you can choose the binary here:
 - https://releases.hashicorp.com/terraform/
 
 Then perform the following commands:

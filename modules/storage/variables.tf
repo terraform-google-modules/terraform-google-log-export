@@ -14,18 +14,14 @@
  * limitations under the License.
  */
 
-module "log_export" {
-  source               = "terraform-google-modules/log-export/google"
-  destination_uri      = "${module.destination.destination_uri}"
-  log_sink_name        = "test-splunk-sink"
-  parent_resource_id   = "${var.parent_resource_id}"
-  parent_resource_type = "project"
+variable "log_sink_writer_identity" {
+  description = "The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module)."
 }
 
-module "destination" {
-  source                   = "terraform-google-modules/log-export/google//modules/storage"
-  project_id               = "${var.project_id}"
-  topic_name               = "splunk-sink"
-  log_sink_writer_identity = "${module.log_export.writer_identity}"
-  create_subscriber        = "true"
+variable "project_id" {
+  description = "The ID of the project in which the storage bucket will be created."
+}
+
+variable "storage_bucket_name" {
+  description = "The name of the storage bucket to be created and used for log entries matching the filter."
 }
