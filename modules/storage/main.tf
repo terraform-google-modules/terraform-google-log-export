@@ -15,7 +15,7 @@
  */
 
 locals {
-  storage_bucket_name = "${google_storage_bucket.bucket.name}"
+  storage_bucket_name = "${element(concat(google_storage_bucket.bucket.*.name, list("")), 0)}"
   destination_uri     = "storage.googleapis.com/${local.storage_bucket_name}"
 }
 
