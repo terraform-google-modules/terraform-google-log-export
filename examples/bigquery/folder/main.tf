@@ -14,10 +14,21 @@
  * limitations under the License.
  */
 
+provider "google" {
+  version = "~> 2.0"
+}
+
+resource "random_string" "suffix" {
+  length  = 4
+  upper   = "false"
+  special = "false"
+}
+
 module "log_export" {
   source                 = "../../../"
   destination_uri        = "${module.destination.destination_uri}"
-  log_sink_name          = "bigquery_example_logsink"
+  filter                 = "resource.type = gce_instance"
+  log_sink_name          = "bigquery_folder_${random_string.suffix.result}"
   parent_resource_id     = "${var.parent_resource_id}"
   parent_resource_type   = "folder"
   unique_writer_identity = "true"
@@ -26,6 +37,6 @@ module "log_export" {
 module "destination" {
   source                   = "../../..//modules/bigquery"
   project_id               = "${var.project_id}"
-  dataset_name             = "bigquery_example"
+  dataset_name             = "bq_folder_${random_string.suffix.result}"
   log_sink_writer_identity = "${module.log_export.writer_identity}"
 }
