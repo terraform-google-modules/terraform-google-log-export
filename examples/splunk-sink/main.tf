@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+provider "google" {
+  version = "~> 2.0"
+}
+
 module "log_export" {
   source               = "terraform-google-modules/log-export/google"
   destination_uri      = "${module.destination.destination_uri}"
@@ -23,7 +27,7 @@ module "log_export" {
 }
 
 module "destination" {
-  source                   = "terraform-google-modules/log-export/google//modules/storage"
+  source                   = "terraform-google-modules/log-export/google//modules/pubsub"
   project_id               = "${var.project_id}"
   topic_name               = "splunk-sink"
   log_sink_writer_identity = "${module.log_export.writer_identity}"

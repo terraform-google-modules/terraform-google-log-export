@@ -19,9 +19,8 @@
 SHELL := /usr/bin/env bash
 
 # Docker build config variables
-CREDENTIALS_PATH 			?= /cft/workdir/credentials.json
 DOCKER_ORG 				:= gcr.io/cloud-foundation-cicd
-DOCKER_TAG_BASE_KITCHEN_TERRAFORM 	?= 0.11.10_216.0.0_1.19.1_0.1.10
+DOCKER_TAG_BASE_KITCHEN_TERRAFORM 	?= 1.0.0
 DOCKER_REPO_BASE_KITCHEN_TERRAFORM 	:= ${DOCKER_ORG}/cft/kitchen-terraform:${DOCKER_TAG_BASE_KITCHEN_TERRAFORM}
 
 # All is the first target in the file so it will get picked up when you just run 'make' on its own
@@ -89,10 +88,12 @@ version:
 docker_run:
 	docker run --rm -it \
 		-e PROJECT_ID \
-		-e BUCKET_NAME \
+		-e PARENT_RESOURCE_PROJECT \
+		-e PARENT_RESOURCE_FOLDER \
+		-e PARENT_RESOURCE_BILLING_ACCOUNT \
+		-e PARENT_RESOURCE_ORGANIZATION \
 		-e SERVICE_ACCOUNT_JSON \
-		-e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=${CREDENTIALS_PATH} \
-		-e GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_PATH} \
+		-e SUITE \
 		-v $(CURDIR):/cft/workdir \
 		${DOCKER_REPO_BASE_KITCHEN_TERRAFORM} \
 		/bin/bash -c "source test/ci_integration.sh && setup_environment && exec /bin/bash"
@@ -101,10 +102,12 @@ docker_run:
 docker_create:
 	docker run --rm -it \
 		-e PROJECT_ID \
-		-e BUCKET_NAME \
+		-e PARENT_RESOURCE_PROJECT \
+		-e PARENT_RESOURCE_FOLDER \
+		-e PARENT_RESOURCE_BILLING_ACCOUNT \
+		-e PARENT_RESOURCE_ORGANIZATION \
 		-e SERVICE_ACCOUNT_JSON \
-		-e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=${CREDENTIALS_PATH} \
-		-e GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_PATH} \
+		-e SUITE \
 		-v $(CURDIR):/cft/workdir \
 		${DOCKER_REPO_BASE_KITCHEN_TERRAFORM} \
 		/bin/bash -c "source test/ci_integration.sh && setup_environment && kitchen create"
@@ -113,10 +116,12 @@ docker_create:
 docker_converge:
 	docker run --rm -it \
 		-e PROJECT_ID \
-		-e BUCKET_NAME \
+		-e PARENT_RESOURCE_PROJECT \
+		-e PARENT_RESOURCE_FOLDER \
+		-e PARENT_RESOURCE_BILLING_ACCOUNT \
+		-e PARENT_RESOURCE_ORGANIZATION \
 		-e SERVICE_ACCOUNT_JSON \
-		-e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=${CREDENTIALS_PATH} \
-		-e GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_PATH} \
+		-e SUITE \
 		-v $(CURDIR):/cft/workdir \
 		${DOCKER_REPO_BASE_KITCHEN_TERRAFORM} \
 		/bin/bash -c "source test/ci_integration.sh && setup_environment && kitchen converge"
@@ -125,10 +130,12 @@ docker_converge:
 docker_verify:
 	docker run --rm -it \
 		-e PROJECT_ID \
-		-e BUCKET_NAME \
+		-e PARENT_RESOURCE_PROJECT \
+		-e PARENT_RESOURCE_FOLDER \
+		-e PARENT_RESOURCE_BILLING_ACCOUNT \
+		-e PARENT_RESOURCE_ORGANIZATION \
 		-e SERVICE_ACCOUNT_JSON \
-		-e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=${CREDENTIALS_PATH} \
-		-e GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_PATH} \
+		-e SUITE \
 		-v $(CURDIR):/cft/workdir \
 		${DOCKER_REPO_BASE_KITCHEN_TERRAFORM} \
 		/bin/bash -c "source test/ci_integration.sh && setup_environment && kitchen verify"
@@ -137,10 +144,12 @@ docker_verify:
 docker_destroy:
 	docker run --rm -it \
 		-e PROJECT_ID \
-		-e BUCKET_NAME \
+		-e PARENT_RESOURCE_PROJECT \
+		-e PARENT_RESOURCE_FOLDER \
+		-e PARENT_RESOURCE_BILLING_ACCOUNT \
+		-e PARENT_RESOURCE_ORGANIZATION \
 		-e SERVICE_ACCOUNT_JSON \
-		-e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=${CREDENTIALS_PATH} \
-		-e GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_PATH} \
+		-e SUITE \
 		-v $(CURDIR):/cft/workdir \
 		${DOCKER_REPO_BASE_KITCHEN_TERRAFORM} \
 		/bin/bash -c "source test/ci_integration.sh && setup_environment && kitchen destroy"
@@ -149,10 +158,12 @@ docker_destroy:
 test_integration_docker:
 	docker run --rm -it \
 		-e PROJECT_ID \
-		-e BUCKET_NAME \
+		-e PARENT_RESOURCE_PROJECT \
+		-e PARENT_RESOURCE_FOLDER \
+		-e PARENT_RESOURCE_BILLING_ACCOUNT \
+		-e PARENT_RESOURCE_ORGANIZATION \
 		-e SERVICE_ACCOUNT_JSON \
-		-e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=${CREDENTIALS_PATH} \
-		-e GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_PATH} \
+		-e SUITE \
 		-v $(CURDIR):/cft/workdir \
 		${DOCKER_REPO_BASE_KITCHEN_TERRAFORM} \
 		make test_integration

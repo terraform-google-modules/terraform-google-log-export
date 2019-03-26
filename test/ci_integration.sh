@@ -38,7 +38,10 @@ setup_environment() {
 
   # Terraform variables
   export TF_VAR_project_id="$PROJECT_ID"
-  export TF_VAR_bucket_name="$BUCKET_NAME"
+  export TF_VAR_parent_resource_project="$PARENT_RESOURCE_PROJECT"
+  export TF_VAR_parent_resource_folder="$PARENT_RESOURCE_FOLDER"
+  export TF_VAR_parent_resource_billing_account="$PARENT_RESOURCE_BILLING_ACCOUNT"
+  export TF_VAR_parent_resource_organization="$PARENT_RESOURCE_ORGANIZATION"
 }
 
 main() {

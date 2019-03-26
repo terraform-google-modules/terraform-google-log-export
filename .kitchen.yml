@@ -17,6 +17,10 @@ driver:
   name: "terraform"
   command_timeout: 1800
 
+verifier:
+  name: "terraform"
+  color: false
+
 provisioner:
   name: "terraform"
 
@@ -24,23 +28,121 @@ platforms:
   - name: local
 
 suites:
-  - name: "simple_example"
+  - name: "computed_values"
     driver:
-      name: "terraform"
-      command_timeout: 1800
-      root_module_directory: test/fixtures/simple_example/
+      root_module_directory: test/fixtures/computed_values/
     verifier:
-      name: terraform
-      color: false
       systems:
-        - name: simple_example
+        - name: inspec-gcp
+          backend: gcp
+          controls:
+            - gcp
+  - name: "storage/project"
+    driver:
+      root_module_directory: test/fixtures/storage/project/
+    verifier:
+      systems:
+        - name: inspec-gcp
+          backend: gcp
+          controls:
+            - gcp
+  - name: "storage/folder"
+    driver:
+      root_module_directory: test/fixtures/storage/folder/
+    verifier:
+      systems:
+        - name: local
           backend: local
           controls:
             - gcloud
-        - name: simple_example
+        - name: inspec-gcp
           backend: gcp
-          shell: true
           controls:
             - gcp
-    provisioner:
-      name: terraform
+  - name: "storage/organization"
+    driver:
+      root_module_directory: test/fixtures/storage/organization/
+    verifier:
+      systems:
+        - name: local
+          backend: local
+          controls:
+            - gcloud
+        - name: inspec-gcp
+          backend: gcp
+          controls:
+            - gcp
+  - name: "pubsub/project"
+    driver:
+      root_module_directory: test/fixtures/pubsub/project/
+    verifier:
+      systems:
+        - name: inspec-gcp
+          backend: gcp
+          controls:
+            - gcp
+        - name: local
+          backend: local
+          controls:
+            - gcloud
+  - name: "pubsub/folder"
+    driver:
+      root_module_directory: test/fixtures/pubsub/folder/
+    verifier:
+      systems:
+        - name: local
+          backend: local
+          controls:
+            - gcloud
+        - name: inspec-gcp
+          backend: gcp
+          controls:
+            - gcp
+  - name: "pubsub/organization"
+    driver:
+      root_module_directory: test/fixtures/pubsub/organization/
+    verifier:
+      systems:
+        - name: local
+          backend: local
+          controls:
+            - gcloud
+        - name: inspec-gcp
+          backend: gcp
+          controls:
+            - gcp
+  - name: "bigquery/project"
+    driver:
+      root_module_directory: test/fixtures/bigquery/project/
+    verifier:
+      systems:
+        - name: inspec-gcp
+          backend: gcp
+          controls:
+            - gcp
+  - name: "bigquery/folder"
+    driver:
+      root_module_directory: test/fixtures/bigquery/folder/
+    verifier:
+      systems:
+        - name: local
+          backend: local
+          controls:
+            - gcloud
+        - name: inspec-gcp
+          backend: gcp
+          controls:
+            - gcp
+  - name: "bigquery/organization"
+    driver:
+      root_module_directory: test/fixtures/bigquery/organization/
+    verifier:
+      systems:
+        - name: local
+          backend: local
+          controls:
+            - gcloud
+        - name: inspec-gcp
+          backend: gcp
+          controls:
+            - gcp
