@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [2.0.0] - 2019-04-04
+## [2.0.0] - 2019-04-05
 ### Added
 - Kitchen-terraform tests for log exports at the project/folder/organization level and for storage/PubSub/BigQuery destinations
 - Submodules for each destination (storage/PubSub/BigQuery)
