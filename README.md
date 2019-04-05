@@ -1,32 +1,73 @@
 # Terraform Log Export Module
-This module allows you to create log exports at the project, folder, or organization level.
 
-The resources/services/activations/deletions that this module will create/trigger are:
-- An **Aggregated log export** on the project-level, folder-level, or organization-level
+This module allows you to create log exports at the project, folder,
+organization, or billing account level. Submodules are also available to
+configure the destination resource that will store all exported logs. The
+resources/services/activations/deletions that this module will create/trigger
+are:
+
+- An **Aggregated log export** on the project-level, folder-level, organization-level, or billing-account-level
 - A **Service account** (logsink writer)
 - A **Destination** (Cloud Storage bucket, Cloud Pub/Sub topic, BigQuery dataset)
 
 ## Usage
-You can go to the [examples](./examples) folder to see all the use cases, however the usage of the module could be like this in your own `main.tf` file:
+
+The [examples](./examples) directory contains directories for each destination, and within each destination directory are directories for each parent resource level. Consider the following
+example that will configure a Cloud Storage destination and a log export at the project level:
 
 ```hcl
-module "logsink" {
-  source           = "terraform-google-modules/log-export/google"
-  name             = "my-logsink"
-  folder           = "2165468435"
-  filter           = "severity >= ERROR"
-  include_children = true
-  pubsub = {
-    name    = "my-logsink-pubsub"
-    project = "my-pubsub-project"
-  }
+module "log_export" {
+  source                 = "terraform-google-modules/log-export/google"
+  destination_uri        = "${module.destination.destination_uri}"
+  filter                 = "severity >= ERROR"
+  log_sink_name          = "storage_example_logsink"
+  parent_resource_id     = "sample-project"
+  parent_resource_type   = "project"
+  unique_writer_identity = "true"
+}
+
+module "destination" {
+  source                   = "terraform-google-modules/log-export/google//modules/storage"
+  project_id               = "sample-project"
+  storage_bucket_name      = "storage_example_bucket"
+  log_sink_writer_identity = "${module.log_export.writer_identity}"
 }
 ```
 
+At first glance that example seems like a circular dependency as each module declaration is
+using an output from the other, however Terraform is able to collect and order all the resources
+so that all dependencies are met.
+
+[^]: (autogen_docs_start)
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|:----:|:-----:|:-----:|
+| destination\_uri | The self_link URI of the destination resource (This is available as an output coming from one of the destination submodules) | string | n/a | yes |
+| filter | The filter to apply when exporting logs. Only log entries that match the filter are exported. Default is '' which exports all logs. | string | `""` | no |
+| include\_children | Only valid if 'organization' or 'folder' is chosen as var.parent_resource.type. Determines whether or not to include children organizations/folders in the sink export. If true, logs associated with child projects are also exported; otherwise only logs relating to the provided organization/folder are included. | string | `"false"` | no |
+| log\_sink\_name | The name of the log sink to be created. | string | n/a | yes |
+| parent\_resource\_id | The ID of the GCP resource in which you create the log sink. If var.parent_resource_type is set to 'project', then this is the Project ID (and etc). | string | n/a | yes |
+| parent\_resource\_type | The GCP resource in which you create the log sink. The value must not be computed, and must be one of the following: 'project', 'folder', 'billing_account', or 'organization'. | string | `"project"` | no |
+| unique\_writer\_identity | Whether or not to create a unique identity associated with this sink. If false (the default), then the writer_identity used is serviceAccount:cloud-logs@system.gserviceaccount.com. If true, then a unique service account is created and used for the logging sink. | string | `"false"` | no |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| filter | The filter to be applied when exporting logs. |
+| log\_sink\_resource\_id | The resource ID of the log sink that was created. |
+| log\_sink\_resource\_name | The resource name of the log sink that was created. |
+| parent\_resource\_id | The ID of the GCP resource in which you create the log sink. |
+| writer\_identity | The service account that logging uses to write log entries to the destination. |
+
+[^]: (autogen_docs_end)
+
 ## Requirements
 ### Terraform plugins
-- [Terraform](https://www.terraform.io/downloads.html) 0.10.x
-- [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) plugin v1.8.0
+- [Terraform](https://www.terraform.io/downloads.html) 0.11.x
+- [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) plugin ~> v2.0.x
 
 ### Configure a Service Account
 In order to execute this module you must have a Service Account with the following:
@@ -34,15 +75,15 @@ In order to execute this module you must have a Service Account with the followi
 #### Roles
 The service account should have the following roles:
 - `roles/logging.configWriter` on the logsink's project, folder, or organization (to create the logsink)
-- `roles/iam.admin` on the destination project (to grant write permissions for logsink service account)
-- `roles/serviceusage.admin` on the destination project (to enable destination API)
+- `roles/resourcemanager.projectIamAdmin` on the destination project (to grant write permissions for logsink service account)
+- `roles/serviceusage.serviceUsageAdmin` on the destination project (to enable destination APIs)
 
 #### Pub/Sub roles
 To use a Google Cloud Pub/Sub topic as the destination:
 - `roles/pubsub.admin` on the destination project (to create a pub/sub topic)
 
 To integrate the logsink with Splunk, you'll need a topic subscriber (service account):
-- `roles/serviceAccount.admin` on the destination project (to create a service account for the logsink subscriber)
+- `roles/iam.serviceAccountAdmin` on the destination project (to create a service account for the logsink subscriber)
 
 #### Storage role
 To use a Google Cloud Storage bucket as the destination:
@@ -60,53 +101,115 @@ In order to operate with the Service Account you must activate the following API
 - Cloud Billing API - cloudbilling.googleapis.com
 - Identity and Access Management API - iam.googleapis.com
 - Service Usage API - serviceusage.googleapis.com
+- Stackdriver Logging API - logging.googleapis.com
+- Cloud Storage JSON API - storage-api.googleapis.com
+- BigQuery API - bigquery-json.googleapis.com
+- Cloud Pub/Sub API - pubsub.googleapis.com
 
 ## Install
 
 ### Terraform
-Be sure you have the correct Terraform version (0.10.x), you can choose the binary here:
+Be sure you have the correct Terraform version (0.11.x), you can choose the binary here:
 - https://releases.hashicorp.com/terraform/
-
-Then perform the following commands:
-
-- `terraform init` to get the plugins
-- `terraform plan` to see the infrastructure plan
-- `terraform apply` to apply the infrastructure build
-- `terraform destroy` to destroy the built infrastructure
-
-#### Variables
-Please refer the `variables.tf` file for the required and optional variables.
-
-#### Outputs
-Please refer the `outputs.tf` file for the outputs that you can get with the `terraform output` command
-
-## File structure
-The project has the following folders and files:
-
-- /: root folder
-- /examples: examples for using this module
-- /scripts: Shell scripts for specific tasks on module
-- /test: Folders with files for testing the module (see Testing section on this file)
-- /main.tf: main file for this module, contains all the resources to create
-- /variables.tf: all the variables for the module
-- /output.tf: the outputs of the module
-- /readme.MD: this file
 
 ## Testing
 
 ### Requirements
-- [bats](https://github.com/sstephenson/bats) 0.4.0
+- [bundler](https://github.com/bundler/bundler)
+- [gcloud](https://cloud.google.com/sdk/install)
+- [terraform-docs](https://github.com/segmentio/terraform-docs/releases) 0.6.0
+
+### Autogeneration of documentation from .tf files
+Run
+```
+make generate_docs
+```
 
 ### Integration test
-##### Terraform integration tests
-The integration tests for this module are built with bats, basically the test checks the following:
-- Perform `terraform init` command
-- Perform `terraform get` command
-- Perform `terraform plan` command and check that it'll create *n* resources, modify 0 resources and delete 0 resources
-- Perform `terraform apply -auto-approve` command and check that it has created the *n* resources, modified 0 resources and deleted 0 resources
-- Perform several `gcloud` commands and check the infrastructure is in the desired state
-- Perform `terraform destroy -force` command and check that it has destroyed the *n* resources
 
-You can use the following command to run the integration test in the folder */test/integration/gcloud-test*
+Integration tests are run though [test-kitchen](https://github.com/test-kitchen/test-kitchen), [kitchen-terraform](https://github.com/newcontext-oss/kitchen-terraform), and [InSpec](https://github.com/inspec/inspec).
 
-  `. launch.sh`
+`test-kitchen` instances are defined in [`.kitchen.yml`](./.kitchen.yml). The test-kitchen instances in `test/fixtures/` wrap identically-named examples in the `examples/` directory.
+
+#### Setup
+
+1. Configure the [test fixtures](#test-configuration)
+2. Download a Service Account key with the necessary permissions and copy the contents of that JSON file into the `SERVICE_ACCOUNT_JSON` environment variable:
+
+  ```
+  export SERVICE_ACCOUNT_JSON=$(cat /path/to/credentials.json)
+  ```
+
+3. Set the required environment variables as defined in [`./test/ci_integration.sh`](./test/ci_integration.sh):
+
+  ```
+  export PROJECT_ID="project_id_of_test_project"
+  export PARENT_RESOURCE_PROJECT="project_id_of_test_project"
+  export PARENT_RESOURCE_FOLDER="folder_id_of_test_folder"
+  export PARENT_RESOURCE_ORGANIZATION="org_id_of_test_organization"
+  export PARENT_RESOURCE_BILLING_ACCOUNT="billing_account_id_of_test_billing_account"
+  export SUITE="test_suite_name"  # Leave empty to run all tests
+  ```
+
+4. Run the testing container in interactive mode:
+
+  ```
+  make docker_run
+  ```
+
+  The module root directory will be loaded into the Docker container at `/cft/workdir/`.
+5. Run kitchen-terraform to test the infrastructure:
+
+  1. `make docker_create` creates Terraform state and downloads modules, if applicable.
+  2. `make docker_converge` creates the underlying resources. Run `source test/ci_integration.sh && setup_environment && kitchen converge <INSTANCE_NAME>` to run a specific test case.
+  3. `make docker_verify` tests the created infrastructure. Run `source test/ci_integration.sh && setup_environment && kitchen verify <INSTANCE_NAME>` to run a specific test case.
+  4. `make docker_destroy` tears down the underlying resources created by `make docker_converge`. Run `source test/ci_integration.sh && setup_environment && kitchen destroy <INSTANCE_NAME>` to tear down resources for a specific test case.
+
+Alternatively, you can simply run `make test_integration_docker` to run all the test steps non-interactively.
+
+### Autogeneration of documentation from .tf files
+Run
+```
+make generate_docs
+```
+
+### Linting
+The makefile in this project will lint or sometimes just format any shell,
+Python, golang, Terraform, or Dockerfiles. The linters will only be run if
+the makefile finds files with the appropriate file extension.
+
+All of the linter checks are in the default make target, so you just have to
+run
+
+```
+make -s
+```
+
+The -s is for 'silent'. Successful output looks like this
+
+```
+Running shellcheck
+Running flake8
+Running go fmt and go vet
+Running terraform validate
+Running hadolint on Dockerfiles
+Checking for required files
+Testing the validity of the header check
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.026s
+
+OK
+Checking file headers
+The following lines have trailing whitespace
+```
+
+The linters
+are as follows:
+* Shell - shellcheck. Can be found in homebrew
+* Python - flake8. Can be installed with 'pip install flake8'
+* Golang - gofmt. gofmt comes with the standard golang installation. golang
+is a compiled language so there is no standard linter.
+* Terraform - terraform has a built-in linter in the 'terraform validate'
+command.
+* Dockerfiles - hadolint. Can be found in homebrew

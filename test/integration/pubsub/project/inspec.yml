@@ -1,0 +1,12 @@
+name: pubsub_project
+depends:
+  - name: inspec-gcp
+    git: https://github.com/inspec/inspec-gcp.git
+    tag: v0.10.0
+attributes:
+  - name: log_export_map
+    required: true
+    type: hash
+  - name: destination_map
+    required: true
+    type: hash
