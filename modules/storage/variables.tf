@@ -28,10 +28,10 @@ variable "storage_bucket_name" {
 
 variable "location" {
   description = "The location of the storage bucket."
-  default = "US"
+  default     = "US"
 }
 
 variable "storage_class" {
   description = "The storage class of the storage bucket."
-  default = "MULTI_REGIONAL"
+  default     = "MULTI_REGIONAL"
 }
