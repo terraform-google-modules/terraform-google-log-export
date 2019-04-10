@@ -27,8 +27,8 @@ locals {
 # API activation #
 #----------------#
 resource "google_project_service" "enable_destination_api" {
-  project = "${var.project_id}"
-  service = "bigquery-json.googleapis.com"
+  project            = "${var.project_id}"
+  service            = "bigquery-json.googleapis.com"
   disable_on_destroy = false
 }
 
