@@ -25,3 +25,13 @@ variable "project_id" {
 variable "storage_bucket_name" {
   description = "The name of the storage bucket to be created and used for log entries matching the filter."
 }
+
+variable "location" {
+  description = "The location of the storage bucket."
+  default = "US"
+}
+
+variable "storage_class" {
+  description = "The storage class of the storage bucket."
+  default = "MULTI_REGIONAL"
+}
