@@ -19,7 +19,7 @@
 #-----------------#
 
 locals {
-  dataset_name = "${element(concat(google_bigquery_dataset.dataset.*.dataset_id, list("")), 0)}"
+  dataset_name    = "${element(concat(google_bigquery_dataset.dataset.*.dataset_id, list("")), 0)}"
   destination_uri = "bigquery.googleapis.com/projects/${var.project_id}/datasets/${local.dataset_name}"
 }
 
@@ -37,12 +37,12 @@ resource "google_project_service" "enable_destination_api" {
 #------------------#
 resource "google_bigquery_dataset" "dataset" {
   dataset_id = "${var.dataset_name}"
-  project = "${google_project_service.enable_destination_api.project}"
-  location = "${var.location}}"
+  project    = "${google_project_service.enable_destination_api.project}"
+  location   = "${var.location}}"
   # Delete all tables in dataset on destroy.
   # This is required because a dataset cannot be deleted if it contains any data.
   provisioner "local-exec" {
-    when = "destroy"
+    when    = "destroy"
     command = "sh ${path.module}/scripts/delete-bq-tables.sh ${var.project_id} ${var.dataset_name}"
   }
 }
@@ -52,6 +52,6 @@ resource "google_bigquery_dataset" "dataset" {
 #--------------------------------#
 resource "google_project_iam_member" "bigquery_sink_member" {
   project = "${google_bigquery_dataset.dataset.project}"
-  role = "roles/bigquery.dataEditor"
-  member = "${var.log_sink_writer_identity}"
+  role    = "roles/bigquery.dataEditor"
+  member  = "${var.log_sink_writer_identity}"
 }

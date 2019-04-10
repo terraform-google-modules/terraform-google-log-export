@@ -28,5 +28,5 @@ variable "project_id" {
 
 variable "location" {
   description = "The location of the storage bucket."
-  default = "US"
+  default     = "US"
 }

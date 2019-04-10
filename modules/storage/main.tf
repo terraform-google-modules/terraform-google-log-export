@@ -16,7 +16,7 @@
 
 locals {
   storage_bucket_name = "${element(concat(google_storage_bucket.bucket.*.name, list("")), 0)}"
-  destination_uri = "storage.googleapis.com/${local.storage_bucket_name}"
+  destination_uri     = "storage.googleapis.com/${local.storage_bucket_name}"
 }
 
 #----------------#
@@ -32,10 +32,10 @@ resource "google_project_service" "enable_destination_api" {
 # Storage bucket #
 #----------------#
 resource "google_storage_bucket" "bucket" {
-  name = "${var.storage_bucket_name}"
-  project = "${google_project_service.enable_destination_api.project}"
+  name          = "${var.storage_bucket_name}"
+  project       = "${google_project_service.enable_destination_api.project}"
   storage_class = "${var.storage_class}"
-  location = "${var.location}"
+  location      = "${var.location}"
   force_destroy = true
 }
 
@@ -44,6 +44,6 @@ resource "google_storage_bucket" "bucket" {
 #--------------------------------#
 resource "google_storage_bucket_iam_member" "storage_sink_member" {
   bucket = "${local.storage_bucket_name}"
-  role = "roles/storage.objectCreator"
+  role   = "roles/storage.objectCreator"
   member = "${var.log_sink_writer_identity}"
 }
