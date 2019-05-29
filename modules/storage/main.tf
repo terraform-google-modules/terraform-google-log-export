@@ -34,8 +34,8 @@ resource "google_project_service" "enable_destination_api" {
 resource "google_storage_bucket" "bucket" {
   name          = "${var.storage_bucket_name}"
   project       = "${google_project_service.enable_destination_api.project}"
-  storage_class = "MULTI_REGIONAL"
-  location      = "US"
+  storage_class = "${var.storage_class}"
+  location      = "${var.location}"
   force_destroy = true
 }
 
