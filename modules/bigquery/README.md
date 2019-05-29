@@ -38,6 +38,8 @@ so that all dependencies are met.
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | dataset\_name | The name of the bigquery dataset to be created and used for log entries matching the filter. | string | n/a | yes |
+| delete\_contents\_on\_destroy | (Optional) If set to true, delete all the tables in the dataset when destroying the resource; otherwise, destroying the resource will fail if tables are present. | string | `"true"` | no |
+| location | The location of the storage bucket. | string | `"US"` | no |
 | log\_sink\_writer\_identity | The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module). | string | n/a | yes |
 | project\_id | The ID of the project in which the bigquery dataset will be created. | string | n/a | yes |
 
