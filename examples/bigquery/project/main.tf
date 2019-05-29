@@ -35,9 +35,8 @@ module "log_export" {
 }
 
 module "destination" {
-  source                     = "../../..//modules/bigquery"
-  project_id                 = "${var.project_id}"
-  dataset_name               = "bq_project_${random_string.suffix.result}"
-  log_sink_writer_identity   = "${module.log_export.writer_identity}"
-  delete_contents_on_destroy = "true"
+  source                   = "../../..//modules/bigquery"
+  project_id               = "${var.project_id}"
+  dataset_name             = "bq_project_${random_string.suffix.result}"
+  log_sink_writer_identity = "${module.log_export.writer_identity}"
 }
