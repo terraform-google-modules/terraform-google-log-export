@@ -25,3 +25,8 @@ variable "log_sink_writer_identity" {
 variable "project_id" {
   description = "The ID of the project in which the bigquery dataset will be created."
 }
+
+variable "location" {
+  description = "The location of the storage bucket."
+  default     = "US"
+}

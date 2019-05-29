@@ -38,7 +38,7 @@ resource "google_project_service" "enable_destination_api" {
 resource "google_bigquery_dataset" "dataset" {
   dataset_id = "${var.dataset_name}"
   project    = "${google_project_service.enable_destination_api.project}"
-
+  location   = "${var.location}"
   # Delete all tables in dataset on destroy.
   # This is required because a dataset cannot be deleted if it contains any data.
   provisioner "local-exec" {
