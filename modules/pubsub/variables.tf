@@ -30,3 +30,9 @@ variable "project_id" {
 variable "topic_name" {
   description = "The name of the pubsub topic to be created and used for log entries matching the filter."
 }
+
+variable "topic_labels" {
+  type        = "map"
+  default     = {}
+  description = "A set of key/value label pairs to assign to the pubsub topic."
+}
