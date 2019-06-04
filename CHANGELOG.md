@@ -6,6 +6,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.0] - 2019-06-03
+
+### Added
+
+- Variable for labels on the Pub/Sub topic. [#19]
+
+## [2.2.0] - 2019-05-29
+
+### Added
+
+- Variable for toggling destruction of BigQuery dataset contents. [#18]
+
+## [2.1.0] - 2019-05-29
+
+### Added
+
+- Variables for location and storage class. [#16]
+
 ## [2.0.0] - 2019-04-05
 ### Added
 - Kitchen-terraform tests for log exports at the project/folder/organization level and for storage/PubSub/BigQuery destinations
@@ -21,6 +39,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release of log export module.
 
-[Unreleased]: https://github.com/terraform-google-modules/terraform-google-log-export/compare/v2.0.0...HEAD
-[2.0.0]: https://github.com/terraform-google-modules/terraform-google-log-export/releases/tag/v2.0.0
+[Unreleased]: https://github.com/terraform-google-modules/terraform-google-log-export/compare/v2.3.0...HEAD
+[2.3.0]: https://github.com/terraform-google-modules/terraform-google-log-export/compare/v2.2.0...v2.3.0
+[2.2.0]: https://github.com/terraform-google-modules/terraform-google-log-export/compare/v2.1.0...v2.2.0
+[2.1.0]: https://github.com/terraform-google-modules/terraform-google-log-export/compare/v2.0.0...v2.1.0
+[2.0.0]: https://github.com/terraform-google-modules/terraform-google-log-export/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/terraform-google-modules/terraform-google-log-export/releases/tag/v1.0.0
+[#19]: https://github.com/terraform-google-modules/terraform-google-log-export/pull/19
+[#18]: https://github.com/terraform-google-modules/terraform-google-log-export/pull/18
+[#16]: https://github.com/terraform-google-modules/terraform-google-log-export/pull/16

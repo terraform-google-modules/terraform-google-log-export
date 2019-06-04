@@ -51,6 +51,7 @@ module "log_exports" {
 | sink\_names | The name of the log sinks to be created. | list | n/a | yes |
 | unique\_writer\_identity | Whether or not to create a unique identity associated with this sink. If false (the default), then the writer_identity used is serviceAccount:cloud-logs@system.gserviceaccount.com. If true, then a unique service account is created and used for the logging sink. | string | `"false"` | no |
 
+
 ## Outputs
 
 | Name | Description |

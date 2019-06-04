@@ -32,3 +32,13 @@ variable "bigquery_delete_contents_on_destroy" {
 variable "destination_project_id" {
   description = "The ID of the project in which the bigquery dataset will be created."
 }
+
+variable "location" {
+  description = "The location of the storage bucket."
+  default     = "US"
+}
+
+variable "delete_contents_on_destroy" {
+  description = "(Optional) If set to true, delete all the tables in the dataset when destroying the resource; otherwise, destroying the resource will fail if tables are present."
+  default     = "true"
+}
