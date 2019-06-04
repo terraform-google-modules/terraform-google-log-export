@@ -39,21 +39,33 @@ module "log_exports" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| create\_subscriber | Whether to create a subscription to the topic that was created and used for log entries matching the filter. If 'true', a subscription is created along with a service account that is granted roles/pubsub.subscriber and roles/pubsub.viewer to the topic. | string | `"false"` | no |
-| log\_sink\_writer\_identity | The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module). | string | n/a | yes |
-| project\_id | The ID of the project in which the pubsub topic will be created. | string | n/a | yes |
-| topic\_name | The name of the pubsub topic to be created and used for log entries matching the filter. | string | n/a | yes |
+| destination\_project\_id | The ID of the project in which the pubsub topics will be created. | string | n/a | yes |
+| destination\_uris | Destination URIs (PubSub topic, Storage bucket, BigQuery dataset) | list | `<list>` | no |
+| enable\_splunk | Enable Splunk compatibility. If 'true', a subscription is created along with a service account that is granted needed additional roles to the topic. | string | `"false"` | no |
+| filters | The filters to apply when exporting logs. Only log entries that match the filter are exported. Default is '' which exports all logs. | list | n/a | yes |
+| include\_children | Only valid if 'organization' or 'folder' is chosen as var.parent_resource.type. Determines whether or not to include children organizations/folders in the sink export. If true, logs associated with child projects are also exported; otherwise only logs relating to the provided organization/folder are included. | string | `"false"` | no |
+| parent\_resource\_id | The ID of the GCP resource in which you create the log sink. If var.parent_resource_type is set to 'project', then this is the Project ID (and etc). | string | n/a | yes |
+| parent\_resource\_type | The GCP resource in which you create the log sink. The value must not be computed, and must be one of the following: 'project', 'folder', 'billing_account', or 'organization'. | string | `"project"` | no |
+| pubsub\_topic\_labels | A set of key/value label pairs to assign to the pubsub topics. | map | `<map>` | no |
+| pubsub\_topic\_names | The names of the pubsub topics to be created and used for log entries matching the filter. | list | n/a | yes |
+| sink\_names | The name of the log sinks to be created. | list | n/a | yes |
+| unique\_writer\_identity | Whether or not to create a unique identity associated with this sink. If false (the default), then the writer_identity used is serviceAccount:cloud-logs@system.gserviceaccount.com. If true, then a unique service account is created and used for the logging sink. | string | `"false"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| console\_link | The console link to the destination storage bucket |
-| destination\_uri | The destination URI for the topic. |
-| project | The project in which the topic was created. |
-| pubsub\_subscriber | Pub/Sub subscriber email (if any) |
-| pubsub\_subscription | Pub/Sub subscription id (if any) |
-| resource\_id | The resource id for the destination topic |
-| resource\_name | The resource name for the destination topic |
+| console\_links | Map of log sink names to the Pub/Sub topics' console links |
+| destination\_project | The project in which the Pub/Sub topics were created |
+| destination\_resource\_ids | Map of log sink names to the Pub/Sub topics' resource ids |
+| destination\_resource\_names | Map of log sink names to the Pub/Sub topics' names |
+| destination\_uris | Map of log sink names to the Pub/Sub topics' URIs |
+| pubsub\_subscribers | Map of Pub/Sub topics' names to their respective subscribers |
+| pubsub\_subscriptions | Map of Pub/Sub topics' names to their respective subscriptions |
+| pubsub\_topic\_labels | Pub/Sub labels applied to the topics |
+| sink\_parent\_id |  |
+| sink\_parent\_type |  |
+| sink\_resource\_ids |  |
+| sink\_writer\_identities |  |
 
 [^]: (autogen_docs_end)

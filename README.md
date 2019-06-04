@@ -112,23 +112,22 @@ module "storage_exports" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| destination\_uri | The self_link URI of the destination resource (This is available as an output coming from one of the destination submodules) | string | n/a | yes |
-| filter | The filter to apply when exporting logs. Only log entries that match the filter are exported. Default is '' which exports all logs. | string | `""` | no |
+| destination\_uris | Destination URIs (PubSub topic, Storage bucket, BigQuery dataset) | list | `<list>` | no |
+| filters | The filters to apply when exporting logs. Only log entries that match the filter are exported. Default is '' which exports all logs. | list | n/a | yes |
 | include\_children | Only valid if 'organization' or 'folder' is chosen as var.parent_resource.type. Determines whether or not to include children organizations/folders in the sink export. If true, logs associated with child projects are also exported; otherwise only logs relating to the provided organization/folder are included. | string | `"false"` | no |
-| log\_sink\_name | The name of the log sink to be created. | string | n/a | yes |
 | parent\_resource\_id | The ID of the GCP resource in which you create the log sink. If var.parent_resource_type is set to 'project', then this is the Project ID (and etc). | string | n/a | yes |
 | parent\_resource\_type | The GCP resource in which you create the log sink. The value must not be computed, and must be one of the following: 'project', 'folder', 'billing_account', or 'organization'. | string | `"project"` | no |
+| sink\_names | The name of the log sinks to be created. | list | n/a | yes |
 | unique\_writer\_identity | Whether or not to create a unique identity associated with this sink. If false (the default), then the writer_identity used is serviceAccount:cloud-logs@system.gserviceaccount.com. If true, then a unique service account is created and used for the logging sink. | string | `"false"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| filter | The filter to be applied when exporting logs. |
-| log\_sink\_resource\_id | The resource ID of the log sink that was created. |
-| log\_sink\_resource\_name | The resource name of the log sink that was created. |
-| parent\_resource\_id | The ID of the GCP resource in which you create the log sink. |
-| writer\_identity | The service account that logging uses to write log entries to the destination. |
+| sink\_parent\_id | Sink parent resource id |
+| sink\_parent\_type | Sink parent type (organization, folder, project) |
+| sink\_resource\_ids | Sink resource ids |
+| sink\_writer\_identities | Sink writer identities |
 
 [^]: (autogen_docs_end)
 

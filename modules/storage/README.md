@@ -43,19 +43,30 @@ so that all dependencies are met.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| log\_sink\_writer\_identity | The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module). | string | n/a | yes |
-| project\_id | The ID of the project in which the storage bucket will be created. | string | n/a | yes |
-| storage\_bucket\_name | The name of the storage bucket to be created and used for log entries matching the filter. | string | n/a | yes |
+| destination\_project\_id | The ID of the project in which the pubsub topics will be created. | string | n/a | yes |
+| destination\_uris | Destination URIs (PubSub topic, Storage bucket, BigQuery dataset) | list | `<list>` | no |
+| filters | The filters to apply when exporting logs. Only log entries that match the filter are exported. Default is '' which exports all logs. | list | n/a | yes |
+| include\_children | Only valid if 'organization' or 'folder' is chosen as var.parent_resource.type. Determines whether or not to include children organizations/folders in the sink export. If true, logs associated with child projects are also exported; otherwise only logs relating to the provided organization/folder are included. | string | `"false"` | no |
+| parent\_resource\_id | The ID of the GCP resource in which you create the log sink. If var.parent_resource_type is set to 'project', then this is the Project ID (and etc). | string | n/a | yes |
+| parent\_resource\_type | The GCP resource in which you create the log sink. The value must not be computed, and must be one of the following: 'project', 'folder', 'billing_account', or 'organization'. | string | `"project"` | no |
+| sink\_names | The name of the log sinks to be created. | list | n/a | yes |
+| storage\_bucket\_class | The storage class of the storage bucket. | string | `"MULTI_REGIONAL"` | no |
+| storage\_bucket\_location | The location of the storage bucket. | string | `"US"` | no |
+| storage\_bucket\_names | The name of the storage buckets to be created and used for log entries matching the filter. | list | n/a | yes |
+| storage\_bucket\_versioning\_enabled | If true, enables bucket versioning | string | `"false"` | no |
+| unique\_writer\_identity | Whether or not to create a unique identity associated with this sink. If false (the default), then the writer_identity used is serviceAccount:cloud-logs@system.gserviceaccount.com. If true, then a unique service account is created and used for the logging sink. | string | `"false"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| console\_link | The console link to the destination storage bucket |
-| destination\_uri | The destination URI for the storage bucket. |
-| project | The project in which the storage bucket was created. |
-| resource\_id | The resource id for the destination storage bucket |
-| resource\_name | The resource name for the destination storage bucket |
-| self\_link | The self_link URI for the destination storage bucket |
+| console\_links | Map of log sink names to the Pub/Sub bucket' console links |
+| destination\_project | The project in which the Pub/Sub topics were created |
+| destination\_resource\_names | Map of log sink names to the Cloud Storage bucket resource names |
+| destination\_uris | Map of log sink names to the Cloud Storage bucket URIs |
+| sink\_parent\_id |  |
+| sink\_parent\_type |  |
+| sink\_resource\_ids |  |
+| sink\_writer\_identities |  |
 
 [^]: (autogen_docs_end)

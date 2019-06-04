@@ -39,19 +39,30 @@ module "log_exports" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| dataset\_name | The name of the bigquery dataset to be created and used for log entries matching the filter. | string | n/a | yes |
-| log\_sink\_writer\_identity | The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module). | string | n/a | yes |
-| project\_id | The ID of the project in which the bigquery dataset will be created. | string | n/a | yes |
+| bigquery\_dataset\_location | The location of the storage bucket. | string | `"US"` | no |
+| bigquery\_dataset\_names | The name of the bigquery datasets to be created and used for log entries matching the filter. | list | n/a | yes |
+| bigquery\_delete\_contents\_on\_destroy | Delete dataset contents on destroy | string | `"true"` | no |
+| destination\_project\_id | The ID of the project in which the bigquery dataset will be created. | string | n/a | yes |
+| destination\_uris | Destination URIs (PubSub topic, Storage bucket, BigQuery dataset) | list | `<list>` | no |
+| filters | The filters to apply when exporting logs. Only log entries that match the filter are exported. Default is '' which exports all logs. | list | n/a | yes |
+| include\_children | Only valid if 'organization' or 'folder' is chosen as var.parent_resource.type. Determines whether or not to include children organizations/folders in the sink export. If true, logs associated with child projects are also exported; otherwise only logs relating to the provided organization/folder are included. | string | `"false"` | no |
+| parent\_resource\_id | The ID of the GCP resource in which you create the log sink. If var.parent_resource_type is set to 'project', then this is the Project ID (and etc). | string | n/a | yes |
+| parent\_resource\_type | The GCP resource in which you create the log sink. The value must not be computed, and must be one of the following: 'project', 'folder', 'billing_account', or 'organization'. | string | `"project"` | no |
+| sink\_names | The name of the log sinks to be created. | list | n/a | yes |
+| unique\_writer\_identity | Whether or not to create a unique identity associated with this sink. If false (the default), then the writer_identity used is serviceAccount:cloud-logs@system.gserviceaccount.com. If true, then a unique service account is created and used for the logging sink. | string | `"false"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| console\_link | The console link to the destination bigquery dataset |
-| destination\_uri | The destination URI for the bigquery dataset. |
-| project | The project in which the bigquery dataset was created. |
-| resource\_id | The resource id for the destination bigquery dataset |
-| resource\_name | The resource name for the destination bigquery dataset |
-| self\_link | The self_link URI for the destination bigquery dataset |
+| console\_links | Map of log sink names to the BigQuery dataset' console links |
+| destination\_project | The project in which the BigQuery dataset were created |
+| destination\_resource\_ids | Map of log sink names to the BigQuery dataset' resource ids |
+| destination\_resource\_names | Map of log sink names to the BigQuery dataset' names |
+| destination\_uris | Map of log sink names to the BigQuery dataset' URIs |
+| sink\_parent\_id |  |
+| sink\_parent\_type |  |
+| sink\_resource\_ids |  |
+| sink\_writer\_identities |  |
 
 [^]: (autogen_docs_end)
