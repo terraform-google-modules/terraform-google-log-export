@@ -25,18 +25,11 @@ resource "random_string" "suffix" {
 }
 
 module "log_export" {
-  source                 = "../../../"
-  destination_uri        = "${module.destination.destination_uri}"
-  filter                 = "resource.type = gce_instance"
-  log_sink_name          = "bigquery_project_${random_string.suffix.result}"
+  source                 = "../../..//modules/bigquery"
+  destination_project_id = "${var.project_id}"
   parent_resource_id     = "${var.parent_resource_id}"
   parent_resource_type   = "project"
-  unique_writer_identity = "true"
-}
-
-module "destination" {
-  source                   = "../../..//modules/bigquery"
-  project_id               = "${var.project_id}"
-  dataset_name             = "bq_project_${random_string.suffix.result}"
-  log_sink_writer_identity = "${module.log_export.writer_identity}"
+  filters                = ["resource.type = gce_instance"]
+  sink_names             = ["bigquery_project_${random_string.suffix.result}"]
+  bigquery_dataset_names = ["bq_project_${random_string.suffix.result}"]
 }

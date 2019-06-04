@@ -60,9 +60,9 @@ module "log_exports" {
 | destination\_resource\_ids | Map of log sink names to the BigQuery dataset' resource ids |
 | destination\_resource\_names | Map of log sink names to the BigQuery dataset' names |
 | destination\_uris | Map of log sink names to the BigQuery dataset' URIs |
-| sink\_parent\_id |  |
-| sink\_parent\_type |  |
-| sink\_resource\_ids |  |
-| sink\_writer\_identities |  |
+| sink\_parent\_id | Sink parent resource id |
+| sink\_parent\_type | Sink parent resource type (organization, folder, project) |
+| sink\_resource\_ids | Map of sink names to sink resource ids |
+| sink\_writer\_identities | Map of sink names to sink writer identities |
 
 [^]: (autogen_docs_end)

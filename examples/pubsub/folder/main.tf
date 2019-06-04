@@ -26,21 +26,21 @@ resource "random_string" "suffix" {
 
 module "log_export" {
   source                 = "../../../"
-  destination_uris       = "${module.pubsub_topics.destination_uris}"
-  filter                 = "resource.type = gce_instance"
-  log_sink_name          = "pubsub_folder_${random_string.suffix.result}"
+  destination_project_id = "${var.project_id}"
   parent_resource_id     = "${var.parent_resource_id}"
   parent_resource_type   = "folder"
   unique_writer_identity = "true"
-}
-
-module "pubsub_topics" {
-  source                   = "../../..//modules/pubsub"
-  project_id               = "${var.project_id}"
-  pubsub_topic_names              = [
+  create_subscriber      = "true"
+  filters                = [
+    "resource.type = gce_instance",
+    "resource.type = k8s_container"
+  ]
+  sink_names             = [
+    "pubsub_folder_${random_string.suffix.result}_1"
+    "pubsub_folder_${random_string.suffix.result}_2"
+  ]
+  pubsub_topic_names     = [
     "log-export-pubsub-1-${random_string.suffix.result}"
     "log-export-pubsub-2-${random_string.suffix.result}"
   ]
-  log_sink_writer_identities = "${module.log_export.writer_identities}"
-  create_subscriber          = "true"
 }

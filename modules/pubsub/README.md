@@ -63,9 +63,9 @@ module "log_exports" {
 | pubsub\_subscribers | Map of Pub/Sub topics' names to their respective subscribers |
 | pubsub\_subscriptions | Map of Pub/Sub topics' names to their respective subscriptions |
 | pubsub\_topic\_labels | Pub/Sub labels applied to the topics |
-| sink\_parent\_id |  |
-| sink\_parent\_type |  |
-| sink\_resource\_ids |  |
-| sink\_writer\_identities |  |
+| sink\_parent\_id | Sink parent resource id |
+| sink\_parent\_type | Sink parent resource type (organization, folder, project) |
+| sink\_resource\_ids | Map of sink names to sink resource ids |
+| sink\_writer\_identities | Map of sink names to sink writer identities |
 
 [^]: (autogen_docs_end)

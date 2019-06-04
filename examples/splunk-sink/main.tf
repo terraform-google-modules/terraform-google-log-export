@@ -19,17 +19,11 @@ provider "google" {
 }
 
 module "log_export" {
-  source               = "terraform-google-modules/log-export/google"
-  destination_uri      = "${module.destination.destination_uri}"
-  log_sink_name        = "test-splunk-sink"
-  parent_resource_id   = "${var.parent_resource_id}"
-  parent_resource_type = "project"
-}
-
-module "destination" {
-  source                   = "terraform-google-modules/log-export/google//modules/pubsub"
-  project_id               = "${var.project_id}"
-  topic_name               = "splunk-sink"
-  log_sink_writer_identity = "${module.log_export.writer_identity}"
-  create_subscriber        = "true"
+  source                 = "../../..//modules/pubsub"
+  destination_project_id = "${var.project_id}"
+  parent_resource_id     = "${var.parent_resource_id}"
+  parent_resource_type   = "project"
+  create_subscriber      = "true"
+  sink_names             = ["test-splunk-sink"]
+  pubsub_topic_names     = ["splunk-sink"]
 }

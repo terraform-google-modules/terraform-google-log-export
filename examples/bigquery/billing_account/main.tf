@@ -19,17 +19,11 @@ provider "google" {
 }
 
 module "log_export" {
-  source                 = "../../../"
-  destination_uri        = "${module.destination.destination_uri}"
-  log_sink_name          = "bigquery_example_logsink"
+  source                 = "../../..//modules/bigquery"
+  destination_project_id = "${var.project_id}"
   parent_resource_id     = "${var.parent_resource_id}"
   parent_resource_type   = "billing_account"
   unique_writer_identity = "true"
-}
-
-module "destination" {
-  source                   = "../../..//modules/bigquery"
-  project_id               = "${var.project_id}"
-  dataset_name             = "bigquery_example"
-  log_sink_writer_identity = "${module.log_export.writer_identity}"
+  sink_names             = ["bigquery_example_logsink"]
+  bigquery_dataset_names = ["bigquery_example"]
 }
