@@ -1,7 +1,7 @@
 # Terraform Log Export Module
 
 This module allows you to create log exports at the project, folder,
-organization, or billing account level. Submodules are also available to
+organization, or billing account level. Submodules are  available to
 configure the destination resource that will store all exported logs. The
 resources/services/activations/deletions that this module will create/trigger
 are:
@@ -15,28 +15,96 @@ are:
 The [examples](./examples) directory contains directories for each destination, and within each destination directory are directories for each parent resource level. Consider the following
 example that will configure a Cloud Storage destination and a log export at the project level:
 
-```hcl
-module "log_export" {
-  source                 = "terraform-google-modules/log-export/google"
-  destination_uri        = "${module.destination.destination_uri}"
-  filter                 = "severity >= ERROR"
-  log_sink_name          = "storage_example_logsink"
-  parent_resource_id     = "sample-project"
-  parent_resource_type   = "project"
-  unique_writer_identity = "true"
-}
+### BigQuery
+To create log exports to BigQuery, use the `bigquery` submodule:
 
-module "destination" {
-  source                   = "terraform-google-modules/log-export/google//modules/storage"
-  project_id               = "sample-project"
-  storage_bucket_name      = "storage_example_bucket"
-  log_sink_writer_identity = "${module.log_export.writer_identity}"
+```hcl
+module "bigquery_exports" {
+  source                 = "./modules/terraform-google-log-export/modules/bigquery"
+  parent_resource_id     = "432162980571"
+  parent_resource_type   = "organization"
+  destination_project_id = "rnm-cloud-foundation-testing"
+  include_children       = "true"
+
+  bigquery_dataset_names = [
+    "rnm_test_bigquery_1",
+    "rnm_test_bigquery_2",
+  ]
+
+  sink_names = [
+    "test-sink-bigquery-1",
+    "test-sink-bigquery-2",
+  ]
+
+  filters = [
+    "organizations/465421231564/logs/cloudaudit.googleapis.com%2Factivity",
+    "organizations/465421231564/logs/cloudaudit.googleapis.com%2Fsystem_event",
+  ]
 }
 ```
 
-At first glance that example seems like a circular dependency as each module declaration is
-using an output from the other, however Terraform is able to collect and order all the resources
-so that all dependencies are met.
+### Cloud Pub/Sub
+To create log exports to Pub/Sub, use the `pubsub` submodule:
+
+```hcl
+module "pubsub_exports" {
+  source                 = "./modules/terraform-google-log-export/modules/pubsub"
+  parent_resource_id     = "430062980571"
+  parent_resource_type   = "organization"
+  destination_project_id = "rnm-cloud-foundation-testing"
+  include_children       = "true"
+
+  enable_splunk = "true"
+
+  pubsub_topic_names = [
+    "test-pubsub-1",
+    "test-pubsub-2",
+  ]
+
+  sink_names = [
+    "test-sink-pubsub-1",
+    "test-sink-pubsub-2",
+  ]
+
+  filters = [
+    "organizations/465421231564/logs/cloudaudit.googleapis.com%2Factivity",
+    "organizations/465421231564/logs/cloudaudit.googleapis.com%2Fsystem_event",
+  ]
+}
+```
+
+### Cloud Storage
+To create log exports to Cloud Storage, use the `storage` submodule:
+
+```hcl
+module "storage_exports" {
+  source                 = "./modules/terraform-google-log-export/modules/storage"
+  parent_resource_id     = "430062980571"
+  parent_resource_type   = "organization"
+  destination_project_id = "rnm-cloud-foundation-testing"
+  include_children       = "true"
+
+  storage_bucket_class              = "COLDLINE"
+  storage_bucket_location           = "EU"
+  storage_bucket_versioning_enabled = "true"
+
+  storage_bucket_names = [
+    "rnm_test_storage_3",
+    "rnm_test_storage_4",
+  ]
+
+  sink_names = [
+    "test-sink-storage-3",
+    "test-sink-storage-4",
+  ]
+
+  filters = [
+    "organizations/465421231564/logs/cloudaudit.googleapis.com%2Factivity",
+    "organizations/465421231564/logs/cloudaudit.googleapis.com%2Fsystem_event",
+  ]
+}
+```
+
 
 [^]: (autogen_docs_start)
 

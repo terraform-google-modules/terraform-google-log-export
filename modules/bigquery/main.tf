@@ -19,15 +19,16 @@
 #-----------------#
 
 locals {
-  dataset_name    = "${element(concat(google_bigquery_dataset.dataset.*.dataset_id, list("")), 0)}"
-  destination_uri = "bigquery.googleapis.com/projects/${var.project_id}/datasets/${local.dataset_name}"
+  project_id             = "${var.destination_project_id != "" ? var.destination_project_id : var.parent_resource_type == "project" ? var.parent_resource_id : ""}"
+  bigquery_dataset_names = "${google_bigquery_dataset.dataset.*.dataset_id}"
+  destination_uris       = "${formatlist("bigquery.googleapis.com/projects/${local.project_id}/datasets/%s", local.bigquery_dataset_names)}"
 }
 
 #----------------#
 # API activation #
 #----------------#
 resource "google_project_service" "enable_destination_api" {
-  project            = "${var.project_id}"
+  project            = "${local.project_id}"
   service            = "bigquery-json.googleapis.com"
   disable_on_destroy = false
 }
@@ -36,22 +37,19 @@ resource "google_project_service" "enable_destination_api" {
 # Bigquery dataset #
 #------------------#
 resource "google_bigquery_dataset" "dataset" {
-  dataset_id = "${var.dataset_name}"
-  project    = "${google_project_service.enable_destination_api.project}"
-
-  # Delete all tables in dataset on destroy.
-  # This is required because a dataset cannot be deleted if it contains any data.
-  provisioner "local-exec" {
-    when    = "destroy"
-    command = "sh ${path.module}/scripts/delete-bq-tables.sh ${var.project_id} ${var.dataset_name}"
-  }
+  count                      = "${length(var.bigquery_dataset_names)}"
+  project                    = "${google_project_service.enable_destination_api.project}"
+  dataset_id                 = "${var.bigquery_dataset_names[count.index]}"
+  location                   = "${var.bigquery_dataset_location}"
+  delete_contents_on_destroy = "${var.bigquery_delete_contents_on_destroy}"
 }
 
 #--------------------------------#
 # Service account IAM membership #
 #--------------------------------#
 resource "google_project_iam_member" "bigquery_sink_member" {
-  project = "${google_bigquery_dataset.dataset.project}"
+  count   = "${length(var.bigquery_dataset_names)}"
+  project = "${element(google_bigquery_dataset.dataset.*.project, 0)}"
   role    = "roles/bigquery.dataEditor"
-  member  = "${var.log_sink_writer_identity}"
+  member  = "${module.sink.sink_writer_identities[count.index]}"
 }

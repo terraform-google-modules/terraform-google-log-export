@@ -15,15 +15,16 @@
  */
 
 locals {
-  storage_bucket_name = "${element(concat(google_storage_bucket.bucket.*.name, list("")), 0)}"
-  destination_uri     = "storage.googleapis.com/${local.storage_bucket_name}"
+  project_id           = "${var.destination_project_id != "" ? var.destination_project_id : var.parent_resource_type == "project" ? var.parent_resource_id : ""}"
+  storage_bucket_names = "${google_storage_bucket.bucket.*.name}"
+  destination_uris     = "${formatlist("storage.googleapis.com/%s", local.storage_bucket_names)}"
 }
 
 #----------------#
 # API activation #
 #----------------#
 resource "google_project_service" "enable_destination_api" {
-  project            = "${var.project_id}"
+  project            = "${local.project_id}"
   service            = "storage-component.googleapis.com"
   disable_on_destroy = false
 }
@@ -32,10 +33,11 @@ resource "google_project_service" "enable_destination_api" {
 # Storage bucket #
 #----------------#
 resource "google_storage_bucket" "bucket" {
-  name          = "${var.storage_bucket_name}"
+  count         = "${length(var.storage_bucket_names)}"
+  name          = "${var.storage_bucket_names[count.index]}"
   project       = "${google_project_service.enable_destination_api.project}"
-  storage_class = "MULTI_REGIONAL"
-  location      = "US"
+  storage_class = "${var.storage_bucket_class}"
+  location      = "${var.storage_bucket_location}"
   force_destroy = true
 }
 
@@ -43,7 +45,8 @@ resource "google_storage_bucket" "bucket" {
 # Service account IAM membership #
 #--------------------------------#
 resource "google_storage_bucket_iam_member" "storage_sink_member" {
-  bucket = "${local.storage_bucket_name}"
+  count  = "${length(var.storage_bucket_names)}"
+  bucket = "${local.storage_bucket_names[count.index]}"
   role   = "roles/storage.objectCreator"
-  member = "${var.log_sink_writer_identity}"
+  member = "${module.sink.sink_writer_identities[count.index]}"
 }

@@ -13,20 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-variable "create_subscriber" {
-  description = "Whether to create a subscription to the topic that was created and used for log entries matching the filter. If 'true', a subscription is created along with a service account that is granted roles/pubsub.subscriber and roles/pubsub.viewer to the topic."
+variable "enable_splunk" {
+  description = "Enable Splunk compatibility. If 'true', a subscription is created along with a service account that is granted needed additional roles to the topic."
   default     = "false"
 }
 
-variable "log_sink_writer_identity" {
-  description = "The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module)."
+variable "destination_project_id" {
+  description = "The ID of the project in which the pubsub topics will be created."
 }
 
-variable "project_id" {
-  description = "The ID of the project in which the pubsub topic will be created."
+variable "pubsub_topic_names" {
+  description = "The names of the pubsub topics to be created and used for log entries matching the filter."
+  type        = "list"
 }
 
-variable "topic_name" {
-  description = "The name of the pubsub topic to be created and used for log entries matching the filter."
+variable "pubsub_topic_labels" {
+  description = "A set of key/value label pairs to assign to the pubsub topics."
+  type        = "map"
+  default     = {}
 }

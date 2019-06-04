@@ -14,27 +14,37 @@
  * limitations under the License.
  */
 
-output "filter" {
-  description = "The filter to be applied when exporting logs."
-  value       = "${var.filter}"
+output "sink_parent_type" {
+  description = "Sink parent type (organization, folder, project)"
+  value       = "${var.parent_resource_type}"
 }
 
-output "log_sink_resource_id" {
-  description = "The resource ID of the log sink that was created."
-  value       = "${local.log_sink_resource_id}"
+output "sink_parent_id" {
+  description = "Sink parent resource id"
+
+  value = "${element(concat(
+    google_logging_project_sink.sink.*.project,
+    google_logging_folder_sink.sink.*.folder,
+    google_logging_organization_sink.sink.*.org_id,
+    google_logging_billing_account_sink.sink.*.billing_account), 0)}"
 }
 
-output "log_sink_resource_name" {
-  description = "The resource name of the log sink that was created."
-  value       = "${local.log_sink_resource_name}"
+output "sink_writer_identities" {
+  description = "Sink writer identities"
+
+  value = "${concat(
+    google_logging_project_sink.sink.*.writer_identity,
+    google_logging_folder_sink.sink.*.writer_identity,
+    google_logging_organization_sink.sink.*.writer_identity,
+    google_logging_billing_account_sink.sink.*.writer_identity)}"
 }
 
-output "parent_resource_id" {
-  description = "The ID of the GCP resource in which you create the log sink."
-  value       = "${local.log_sink_parent_id}"
-}
+output "sink_resource_ids" {
+  description = "Sink resource ids"
 
-output "writer_identity" {
-  description = "The service account that logging uses to write log entries to the destination."
-  value       = "${local.log_sink_writer_identity}"
+  value = "${concat(
+    google_logging_project_sink.sink.*.id,
+    google_logging_folder_sink.sink.*.id,
+    google_logging_organization_sink.sink.*.id,
+    google_logging_billing_account_sink.sink.*.id)}"
 }

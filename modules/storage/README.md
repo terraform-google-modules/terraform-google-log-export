@@ -9,21 +9,27 @@ The [examples](../../examples) directory contains directories for each destinati
 example that will configure a storage bucket destination and a log export at the project level:
 
 ```hcl
-module "log_export" {
-  source                 = "terraform-google-modules/log-export/google"
-  destination_uri        = "${module.destination.destination_uri}"
-  filter                 = "severity >= ERROR"
-  log_sink_name          = "storage_example_logsink"
-  parent_resource_id     = "sample-project"
-  parent_resource_type   = "project"
-  unique_writer_identity = "true"
-}
+module "log_exports" {
+  source                 = "terraform-google-modules/log-export/google//modules/storage"
+  parent_resource_id     = "234354564998"
+  parent_resource_type   = "organization"
+  destination_project_id = "test-log-exports"
+  include_children       = "true"
 
-module "destination" {
-  source                   = "terraform-google-modules/log-export/google//modules/storage"
-  project_id               = "sample-project"
-  storage_bucket_name      = "sample_storage_bucket"
-  log_sink_writer_identity = "${module.log_export.writer_identity}"
+  sink_names = [
+    "test-sink-1",
+    "test-sink-2",
+  ]
+
+  sink_filters = [
+    "organizations/465421231564/logs/cloudaudit.googleapis.com%2Factivity",
+    "organizations/465421231564/logs/cloudaudit.googleapis.com%2Fsystem_event",
+  ]
+
+  storage_bucket_names = [
+    "test-bq-1",
+    "test-bq-2",
+  ]
 }
 ```
 

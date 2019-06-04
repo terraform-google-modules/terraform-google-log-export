@@ -14,14 +14,26 @@
  * limitations under the License.
  */
 
-variable "log_sink_writer_identity" {
-  description = "The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module)."
+variable "storage_bucket_names" {
+  description = "The name of the storage buckets to be created and used for log entries matching the filter."
+  type        = "list"
 }
 
-variable "project_id" {
-  description = "The ID of the project in which the storage bucket will be created."
+variable "storage_bucket_location" {
+  description = "The location of the storage bucket."
+  default     = "US"
 }
 
-variable "storage_bucket_name" {
-  description = "The name of the storage bucket to be created and used for log entries matching the filter."
+variable "storage_bucket_class" {
+  description = "The storage class of the storage bucket."
+  default     = "MULTI_REGIONAL"
+}
+
+variable "storage_bucket_versioning_enabled" {
+  description = "If true, enables bucket versioning"
+  default     = "false"
+}
+
+variable "destination_project_id" {
+  description = "The ID of the project in which the pubsub topics will be created."
 }

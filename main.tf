@@ -23,12 +23,6 @@ locals {
   is_folder_level              = "${var.parent_resource_type == "folder" ? 1 : 0}"
   is_org_level                 = "${var.parent_resource_type == "organization" ? 1 : 0}"
   is_billing_level             = "${var.parent_resource_type == "billing_account" ? 1 : 0}"
-
-  # Locals for outputs to ensure the value is available after the resource is created
-  log_sink_writer_identity = "${local.is_project_level ? element(concat(google_logging_project_sink.sink.*.writer_identity, list("")), 0) : local.is_folder_level ? element(concat(google_logging_folder_sink.sink.*.writer_identity, list("")), 0) : local.is_org_level ? element(concat(google_logging_organization_sink.sink.*.writer_identity, list("")), 0) : local.is_billing_level ? element(concat(google_logging_billing_account_sink.sink.*.writer_identity, list("")), 0) : ""}"
-  log_sink_resource_id     = "${local.is_project_level ? element(concat(google_logging_project_sink.sink.*.id, list("")), 0) : local.is_folder_level ? element(concat(google_logging_folder_sink.sink.*.id, list("")), 0) : local.is_org_level ? element(concat(google_logging_organization_sink.sink.*.id, list("")), 0) : local.is_billing_level ? element(concat(google_logging_billing_account_sink.sink.*.id, list("")), 0) : ""}"
-  log_sink_resource_name   = "${local.is_project_level ? element(concat(google_logging_project_sink.sink.*.name, list("")), 0) : local.is_folder_level ? element(concat(google_logging_folder_sink.sink.*.name, list("")), 0) : local.is_org_level ? element(concat(google_logging_organization_sink.sink.*.name, list("")), 0) : local.is_billing_level ? element(concat(google_logging_billing_account_sink.sink.*.name, list("")), 0) : ""}"
-  log_sink_parent_id       = "${local.is_project_level ? element(concat(google_logging_project_sink.sink.*.project, list("")), 0) : local.is_folder_level ? element(concat(google_logging_folder_sink.sink.*.folder, list("")), 0) : local.is_org_level ? element(concat(google_logging_organization_sink.sink.*.org_id, list("")), 0) : local.is_billing_level ? element(concat(google_logging_billing_account_sink.sink.*.billing_account, list("")), 0) : ""}"
 }
 
 #---------------------#
@@ -44,39 +38,40 @@ resource "null_resource" "valid_parent_resource_type" {
 #-----------#
 # Project-level
 resource "google_logging_project_sink" "sink" {
-  count                  = "${local.is_project_level ? 1 : 0}"
-  name                   = "${var.log_sink_name}"
+  count                  = "${local.is_project_level ? length(var.sink_names) : 0}"
   project                = "${var.parent_resource_id}"
-  filter                 = "${var.filter}"
-  destination            = "${var.destination_uri}"
+  name                   = "${var.sink_names[count.index]}"
+  filter                 = "${var.filters[count.index]}"
+  destination            = "${var.destination_uris[count.index]}"
   unique_writer_identity = "${var.unique_writer_identity}"
 }
 
 # Folder-level
 resource "google_logging_folder_sink" "sink" {
-  count            = "${local.is_folder_level ? 1 : 0}"
-  name             = "${var.log_sink_name}"
+  count            = "${local.is_folder_level ? length(var.sink_names) : 0}"
   folder           = "${var.parent_resource_id}"
-  filter           = "${var.filter}"
+  name             = "${var.sink_names[count.index]}"
+  filter           = "${var.filters[count.index]}"
+  destination      = "${var.destination_uris[count.index]}"
   include_children = "${var.include_children}"
-  destination      = "${var.destination_uri}"
 }
 
 # Org-level
 resource "google_logging_organization_sink" "sink" {
-  count            = "${local.is_org_level ? 1 : 0}"
-  name             = "${var.log_sink_name}"
+  count            = "${local.is_org_level ? length(var.sink_names) : 0}"
   org_id           = "${var.parent_resource_id}"
-  filter           = "${var.filter}"
+  name             = "${var.sink_names[count.index]}"
+  filter           = "${var.filters[count.index]}"
+  destination      = "${var.destination_uris[count.index]}"
   include_children = "${var.include_children}"
-  destination      = "${var.destination_uri}"
 }
 
 # Billing Account-level
 resource "google_logging_billing_account_sink" "sink" {
-  count           = "${local.is_billing_level ? 1 : 0}"
-  name            = "${var.log_sink_name}"
-  billing_account = "${var.parent_resource_id}"
-  filter          = "${var.filter}"
-  destination     = "${var.destination_uri}"
+  count            = "${local.is_billing_level ? length(var.sink_names) : 0}"
+  billing_account  = "${var.parent_resource_id}"
+  name             = "${var.sink_names[count.index]}"
+  filter           = "${var.filters[count.index]}"
+  destination      = "${var.destination_uris[count.index]}"
+  include_children = "${var.include_children}"
 }

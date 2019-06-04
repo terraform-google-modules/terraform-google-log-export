@@ -18,17 +18,24 @@
 # Local variables #
 #-----------------#
 locals {
-  destination_uri     = "pubsub.googleapis.com/projects/${var.project_id}/topics/${local.topic_name}"
-  topic_name          = "${element(concat(google_pubsub_topic.topic.*.name, list("")), 0)}"
-  pubsub_subscriber   = "${element(concat(google_service_account.pubsub_subscriber.*.email, list("")), 0)}"
-  pubsub_subscription = "${element(concat(google_pubsub_subscription.pubsub_subscription.*.id, list("")), 0)}"
+  project_id           = "${var.destination_project_id != "" ? var.destination_project_id : var.parent_resource_type == "project" ? var.parent_resource_id : ""}"
+  destination_uris     = "${formatlist("pubsub.googleapis.com/projects/${local.project_id}/topics/%s", local.pubsub_topic_names)}"
+  pubsub_topic_names   = "${google_pubsub_topic.topic.*.name}"
+  pubsub_subscribers   = "${var.enable_splunk ? join(",", google_service_account.pubsub_subscriber.*.email) : local.empty_list}"
+  pubsub_subscriptions = "${var.enable_splunk ? join(",", google_pubsub_subscription.pubsub_subscription.*.id) : local.empty_list}"
+  empty_list           = "${join(",", data.template_file.empty_list.*.rendered)}"
+}
+
+data "template_file" "empty_list" {
+  count    = "${length(var.pubsub_topic_names)}"
+  template = ""
 }
 
 #----------------#
 # API activation #
 #----------------#
 resource "google_project_service" "enable_destination_api" {
-  project            = "${var.project_id}"
+  project            = "${local.project_id}"
   service            = "pubsub.googleapis.com"
   disable_on_destroy = false
 }
@@ -37,49 +44,52 @@ resource "google_project_service" "enable_destination_api" {
 # Pubsub topic #
 #--------------#
 resource "google_pubsub_topic" "topic" {
-  name    = "${var.topic_name}"
+  count   = "${length(var.pubsub_topic_names)}"
+  name    = "${var.pubsub_topic_names[count.index]}"
   project = "${google_project_service.enable_destination_api.project}"
+  labels  = "${var.pubsub_topic_labels}"
 }
 
 #--------------------------------#
 # Service account IAM membership #
 #--------------------------------#
 resource "google_pubsub_topic_iam_member" "pubsub_sink_member" {
-  project = "${var.project_id}"
-  topic   = "${local.topic_name}"
+  count   = "${length(var.pubsub_topic_names)}"
+  project = "${local.project_id}"
+  topic   = "${local.pubsub_topic_names[count.index]}"
   role    = "roles/pubsub.publisher"
-  member  = "${var.log_sink_writer_identity}"
+  member  = "${module.sink.sink_writer_identities[count.index]}"
 }
 
 #-----------------------------------------------#
 # Pub/Sub topic subscription (for integrations) #
 #-----------------------------------------------#
 resource "google_service_account" "pubsub_subscriber" {
-  count        = "${var.create_subscriber ? 1 : 0}"
-  account_id   = "${local.topic_name}-subscriber"
-  display_name = "${local.topic_name} Topic Subscriber"
-  project      = "${var.project_id}"
+  count        = "${var.enable_splunk ? length(local.pubsub_topic_names) : 0}"
+  account_id   = "${local.pubsub_topic_names[count.index]}-subscriber"
+  display_name = "${local.pubsub_topic_names[count.index]} Topic Subscriber"
+  project      = "${local.project_id}"
 }
 
 resource "google_pubsub_topic_iam_member" "pubsub_subscriber_role" {
-  count   = "${var.create_subscriber ? 1 : 0}"
+  count   = "${var.enable_splunk ? length(local.pubsub_topic_names) : 0}"
   role    = "roles/pubsub.subscriber"
-  project = "${var.project_id}"
-  topic   = "${local.topic_name}"
-  member  = "serviceAccount:${google_service_account.pubsub_subscriber.email}"
+  project = "${local.project_id}"
+  topic   = "${local.pubsub_topic_names[count.index]}"
+  member  = "serviceAccount:${google_service_account.pubsub_subscriber.*.email[count.index]}"
 }
 
 resource "google_pubsub_topic_iam_member" "pubsub_viewer_role" {
-  count   = "${var.create_subscriber ? 1 : 0}"
+  count   = "${var.enable_splunk ? length(local.pubsub_topic_names) : 0}"
   role    = "roles/pubsub.viewer"
-  project = "${var.project_id}"
-  topic   = "${local.topic_name}"
-  member  = "serviceAccount:${google_service_account.pubsub_subscriber.email}"
+  project = "${local.project_id}"
+  topic   = "${local.pubsub_topic_names[count.index]}"
+  member  = "serviceAccount:${google_service_account.pubsub_subscriber.*.email[count.index]}"
 }
 
 resource "google_pubsub_subscription" "pubsub_subscription" {
-  count   = "${var.create_subscriber ? 1 : 0}"
-  name    = "${local.topic_name}-subscription"
-  project = "${var.project_id}"
-  topic   = "${local.topic_name}"
+  count   = "${var.enable_splunk ? length(local.pubsub_topic_names) : 0}"
+  name    = "${local.pubsub_topic_names[count.index]}-subscription"
+  project = "${local.project_id}"
+  topic   = "${local.pubsub_topic_names[count.index]}"
 }

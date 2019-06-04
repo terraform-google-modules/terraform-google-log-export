@@ -26,7 +26,7 @@ resource "random_string" "suffix" {
 
 module "log_export" {
   source                 = "../../../"
-  destination_uri        = "${module.destination.destination_uri}"
+  destination_uris       = "${module.pubsub_topics.destination_uris}"
   filter                 = "resource.type = gce_instance"
   log_sink_name          = "pubsub_folder_${random_string.suffix.result}"
   parent_resource_id     = "${var.parent_resource_id}"
@@ -34,10 +34,13 @@ module "log_export" {
   unique_writer_identity = "true"
 }
 
-module "destination" {
+module "pubsub_topics" {
   source                   = "../../..//modules/pubsub"
   project_id               = "${var.project_id}"
-  topic_name               = "pubsub-folder-${random_string.suffix.result}"
-  log_sink_writer_identity = "${module.log_export.writer_identity}"
-  create_subscriber        = "true"
+  pubsub_topic_names              = [
+    "log-export-pubsub-1-${random_string.suffix.result}"
+    "log-export-pubsub-2-${random_string.suffix.result}"
+  ]
+  log_sink_writer_identities = "${module.log_export.writer_identities}"
+  create_subscriber          = "true"
 }

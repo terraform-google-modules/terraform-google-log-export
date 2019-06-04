@@ -14,32 +14,27 @@
  * limitations under the License.
  */
 
-output "console_link" {
-  description = "The console link to the destination bigquery dataset"
-  value       = "https://bigquery.cloud.google.com/dataset/${var.project_id}:${local.dataset_name}"
+output "destination_project" {
+  description = "The project in which the BigQuery dataset were created"
+  value       = "${element(google_bigquery_dataset.dataset.*.project, 0)}"
 }
 
-output "project" {
-  description = "The project in which the bigquery dataset was created."
-  value       = "${google_bigquery_dataset.dataset.project}"
+output "destination_resource_names" {
+  description = "Map of log sink names to the BigQuery dataset' names"
+  value       = "${zipmap(var.sink_names, local.bigquery_dataset_names)}"
 }
 
-output "resource_name" {
-  description = "The resource name for the destination bigquery dataset"
-  value       = "${local.dataset_name}"
+output "destination_resource_ids" {
+  description = "Map of log sink names to the BigQuery dataset' resource ids"
+  value       = "${zipmap(var.sink_names, google_bigquery_dataset.dataset.*.id)}"
 }
 
-output "resource_id" {
-  description = "The resource id for the destination bigquery dataset"
-  value       = "${google_bigquery_dataset.dataset.id}"
+output "destination_uris" {
+  description = "Map of log sink names to the BigQuery dataset' URIs"
+  value       = "${zipmap(var.sink_names, local.destination_uris)}"
 }
 
-output "self_link" {
-  description = "The self_link URI for the destination bigquery dataset"
-  value       = "${google_bigquery_dataset.dataset.self_link}"
-}
-
-output "destination_uri" {
-  description = "The destination URI for the bigquery dataset."
-  value       = "${local.destination_uri}"
+output "console_links" {
+  description = "Map of log sink names to the BigQuery dataset' console links"
+  value       = "${zipmap(var.sink_names, formatlist("https://bigquery.cloud.google.com/dataset/${local.project_id}:%s", local.bigquery_dataset_names))}"
 }

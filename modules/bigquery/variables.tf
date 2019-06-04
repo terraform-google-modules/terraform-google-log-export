@@ -14,14 +14,21 @@
  * limitations under the License.
  */
 
-variable "dataset_name" {
-  description = "The name of the bigquery dataset to be created and used for log entries matching the filter."
+variable "bigquery_dataset_names" {
+  description = "The name of the bigquery datasets to be created and used for log entries matching the filter."
+  type        = "list"
 }
 
-variable "log_sink_writer_identity" {
-  description = "The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module)."
+variable "bigquery_dataset_location" {
+  description = "The location of the storage bucket."
+  default     = "US"
 }
 
-variable "project_id" {
+variable "bigquery_delete_contents_on_destroy" {
+  description = "Delete dataset contents on destroy"
+  default     = "true"
+}
+
+variable "destination_project_id" {
   description = "The ID of the project in which the bigquery dataset will be created."
 }

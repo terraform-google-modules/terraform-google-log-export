@@ -9,28 +9,29 @@ The [examples](../../examples) directory contains directories for each destinati
 example that will configure a PubSub topic destination and a log export at the project level:
 
 ```hcl
-module "log_export" {
-  source                 = "terraform-google-modules/log-export/google"
-  destination_uri        = "${module.destination.destination_uri}"
-  filter                 = "severity >= ERROR"
-  log_sink_name          = "pubsub_example_logsink"
-  parent_resource_id     = "sample-project"
-  parent_resource_type   = "project"
-  unique_writer_identity = "true"
-}
+module "log_exports" {
+  source                 = "terraform-google-modules/log-export/google//modules/pubsub"
+  parent_resource_id     = "234354564998"
+  parent_resource_type   = "organization"
+  destination_project_id = "test-log-exports"
+  include_children       = "true"
 
-module "destination" {
-  source                   = "terraform-google-modules/log-export/google//modules/pubsub"
-  project_id               = "sample-project"
-  topic_name               = "sample-topic"
-  log_sink_writer_identity = "${module.log_export.writer_identity}"
-  create_subscriber        = "true"
+  sink_names = [
+    "test-sink-1",
+    "test-sink-2",
+  ]
+
+  sink_filters = [
+    "organizations/465421231564/logs/cloudaudit.googleapis.com%2Factivity",
+    "organizations/465421231564/logs/cloudaudit.googleapis.com%2Fsystem_event",
+  ]
+
+  pubsub_topic_names = [
+    "test-storage-1",
+    "test-storage-2",
+  ]
 }
 ```
-
-At first glance that example seems like a circular dependency as each module declaration is
-using an output from the other, however Terraform is able to collect and order all the resources
-so that all dependencies are met.
 
 [^]: (autogen_docs_start)
 
