@@ -37,3 +37,13 @@ variable "storage_bucket_versioning_enabled" {
 variable "destination_project_id" {
   description = "The ID of the project in which the pubsub topics will be created."
 }
+
+variable "location" {
+  description = "The location of the storage bucket."
+  default     = "US"
+}
+
+variable "storage_class" {
+  description = "The storage class of the storage bucket."
+  default     = "MULTI_REGIONAL"
+}
