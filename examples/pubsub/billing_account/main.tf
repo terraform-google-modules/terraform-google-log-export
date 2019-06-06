@@ -24,7 +24,6 @@ module "log_export" {
   parent_resource_id     = "${var.parent_resource_id}"
   parent_resource_type   = "billing_account"
   unique_writer_identity = "true"
-  create_subscriber      = "true"
   sink_names             = ["pubsub_example_logsink"]
   pubsub_topic_names     = ["pubsub-example"]
 }

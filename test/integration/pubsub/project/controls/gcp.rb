@@ -20,18 +20,18 @@ control "gcp" do
 
   describe google_pubsub_topic(
     project: destination_map["project"],
-    name: destination_map["resource_name"],
+    name: destination_map["resource_names"][0],
   ) do
     it { should exist }
   end
 
   describe google_logging_project_sink(
-    project: log_export_map["parent_resource_id"],
-    sink: log_export_map["log_sink_resource_name"]
+    project: log_export_map["parent_id"],
+    sink: log_export_map["sink_resource_names"][0]
   ) do
     it { should exist }
-    its('destination') { should eq destination_map["destination_uri"] }
-    its('filter') { should eq log_export_map["filter"] }
-    its('writer_identity') { should eq log_export_map["writer_identity"] }
+    its('destination') { should eq destination_map["destination_uris"][0] }
+    its('filter') { should eq log_export_map["filters"][0] }
+    its('writer_identity') { should eq log_export_map["writer_identities"][0] }
   end
 end

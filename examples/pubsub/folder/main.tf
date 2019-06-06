@@ -25,22 +25,12 @@ resource "random_string" "suffix" {
 }
 
 module "log_export" {
-  source                 = "../../../"
+  source                 = "../../..//modules/pubsub"
   destination_project_id = "${var.project_id}"
   parent_resource_id     = "${var.parent_resource_id}"
   parent_resource_type   = "folder"
   unique_writer_identity = "true"
-  create_subscriber      = "true"
-  filters                = [
-    "resource.type = gce_instance",
-    "resource.type = k8s_container"
-  ]
-  sink_names             = [
-    "pubsub_folder_${random_string.suffix.result}_1"
-    "pubsub_folder_${random_string.suffix.result}_2"
-  ]
-  pubsub_topic_names     = [
-    "log-export-pubsub-1-${random_string.suffix.result}"
-    "log-export-pubsub-2-${random_string.suffix.result}"
-  ]
+  filters                = ["resource.type = gce_instance"]
+  sink_names             = ["pubsub_folder_${random_string.suffix.result}"]
+  pubsub_topic_names     = ["log-export-pubsub-${random_string.suffix.result}"]
 }

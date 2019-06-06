@@ -18,7 +18,7 @@ destination_map  = attribute('destination_map')
 control "gcloud" do
   title "Log exports - organization level storage destination - gcloud commands"
 
-  describe command("gcloud logging sinks list --organization #{log_export_map['parent_resource_id']} --filter=\"name:#{log_export_map['log_sink_resource_name']}\" --format json") do
+  describe command("gcloud logging sinks list --organization #{log_export_map['sink_parent_id']} --filter=\"name:#{log_export_map['sink_resource_names']}\" --format json") do
     its('exit_status') { should eq 0 }
     its('stderr') { should eq '' }
     let(:sink) do
@@ -31,25 +31,25 @@ control "gcloud" do
 
     it "does return the correct log sink" do
       expect(sink).to include(
-        name: log_export_map["log_sink_resource_name"]
+        name: log_export_map["sink_resource_names"][0]
       )
     end
 
     it "does contain the writerIdentity of #{log_export_map['writer_identity']}" do
       expect(sink).to include(
-        writerIdentity: log_export_map["writer_identity"]
+        writerIdentity: log_export_map["writer_identities"][0]
       )
     end
 
     it "does contain the destination of #{destination_map['destination_uri']}" do
       expect(sink).to include(
-        destination: destination_map["destination_uri"]
+        destination: destination_map["destination_uris"][0]
       )
     end
 
     it "does contain the filter of #{log_export_map['filter']}" do
       expect(sink).to include(
-        filter: log_export_map["filter"]
+        filter: log_export_map["filters"][0]
       )
     end
   end

@@ -30,7 +30,7 @@ module "log_export" {
   parent_resource_id     = "${var.parent_resource_id}"
   parent_resource_type   = "folder"
   unique_writer_identity = "true"
-  log_sink_name          = ["storage_folder_${random_string.suffix.result}"]
+  sink_names             = ["storage_folder_${random_string.suffix.result}"]
   filters                = ["resource.type = gce_instance"]
   storage_bucket_names   = ["storage_folder_${random_string.suffix.result}"]
 }

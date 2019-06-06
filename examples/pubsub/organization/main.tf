@@ -27,12 +27,10 @@ resource "random_string" "suffix" {
 module "log_export" {
   source                 = "../../..//modules/pubsub"
   destination_project_id = "${var.project_id}"
-  destination_uri        = "${module.destination.destination_uri}"
   parent_resource_id     = "${var.parent_resource_id}"
   parent_resource_type   = "organization"
   unique_writer_identity = "true"
-  create_subscriber      = "true"
   filters                = ["resource.type = gce_instance"]
   sink_names             = ["pubsub_org_${random_string.suffix.result}"]
-  topic_name             = ["pubsub-org-${random_string.suffix.result}"]
+  pubsub_topic_names     = ["pubsub-org-${random_string.suffix.result}"]
 }

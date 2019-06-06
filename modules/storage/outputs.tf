@@ -20,16 +20,26 @@ output "destination_project" {
 }
 
 output "destination_resource_names" {
-  description = "Map of log sink names to the Cloud Storage bucket resource names"
+  description = "Map of log sink names to the Cloud Storage buckets' resource names"
   value       = "${zipmap(var.sink_names, local.storage_bucket_names)}"
 }
 
+output "destination_resource_ids" {
+  description = "Map of log sink names to the Cloud Storage buckets' resource ids"
+  value       = "${zipmap(var.sink_names, google_storage_bucket.bucket.*.id)}"
+}
+
 output "destination_uris" {
-  description = "Map of log sink names to the Cloud Storage bucket URIs"
+  description = "Map of log sink names to the Cloud Storage buckets' URIs"
   value       = "${zipmap(var.sink_names, local.destination_uris)}"
 }
 
-output "console_links" {
-  description = "Map of log sink names to the Pub/Sub bucket' console links"
+output "destination_console_links" {
+  description = "Map of log sink names to the Cloud Storage buckets' console links"
   value       = "${zipmap(var.sink_names, formatlist("https://console.cloud.google.com/storage/browser/%s?project=${local.project_id}", local.storage_bucket_names))}"
+}
+
+output "destination_self_links" {
+  description = "Map of log sink names to the Cloud Storage buckets' self links"
+  value       = "${zipmap(var.sink_names, google_storage_bucket.bucket.*.self_link)}"
 }

@@ -34,7 +34,7 @@ output "destination_uris" {
   value       = "${zipmap(var.sink_names, local.destination_uris)}"
 }
 
-output "console_links" {
+output "destination_console_links" {
   description = "Map of log sink names to the Pub/Sub topics' console links"
   value       = "${zipmap(var.sink_names, formatlist("https://console.cloud.google.com/cloudpubsub/topics/%s?project=${local.project_id}", local.pubsub_topic_names))}"
 }

@@ -17,3 +17,13 @@ output "sink_resource_ids" {
   description = "Map of sink names to sink resource ids"
   value       = "${zipmap(var.sink_names, module.sink.sink_resource_ids)}"
 }
+
+output "sink_resource_names" {
+  description = "Map of sink names to sink resource ids"
+  value       = "${zipmap(var.sink_names, module.sink.sink_resource_names)}"
+}
+
+output "sink_filters" {
+  description = "Map of sink names to sink filters"
+  value       = "${zipmap(var.sink_names, var.filters)}"
+}

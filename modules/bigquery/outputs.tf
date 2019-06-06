@@ -34,7 +34,12 @@ output "destination_uris" {
   value       = "${zipmap(var.sink_names, local.destination_uris)}"
 }
 
-output "console_links" {
+output "destination_self_links" {
+  description = "Map of log sink names to the Bigquery datasets' self links"
+  value       = "${zipmap(var.sink_names, google_bigquery_dataset.dataset.*.self_link)}"
+}
+
+output "destination_console_links" {
   description = "Map of log sink names to the BigQuery dataset' console links"
   value       = "${zipmap(var.sink_names, formatlist("https://bigquery.cloud.google.com/dataset/${local.project_id}:%s", local.bigquery_dataset_names))}"
 }

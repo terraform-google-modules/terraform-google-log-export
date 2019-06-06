@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-output "pubsub_topic_name" {
-  description = "Pub/Sub topic name"
-  value       = "${module.destination.resource_id}"
-}
-
 output "pubsub_topic_project" {
   description = "Pub/Sub topic project id"
-  value       = "${module.destination.project}"
+  value       = "${module.log_export.destination_project}"
 }
 
-output "pubsub_subscription_name" {
-  description = "Pub/Sub topic subscription name"
-  value       = "${module.destination.pubsub_subscription}"
+output "pubsub_topic_names" {
+  description = "Pub/Sub topic names"
+  value       = "${module.log_export.destination_resource_id}"
 }
 
-output "pubsub_subscriber" {
-  description = "Pub/Sub topic subscriber email"
-  value       = "${module.destination.pubsub_subscriber}"
+output "pubsub_subscription_names" {
+  description = "Pub/Sub topic subscription names"
+  value       = "${module.log_export.pubsub_subscriptions}"
+}
+
+output "pubsub_subscribers" {
+  description = "Pub/Sub topic subscribers emails"
+  value       = "${module.log_export.pubsub_subscribers}"
 }

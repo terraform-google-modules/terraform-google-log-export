@@ -68,10 +68,9 @@ resource "google_logging_organization_sink" "sink" {
 
 # Billing Account-level
 resource "google_logging_billing_account_sink" "sink" {
-  count            = "${local.is_billing_level ? length(var.sink_names) : 0}"
-  billing_account  = "${var.parent_resource_id}"
-  name             = "${var.sink_names[count.index]}"
-  filter           = "${var.filters[count.index]}"
-  destination      = "${var.destination_uris[count.index]}"
-  include_children = "${var.include_children}"
+  count           = "${local.is_billing_level ? length(var.sink_names) : 0}"
+  billing_account = "${var.parent_resource_id}"
+  name            = "${var.sink_names[count.index]}"
+  filter          = "${var.filters[count.index]}"
+  destination     = "${var.destination_uris[count.index]}"
 }

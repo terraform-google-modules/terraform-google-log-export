@@ -48,3 +48,13 @@ output "sink_resource_ids" {
     google_logging_organization_sink.sink.*.id,
     google_logging_billing_account_sink.sink.*.id)}"
 }
+
+output "sink_resource_names" {
+  description = "Sink resource names"
+
+  value = "${concat(
+    google_logging_project_sink.sink.*.name,
+    google_logging_folder_sink.sink.*.name,
+    google_logging_organization_sink.sink.*.name,
+    google_logging_billing_account_sink.sink.*.name)}"
+}

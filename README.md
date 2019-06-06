@@ -20,7 +20,7 @@ To create log exports to BigQuery, use the `bigquery` submodule:
 
 ```hcl
 module "bigquery_exports" {
-  source                 = "./modules/terraform-google-log-export/modules/bigquery"
+  source                 = "terraform-google-modules/log-export/google//modules/bigquery"
   parent_resource_id     = "432162980571"
   parent_resource_type   = "organization"
   destination_project_id = "rnm-cloud-foundation-testing"
@@ -48,7 +48,7 @@ To create log exports to Pub/Sub, use the `pubsub` submodule:
 
 ```hcl
 module "pubsub_exports" {
-  source                 = "./modules/terraform-google-log-export/modules/pubsub"
+  source                 = "terraform-google-modules/log-export/google//modules/pubsub"
   parent_resource_id     = "430062980571"
   parent_resource_type   = "organization"
   destination_project_id = "rnm-cloud-foundation-testing"
@@ -78,7 +78,7 @@ To create log exports to Cloud Storage, use the `storage` submodule:
 
 ```hcl
 module "storage_exports" {
-  source                 = "./modules/terraform-google-log-export/modules/storage"
+  source                 = "terraform-google-modules/log-export/google//modules/storage"
   parent_resource_id     = "430062980571"
   parent_resource_type   = "organization"
   destination_project_id = "rnm-cloud-foundation-testing"
@@ -127,6 +127,7 @@ module "storage_exports" {
 | sink\_parent\_id | Sink parent resource id |
 | sink\_parent\_type | Sink parent type (organization, folder, project) |
 | sink\_resource\_ids | Sink resource ids |
+| sink\_resource\_names | Sink resource names |
 | sink\_writer\_identities | Sink writer identities |
 
 [^]: (autogen_docs_end)

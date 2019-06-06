@@ -20,7 +20,7 @@ control "gcp" do
 
   describe google_pubsub_topic(
     project: destination_map["project"],
-    name: destination_map["resource_name"],
+    name: destination_map["resource_names"][0],
   ) do
     it { should exist }
   end

@@ -26,7 +26,7 @@ resource "random_string" "suffix" {
 
 module "log_export" {
   source                 = "../../..//modules/storage"
-  project_id             = "${var.project_id}"
+  destination_project_id = "${var.project_id}"
   parent_resource_id     = "${var.parent_resource_id}"
   parent_resource_type   = "project"
   unique_writer_identity = "true"

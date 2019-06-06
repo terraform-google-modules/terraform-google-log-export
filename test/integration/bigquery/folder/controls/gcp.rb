@@ -20,7 +20,7 @@ control "gcp" do
 
   describe google_bigquery_dataset(
     project: destination_map["project"],
-    name: destination_map["resource_name"],
+    name: destination_map["resource_names"][0],
   ) do
     it { should exist }
   end
@@ -30,6 +30,6 @@ control "gcp" do
     role: 'roles/bigquery.dataEditor',
   ) do
     it { should exist }
-    its('members') { should include log_export_map["writer_identity"] }
+    its('members') { should include log_export_map["writer_identities"][0] }
   end
 end
