@@ -21,3 +21,4 @@ variable "project_id" {
 variable "parent_resource_folder" {
   description = "The ID of the parent resource folder in which the destination will be created."
 }
+

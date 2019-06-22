@@ -21,30 +21,31 @@ output "console_link" {
 
 output "project" {
   description = "The project in which the topic was created."
-  value       = "${google_pubsub_topic.topic.project}"
+  value       = google_pubsub_topic.topic.project
 }
 
 output "resource_name" {
   description = "The resource name for the destination topic"
-  value       = "${local.topic_name}"
+  value       = local.topic_name
 }
 
 output "resource_id" {
   description = "The resource id for the destination topic"
-  value       = "${google_pubsub_topic.topic.id}"
+  value       = google_pubsub_topic.topic.id
 }
 
 output "destination_uri" {
   description = "The destination URI for the topic."
-  value       = "${local.destination_uri}"
+  value       = local.destination_uri
 }
 
 output "pubsub_subscriber" {
   description = "Pub/Sub subscriber email (if any)"
-  value       = "${local.pubsub_subscriber}"
+  value       = local.pubsub_subscriber
 }
 
 output "pubsub_subscription" {
   description = "Pub/Sub subscription id (if any)"
-  value       = "${local.pubsub_subscription}"
+  value       = local.pubsub_subscription
 }
+

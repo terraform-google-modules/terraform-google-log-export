@@ -46,3 +46,5 @@ test/fixtures/shared/terraform.tfvars
 
 credentials.json
 
+.idea
+
