@@ -19,7 +19,10 @@
 #-----------------#
 
 locals {
-  dataset_name    = "${element(concat(google_bigquery_dataset.dataset.*.dataset_id, list("")), 0)}"
+  dataset_name = element(
+    concat(google_bigquery_dataset.dataset.*.dataset_id, [""]),
+    0,
+  )
   destination_uri = "bigquery.googleapis.com/projects/${var.project_id}/datasets/${local.dataset_name}"
 }
 
@@ -27,7 +30,7 @@ locals {
 # API activation #
 #----------------#
 resource "google_project_service" "enable_destination_api" {
-  project            = "${var.project_id}"
+  project            = var.project_id
   service            = "bigquery-json.googleapis.com"
   disable_on_destroy = false
 }
@@ -36,17 +39,18 @@ resource "google_project_service" "enable_destination_api" {
 # Bigquery dataset #
 #------------------#
 resource "google_bigquery_dataset" "dataset" {
-  dataset_id                 = "${var.dataset_name}"
-  project                    = "${google_project_service.enable_destination_api.project}"
-  location                   = "${var.location}"
-  delete_contents_on_destroy = "${var.delete_contents_on_destroy}"
+  dataset_id                 = var.dataset_name
+  project                    = google_project_service.enable_destination_api.project
+  location                   = var.location
+  delete_contents_on_destroy = var.delete_contents_on_destroy
 }
 
 #--------------------------------#
 # Service account IAM membership #
 #--------------------------------#
 resource "google_project_iam_member" "bigquery_sink_member" {
-  project = "${google_bigquery_dataset.dataset.project}"
+  project = google_bigquery_dataset.dataset.project
   role    = "roles/bigquery.dataEditor"
-  member  = "${var.log_sink_writer_identity}"
+  member  = var.log_sink_writer_identity
 }
+
