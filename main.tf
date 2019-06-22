@@ -34,10 +34,11 @@ locals {
 #---------------------#
 # Variable validation #
 #---------------------#
+/*
 resource "null_resource" "valid_parent_resource_type" {
   count  = local.invalid_parent_resource_type
   "ERROR: Variable `parent_resource_type` must not be a computed value, and must be one of: 'project', 'folder', 'organization', or 'billing_account'. Please correct your value and try again." = true
-}
+}*/
 
 #-----------#
 # Log sinks #
