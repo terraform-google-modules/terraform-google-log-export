@@ -42,7 +42,6 @@ setup_environment() {
   export TF_VAR_parent_resource_folder="$PARENT_RESOURCE_FOLDER"
   export TF_VAR_parent_resource_billing_account="$PARENT_RESOURCE_BILLING_ACCOUNT"
   export TF_VAR_parent_resource_organization="$PARENT_RESOURCE_ORGANIZATION"
-  export TF_LOG=DEBUG
 }
 
 main() {

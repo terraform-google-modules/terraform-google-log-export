@@ -16,5 +16,4 @@ ruby '2.6.3'
 
 source 'https://rubygems.org/' do
   gem 'kitchen-terraform', '~> 4.0'
-  gem 'sourcify'
 end
