@@ -18,11 +18,18 @@ destination_map  = attribute('destination_map')
 control "gcp" do
   title "Log exports - organization level bigquery destination - native resources"
 
-  describe "google_bigquery_dataset" do
-    before do
-      @dataset = google_bigquery_dataset(project: destination_map["project"], name: destination_map["resource_name"],)
-    end
-
+  describe google_bigquery_dataset(
+    project: destination_map["project"],
+    name: destination_map["resource_name"],
+  ) do
+    it { should exist }
   end
 
+  describe google_project_iam_binding(
+    project: destination_map["project"],
+    role: 'roles/bigquery.dataEditor',
+  ) do
+    it { should exist }
+    its('members') { should include log_export_map["writer_identity"] }
+  end
 end

@@ -77,6 +77,10 @@ suites:
       root_module_directory: test/fixtures/pubsub/project/
     verifier:
       systems:
+        - name: inspec-gcp
+          backend: gcp
+          controls:
+            - gcp
         - name: local
           backend: local
           controls:
@@ -90,6 +94,10 @@ suites:
           backend: local
           controls:
             - gcloud
+        - name: inspec-gcp
+          backend: gcp
+          controls:
+            - gcp
   - name: "pubsub/organization"
     driver:
       root_module_directory: test/fixtures/pubsub/organization/
@@ -99,6 +107,10 @@ suites:
           backend: local
           controls:
             - gcloud
+        - name: inspec-gcp
+          backend: gcp
+          controls:
+            - gcp
   - name: "bigquery/project"
     driver:
       root_module_directory: test/fixtures/bigquery/project/
@@ -117,6 +129,10 @@ suites:
           backend: local
           controls:
             - gcloud
+        - name: inspec-gcp
+          backend: gcp
+          controls:
+            - gcp
   - name: "bigquery/organization"
     driver:
       root_module_directory: test/fixtures/bigquery/organization/
@@ -126,3 +142,7 @@ suites:
           backend: local
           controls:
             - gcloud
+        - name: inspec-gcp
+          backend: gcp
+          controls:
+            - gcp

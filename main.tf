@@ -18,7 +18,6 @@
 # Local variables #
 #-----------------#
 locals {
-  invalid_parent_resource_type = var.parent_resource_type == "project" || var.parent_resource_type == "organization" || var.parent_resource_type == "folder" || var.parent_resource_type == "billing_account" ? 0 : 1
   is_project_level             = var.parent_resource_type == "project"
   is_folder_level              = var.parent_resource_type == "folder"
   is_org_level                 = var.parent_resource_type == "organization"
@@ -31,14 +30,6 @@ locals {
   log_sink_parent_id       = local.is_project_level ? element(concat(google_logging_project_sink.sink.*.project, list("")), 0) : local.is_folder_level ? element(concat(google_logging_folder_sink.sink.*.folder, list("")), 0) : local.is_org_level ? element(concat(google_logging_organization_sink.sink.*.org_id, list("")), 0) : local.is_billing_level ? element(concat(google_logging_billing_account_sink.sink.*.billing_account, list("")), 0) : ""
 }
 
-#---------------------#
-# Variable validation #
-#---------------------#
-/*
-resource "null_resource" "valid_parent_resource_type" {
-  count  = local.invalid_parent_resource_type
-  "ERROR: Variable `parent_resource_type` must not be a computed value, and must be one of: 'project', 'folder', 'organization', or 'billing_account'. Please correct your value and try again." = true
-}*/
 
 #-----------#
 # Log sinks #
