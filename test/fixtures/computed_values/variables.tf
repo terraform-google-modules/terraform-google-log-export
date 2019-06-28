@@ -25,3 +25,4 @@ variable "parent_resource_folder" {
 variable "parent_resource_billing_account" {
   description = "The ID of the billing account in which the test project will be created."
 }
+

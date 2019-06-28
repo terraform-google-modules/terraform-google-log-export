@@ -16,6 +16,7 @@
 
 module "log_export" {
   source             = "../../../../examples/bigquery/folder"
-  parent_resource_id = "${var.parent_resource_folder}"
-  project_id         = "${var.project_id}"
+  parent_resource_id = var.parent_resource_folder
+  project_id         = var.project_id
 }
+

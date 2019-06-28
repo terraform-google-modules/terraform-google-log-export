@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Migrated to Terraform 0.12. [#22]
+
 ## [2.3.0] - 2019-06-03
 
 ### Added
@@ -45,6 +49,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [2.1.0]: https://github.com/terraform-google-modules/terraform-google-log-export/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/terraform-google-modules/terraform-google-log-export/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/terraform-google-modules/terraform-google-log-export/releases/tag/v1.0.0
+[#22]: https://github.com/terraform-google-modules/terraform-google-log-export/pull/22
 [#19]: https://github.com/terraform-google-modules/terraform-google-log-export/pull/19
 [#18]: https://github.com/terraform-google-modules/terraform-google-log-export/pull/18
 [#16]: https://github.com/terraform-google-modules/terraform-google-log-export/pull/16
+

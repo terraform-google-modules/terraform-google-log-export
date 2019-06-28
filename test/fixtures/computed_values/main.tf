@@ -22,13 +22,14 @@ resource "random_string" "suffix" {
 
 resource "google_project" "computed" {
   name            = "log-exports-computed-${random_string.suffix.result}"
-  folder_id       = "${var.parent_resource_folder}"
+  folder_id       = var.parent_resource_folder
   project_id      = "log-exports-computed-${random_string.suffix.result}"
-  billing_account = "${var.parent_resource_billing_account}"
+  billing_account = var.parent_resource_billing_account
 }
 
 module "log_export" {
   source             = "../../../examples/storage/project"
-  parent_resource_id = "${google_project.computed.id}"
-  project_id         = "${google_project.computed.id}"
+  parent_resource_id = google_project.computed.id
+  project_id         = google_project.computed.id
 }
+
