@@ -16,6 +16,7 @@
 
 module "log_export" {
   source             = "../../../../examples/storage/organization"
-  parent_resource_id = "${var.parent_resource_organization}"
-  project_id         = "${var.project_id}"
+  parent_resource_id = var.parent_resource_organization
+  project_id         = var.project_id
 }
+

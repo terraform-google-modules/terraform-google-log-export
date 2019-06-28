@@ -35,3 +35,4 @@ variable "storage_class" {
   description = "The storage class of the storage bucket."
   default     = "MULTI_REGIONAL"
 }
+

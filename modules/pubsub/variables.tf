@@ -32,7 +32,8 @@ variable "topic_name" {
 }
 
 variable "topic_labels" {
-  type        = "map"
+  type        = map(string)
   default     = {}
   description = "A set of key/value label pairs to assign to the pubsub topic."
 }
+
