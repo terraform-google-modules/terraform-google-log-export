@@ -2,8 +2,7 @@
 
 This example configures a billing-account-level log sink that feeds a pubsub topic destination
 
-[^]: (autogen_docs_start)
-
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -18,4 +17,4 @@ This example configures a billing-account-level log sink that feeds a pubsub top
 | destination\_map | Outputs from the destination module |
 | log\_export\_map | Outputs from the log export module |
 
-[^]: (autogen_docs_end)
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
