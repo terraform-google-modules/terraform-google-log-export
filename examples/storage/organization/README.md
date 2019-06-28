@@ -2,8 +2,7 @@
 
 This example configures a organization-level log sink that feeds a storage bucket destination
 
-[^]: (autogen_docs_start)
-
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -18,4 +17,4 @@ This example configures a organization-level log sink that feeds a storage bucke
 | destination\_map | Outputs from the destination module |
 | log\_export\_map | Outputs from the log export module |
 
-[^]: (autogen_docs_end)
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

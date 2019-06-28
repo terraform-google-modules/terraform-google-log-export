@@ -61,8 +61,7 @@ The example is for a project-level sink, but it can be easily be adapted for agg
 
 10. **Congratulations !** Your Stackdriver-to-Splunk logging pipeline is up and running !
 
-[^]: (autogen_docs_start)
-
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -79,4 +78,4 @@ The example is for a project-level sink, but it can be easily be adapted for agg
 | pubsub\_topic\_name | Pub/Sub topic name |
 | pubsub\_topic\_project | Pub/Sub topic project id |
 
-[^]: (autogen_docs_end)
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
