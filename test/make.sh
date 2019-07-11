@@ -78,7 +78,7 @@ function check_terraform() {
     | compat_xargs -0 -n1 dirname \
     | sort -u \
     | grep -xv './test/fixtures/shared' \
-    | compat_xargs -t -n1 terraform validate --check-variables=false
+    | compat_xargs -t -n1 terraform validate
 }
 
 # This function runs 'go fmt' and 'go vet' on every file
@@ -125,8 +125,9 @@ function generate_docs() {
   while read -r path; do
     if [[ -e "${path}/README.md" ]]; then
       # script seem to be designed to work into current directory
-      cd $path && echo "Working in ${path} ..." 
+      cd "${path}" && echo "Working in ${path} ..." 
       terraform_docs.sh . && echo Success! || echo "Warning! Exit code: ${?}"
+      #shellcheck disable=2164
       cd - >/dev/null
     else
       echo "Skipping ${path} because README.md does not exist."
