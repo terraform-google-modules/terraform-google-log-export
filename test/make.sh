@@ -117,6 +117,7 @@ function check_trailing_whitespace() {
   echo "Checking for trailing whitespace"
   find_files . -print \
     | grep -v -E '\.(pyc|png)$' \
+    | grep -v '\.kitchen/' \
     | compat_xargs grep -H -n '[[:blank:]]$'
   rc=$?
   if [[ ${rc} -eq 0 ]]; then
@@ -130,7 +131,7 @@ function generate_docs() {
   while read -r path; do
     if [[ -e "${path}/README.md" ]]; then
       # script seem to be designed to work into current directory
-      cd "${path}" && echo "Working in ${path} ..." 
+      cd "${path}" && echo "Working in ${path} ..."
       terraform_docs.sh . && echo Success! || echo "Warning! Exit code: ${?}"
       #shellcheck disable=2164
       cd - >/dev/null
