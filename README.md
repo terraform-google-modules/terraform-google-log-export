@@ -10,6 +10,10 @@ are:
 - A **Service account** (logsink writer)
 - A **Destination** (Cloud Storage bucket, Cloud Pub/Sub topic, BigQuery dataset)
 
+## Compatibility
+
+This module is meant for use with Terraform 0.12. If you haven't [upgraded](https://www.terraform.io/upgrade-guides/0-12.html) and need a Terraform 0.11.x-compatible version of this module, the last released version intended for Terraform 0.11.x is [2.3.0](https://registry.terraform.io/modules/terraform-google-modules/log-export/google/2.3.0).
+
 ## Usage
 
 The [examples](./examples) directory contains directories for each destination, and within each destination directory are directories for each parent resource level. Consider the following
