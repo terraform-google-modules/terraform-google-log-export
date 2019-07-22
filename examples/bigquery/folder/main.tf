@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,17 +26,17 @@ resource "random_string" "suffix" {
 
 module "log_export" {
   source                 = "../../../"
-  destination_uri        = "${module.destination.destination_uri}"
+  destination_uri        = module.destination.destination_uri
   filter                 = "resource.type = gce_instance"
   log_sink_name          = "bigquery_folder_${random_string.suffix.result}"
-  parent_resource_id     = "${var.parent_resource_id}"
+  parent_resource_id     = var.parent_resource_id
   parent_resource_type   = "folder"
   unique_writer_identity = "true"
 }
 
 module "destination" {
   source                   = "../../..//modules/bigquery"
-  project_id               = "${var.project_id}"
+  project_id               = var.project_id
   dataset_name             = "bq_folder_${random_string.suffix.result}"
-  log_sink_writer_identity = "${module.log_export.writer_identity}"
+  log_sink_writer_identity = module.log_export.writer_identity
 }

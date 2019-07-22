@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,17 +20,18 @@ provider "google" {
 
 module "log_export" {
   source                 = "../../../"
-  destination_uri        = "${module.destination.destination_uri}"
+  destination_uri        = module.destination.destination_uri
   log_sink_name          = "pubsub_example_logsink"
-  parent_resource_id     = "${var.parent_resource_id}"
+  parent_resource_id     = var.parent_resource_id
   parent_resource_type   = "billing_account"
   unique_writer_identity = "true"
 }
 
 module "destination" {
   source                   = "../../..//modules/pubsub"
-  project_id               = "${var.project_id}"
+  project_id               = var.project_id
   topic_name               = "pubsub-example"
-  log_sink_writer_identity = "${module.log_export.writer_identity}"
+  log_sink_writer_identity = module.log_export.writer_identity
   create_subscriber        = "true"
 }
+

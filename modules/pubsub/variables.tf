@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,8 @@ variable "topic_name" {
 }
 
 variable "topic_labels" {
-  type        = "map"
+  type        = map(string)
   default     = {}
   description = "A set of key/value label pairs to assign to the pubsub topic."
 }
+
