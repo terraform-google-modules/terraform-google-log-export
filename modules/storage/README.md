@@ -31,8 +31,7 @@ At first glance that example seems like a circular dependency as each module dec
 using an output from the other, however Terraform is able to collect and order all the resources
 so that all dependencies are met.
 
-[^]: (autogen_docs_start)
-
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -54,4 +53,4 @@ so that all dependencies are met.
 | resource\_name | The resource name for the destination storage bucket |
 | self\_link | The self_link URI for the destination storage bucket |
 
-[^]: (autogen_docs_end)
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,25 +16,26 @@
 
 output "filter" {
   description = "The filter to be applied when exporting logs."
-  value       = "${var.filter}"
+  value       = var.filter
 }
 
 output "log_sink_resource_id" {
   description = "The resource ID of the log sink that was created."
-  value       = "${local.log_sink_resource_id}"
+  value       = local.log_sink_resource_id
 }
 
 output "log_sink_resource_name" {
   description = "The resource name of the log sink that was created."
-  value       = "${local.log_sink_resource_name}"
+  value       = local.log_sink_resource_name
 }
 
 output "parent_resource_id" {
   description = "The ID of the GCP resource in which you create the log sink."
-  value       = "${local.log_sink_parent_id}"
+  value       = local.log_sink_parent_id
 }
 
 output "writer_identity" {
   description = "The service account that logging uses to write log entries to the destination."
-  value       = "${local.log_sink_writer_identity}"
+  value       = local.log_sink_writer_identity
 }
+

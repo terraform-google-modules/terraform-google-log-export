@@ -38,8 +38,7 @@ At first glance that example seems like a circular dependency as each module dec
 using an output from the other, however Terraform is able to collect and order all the resources
 so that all dependencies are met.
 
-[^]: (autogen_docs_start)
-
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 
 | Name | Description | Type | Default | Required |
@@ -62,7 +61,7 @@ so that all dependencies are met.
 | parent\_resource\_id | The ID of the GCP resource in which you create the log sink. |
 | writer\_identity | The service account that logging uses to write log entries to the destination. |
 
-[^]: (autogen_docs_end)
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Requirements
 ### Terraform plugins

@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,25 +21,26 @@ output "console_link" {
 
 output "project" {
   description = "The project in which the storage bucket was created."
-  value       = "${google_storage_bucket.bucket.project}"
+  value       = google_storage_bucket.bucket.project
 }
 
 output "resource_name" {
   description = "The resource name for the destination storage bucket"
-  value       = "${local.storage_bucket_name}"
+  value       = local.storage_bucket_name
 }
 
 output "resource_id" {
   description = "The resource id for the destination storage bucket"
-  value       = "${google_storage_bucket.bucket.id}"
+  value       = google_storage_bucket.bucket.id
 }
 
 output "self_link" {
   description = "The self_link URI for the destination storage bucket"
-  value       = "${google_storage_bucket.bucket.self_link}"
+  value       = google_storage_bucket.bucket.self_link
 }
 
 output "destination_uri" {
   description = "The destination URI for the storage bucket."
-  value       = "${local.destination_uri}"
+  value       = local.destination_uri
 }
+

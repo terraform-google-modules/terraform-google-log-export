@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 module "log_export" {
   source             = "../../../../examples/bigquery/folder"
-  parent_resource_id = "${var.parent_resource_folder}"
-  project_id         = "${var.project_id}"
+  parent_resource_id = var.parent_resource_folder
+  project_id         = var.project_id
 }
+
