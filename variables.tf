@@ -32,17 +32,12 @@ variable "log_sink_name" {
   description = "The name of the log sink to be created."
 }
 
-variable "parent_resource_id" {
-  description = "The ID of the GCP resource in which you create the log sink. If var.parent_resource_type is set to 'project', then this is the Project ID (and etc)."
-}
-
-variable "parent_resource_type" {
-  description = "The GCP resource in which you create the log sink. The value must not be computed, and must be one of the following: 'project', 'folder', 'billing_account', or 'organization'."
-  default     = "project"
-}
-
 variable "unique_writer_identity" {
   description = "Whether or not to create a unique identity associated with this sink. If false (the default), then the writer_identity used is serviceAccount:cloud-logs@system.gserviceaccount.com. If true, then a unique service account is created and used for the logging sink."
   default     = "false"
 }
 
+variable "parent" {
+  description = "The GCP parent attributes: `resource_type` - must be one of the following: 'project', 'folder', 'billing_account', or 'organization'; `resource_id` - the ID of the GCP resource in which you create the log sink. If var.parent_resource_type is set to 'project', then this is the Project ID (and etc)."
+  type        = object({ resource_type = string, resource_id = string })
+}

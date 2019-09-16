@@ -29,8 +29,10 @@ module "log_export" {
   destination_uri        = module.destination.destination_uri
   filter                 = "resource.type = gce_instance"
   log_sink_name          = "storage_org_${random_string.suffix.result}"
-  parent_resource_id     = var.parent_resource_id
-  parent_resource_type   = "organization"
+  parent                 = {
+    resource_type: "organization",
+    resource_id: var.parent_resource_id
+  }
   unique_writer_identity = "true"
 }
 
@@ -40,4 +42,3 @@ module "destination" {
   storage_bucket_name      = "storage_org_${random_string.suffix.result}"
   log_sink_writer_identity = module.log_export.writer_identity
 }
-

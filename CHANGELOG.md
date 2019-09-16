@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.1] - 2019-XX-YY
+
+### Changed
+
+- Changed the interface. Combined variable parent now incorporates `parent_resource_type` and `parent_resource_id` [#30]:
+```hcl
+variable "parent" {
+  description = "The GCP parent attributes: `resource_type` - must be one of the following: 'project', 'folder', 'billing_account', or 'organization'; `resource_id` - the ID of the GCP resource in which you create the log sink. If var.parent_resource_type is set to 'project', then this is the Project ID (and etc)."
+  type        = object({ resource_type = string, resource_id = string })
+}
+```
+
 ## [3.0.0] - 2019-07-23
 
 ### Changed
@@ -45,13 +57,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release of log export module.
 
-[Unreleased]: https://github.com/terraform-google-modules/terraform-google-log-export/compare/v3.0.0...HEAD
+[Unreleased]: https://github.com/terraform-google-modules/terraform-google-log-export/compare/v3.0.1...HEAD
+[3.0.1]: https://github.com/terraform-google-modules/terraform-google-log-export/compare/v2.3.0...v3.0.1
 [3.0.0]: https://github.com/terraform-google-modules/terraform-google-log-export/compare/v2.3.0...v3.0.0
 [2.3.0]: https://github.com/terraform-google-modules/terraform-google-log-export/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/terraform-google-modules/terraform-google-log-export/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/terraform-google-modules/terraform-google-log-export/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/terraform-google-modules/terraform-google-log-export/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/terraform-google-modules/terraform-google-log-export/releases/tag/v1.0.0
+[#30]: https://github.com/terraform-google-modules/terraform-google-log-export/pull/30
 [#22]: https://github.com/terraform-google-modules/terraform-google-log-export/pull/22
 [#19]: https://github.com/terraform-google-modules/terraform-google-log-export/pull/19
 [#18]: https://github.com/terraform-google-modules/terraform-google-log-export/pull/18

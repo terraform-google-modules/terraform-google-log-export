@@ -22,8 +22,10 @@ module "log_export" {
   source                 = "../../../"
   destination_uri        = module.destination.destination_uri
   log_sink_name          = "bigquery_example_logsink"
-  parent_resource_id     = var.parent_resource_id
-  parent_resource_type   = "billing_account"
+  parent                 = {
+    resource_type: "billing_account",
+    resource_id: var.parent_resource_id
+  }
   unique_writer_identity = "true"
 }
 

@@ -19,10 +19,7 @@
 #-----------------#
 
 locals {
-  dataset_name = element(
-    concat(google_bigquery_dataset.dataset.*.dataset_id, [""]),
-    0,
-  )
+  dataset_name = concat(google_bigquery_dataset.dataset.*.dataset_id, [""])[0]
   destination_uri = "bigquery.googleapis.com/projects/${var.project_id}/datasets/${local.dataset_name}"
 }
 
