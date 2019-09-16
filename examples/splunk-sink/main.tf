@@ -19,11 +19,10 @@ provider "google" {
 }
 
 module "log_export" {
-  source               = "terraform-google-modules/log-export/google"
-  destination_uri      = module.destination.destination_uri
-  log_sink_name        = "test-splunk-sink"
-  parent_resource_id   = var.parent_resource_id
-  parent_resource_type = "project"
+  source          = "../../"
+  destination_uri = module.destination.destination_uri
+  log_sink_name   = "test-splunk-sink"
+  parent          = "project/${var.parent_resource_id}"
 }
 
 module "destination" {
@@ -33,4 +32,3 @@ module "destination" {
   log_sink_writer_identity = module.log_export.writer_identity
   create_subscriber        = "true"
 }
-

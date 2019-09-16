@@ -18,16 +18,16 @@
 # Local variables #
 #-----------------#
 locals {
-  is_project_level = var.parent_resource_type == "project"
-  is_folder_level  = var.parent_resource_type == "folder"
-  is_org_level     = var.parent_resource_type == "organization"
-  is_billing_level = var.parent_resource_type == "billing_account"
+  is_project_level = split("/", var.parent)[0] == "project"
+  is_folder_level  = split("/", var.parent)[0] == "folder"
+  is_org_level     = split("/", var.parent)[0] == "organization"
+  is_billing_level = split("/", var.parent)[0] == "billing_account"
 
   # Locals for outputs to ensure the value is available after the resource is created
-  log_sink_writer_identity = local.is_project_level ? element(concat(google_logging_project_sink.sink.*.writer_identity, list("")), 0) : local.is_folder_level ? element(concat(google_logging_folder_sink.sink.*.writer_identity, list("")), 0) : local.is_org_level ? element(concat(google_logging_organization_sink.sink.*.writer_identity, list("")), 0) : local.is_billing_level ? element(concat(google_logging_billing_account_sink.sink.*.writer_identity, list("")), 0) : ""
-  log_sink_resource_id     = local.is_project_level ? element(concat(google_logging_project_sink.sink.*.id, list("")), 0) : local.is_folder_level ? element(concat(google_logging_folder_sink.sink.*.id, list("")), 0) : local.is_org_level ? element(concat(google_logging_organization_sink.sink.*.id, list("")), 0) : local.is_billing_level ? element(concat(google_logging_billing_account_sink.sink.*.id, list("")), 0) : ""
-  log_sink_resource_name   = local.is_project_level ? element(concat(google_logging_project_sink.sink.*.name, list("")), 0) : local.is_folder_level ? element(concat(google_logging_folder_sink.sink.*.name, list("")), 0) : local.is_org_level ? element(concat(google_logging_organization_sink.sink.*.name, list("")), 0) : local.is_billing_level ? element(concat(google_logging_billing_account_sink.sink.*.name, list("")), 0) : ""
-  log_sink_parent_id       = local.is_project_level ? element(concat(google_logging_project_sink.sink.*.project, list("")), 0) : local.is_folder_level ? element(concat(google_logging_folder_sink.sink.*.folder, list("")), 0) : local.is_org_level ? element(concat(google_logging_organization_sink.sink.*.org_id, list("")), 0) : local.is_billing_level ? element(concat(google_logging_billing_account_sink.sink.*.billing_account, list("")), 0) : ""
+  log_sink_writer_identity = local.is_project_level ? concat(google_logging_project_sink.sink.*.writer_identity, list(""))[0] : local.is_folder_level ? concat(google_logging_folder_sink.sink.*.writer_identity, list(""))[0] : local.is_org_level ? concat(google_logging_organization_sink.sink.*.writer_identity, list(""))[0] : local.is_billing_level ? concat(google_logging_billing_account_sink.sink.*.writer_identity, list(""))[0] : ""
+  log_sink_resource_id     = local.is_project_level ? concat(google_logging_project_sink.sink.*.id, list(""))[0] : local.is_folder_level ? concat(google_logging_folder_sink.sink.*.id, list(""))[0] : local.is_org_level ? concat(google_logging_organization_sink.sink.*.id, list(""))[0] : local.is_billing_level ? concat(google_logging_billing_account_sink.sink.*.id, list(""))[0] : ""
+  log_sink_resource_name   = local.is_project_level ? concat(google_logging_project_sink.sink.*.name, list(""))[0] : local.is_folder_level ? concat(google_logging_folder_sink.sink.*.name, list(""))[0] : local.is_org_level ? concat(google_logging_organization_sink.sink.*.name, list(""))[0] : local.is_billing_level ? concat(google_logging_billing_account_sink.sink.*.name, list(""))[0] : ""
+  log_sink_parent_id       = local.is_project_level ? concat(google_logging_project_sink.sink.*.project, list(""))[0] : local.is_folder_level ? concat(google_logging_folder_sink.sink.*.folder, list(""))[0] : local.is_org_level ? concat(google_logging_organization_sink.sink.*.org_id, list(""))[0] : local.is_billing_level ? concat(google_logging_billing_account_sink.sink.*.billing_account, list(""))[0] : ""
 }
 
 
@@ -38,7 +38,7 @@ locals {
 resource "google_logging_project_sink" "sink" {
   count                  = local.is_project_level ? 1 : 0
   name                   = var.log_sink_name
-  project                = var.parent_resource_id
+  project                = split("/", var.parent)[1]
   filter                 = var.filter
   destination            = var.destination_uri
   unique_writer_identity = var.unique_writer_identity
@@ -48,7 +48,7 @@ resource "google_logging_project_sink" "sink" {
 resource "google_logging_folder_sink" "sink" {
   count            = local.is_folder_level ? 1 : 0
   name             = var.log_sink_name
-  folder           = var.parent_resource_id
+  folder           = split("/", var.parent)[1]
   filter           = var.filter
   include_children = var.include_children
   destination      = var.destination_uri
@@ -58,7 +58,7 @@ resource "google_logging_folder_sink" "sink" {
 resource "google_logging_organization_sink" "sink" {
   count            = local.is_org_level ? 1 : 0
   name             = var.log_sink_name
-  org_id           = var.parent_resource_id
+  org_id           = split("/", var.parent)[1]
   filter           = var.filter
   include_children = var.include_children
   destination      = var.destination_uri
@@ -68,7 +68,7 @@ resource "google_logging_organization_sink" "sink" {
 resource "google_logging_billing_account_sink" "sink" {
   count           = local.is_billing_level ? 1 : 0
   name            = var.log_sink_name
-  billing_account = var.parent_resource_id
+  billing_account = split("/", var.parent)[1]
   filter          = var.filter
   destination     = var.destination_uri
 }

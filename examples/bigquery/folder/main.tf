@@ -29,8 +29,7 @@ module "log_export" {
   destination_uri        = module.destination.destination_uri
   filter                 = "resource.type = gce_instance"
   log_sink_name          = "bigquery_folder_${random_string.suffix.result}"
-  parent_resource_id     = var.parent_resource_id
-  parent_resource_type   = "folder"
+  parent                 = "folder/${var.parent_resource_id}"
   unique_writer_identity = "true"
 }
 

@@ -22,8 +22,7 @@ module "log_export" {
   source                 = "../../../"
   destination_uri        = module.destination.destination_uri
   log_sink_name          = "pubsub_example_logsink"
-  parent_resource_id     = var.parent_resource_id
-  parent_resource_type   = "billing_account"
+  parent                 = "billing_account/${var.parent_resource_id}"
   unique_writer_identity = "true"
 }
 
@@ -34,4 +33,3 @@ module "destination" {
   log_sink_writer_identity = module.log_export.writer_identity
   create_subscriber        = "true"
 }
-
