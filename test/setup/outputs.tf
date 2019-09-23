@@ -13,3 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+output "project_id" {
+  value = module.project.project_id
+}
+
+output "sa_key" {
+  value     = google_service_account_key.int_test.private_key
+  sensitive = true
+}
+
+output "parent_resource_folder" {
+  value = var.folder_id
+}
+
+output "parent_resource_billing_account" {
+  value = var.billing_account
+}
+
+output "parent_resource_organization" {
+  value = var.org_id
+}

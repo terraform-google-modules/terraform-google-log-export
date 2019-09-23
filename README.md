@@ -69,8 +69,8 @@ so that all dependencies are met.
 
 ## Requirements
 ### Terraform plugins
-- [Terraform](https://www.terraform.io/downloads.html) 0.11.x
-- [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) plugin ~> v2.0.x
+- [Terraform](https://www.terraform.io/downloads.html) 0.12.x
+- [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) plugin ~> v2.7.x
 
 ### Configure a Service Account
 In order to execute this module you must have a Service Account with the following:
@@ -112,107 +112,5 @@ In order to operate with the Service Account you must activate the following API
 ## Install
 
 ### Terraform
-Be sure you have the correct Terraform version (0.11.x), you can choose the binary here:
+Be sure you have the correct Terraform version (0.12.x), you can choose the binary here:
 - https://releases.hashicorp.com/terraform/
-
-## Testing
-
-### Requirements
-- [bundler](https://github.com/bundler/bundler)
-- [gcloud](https://cloud.google.com/sdk/install)
-- [terraform-docs](https://github.com/segmentio/terraform-docs/releases) 0.6.0
-
-### Autogeneration of documentation from .tf files
-Run
-```
-make generate_docs
-```
-
-### Integration test
-
-Integration tests are run though [test-kitchen](https://github.com/test-kitchen/test-kitchen), [kitchen-terraform](https://github.com/newcontext-oss/kitchen-terraform), and [InSpec](https://github.com/inspec/inspec).
-
-`test-kitchen` instances are defined in [`.kitchen.yml`](./.kitchen.yml). The test-kitchen instances in `test/fixtures/` wrap identically-named examples in the `examples/` directory.
-
-#### Setup
-
-1. Configure the [test fixtures](#test-configuration)
-2. Download a Service Account key with the necessary permissions and copy the contents of that JSON file into the `SERVICE_ACCOUNT_JSON` environment variable:
-
-  ```
-  export SERVICE_ACCOUNT_JSON=$(cat /path/to/credentials.json)
-  ```
-
-3. Set the required environment variables as defined in [`./test/ci_integration.sh`](./test/ci_integration.sh):
-
-  ```
-  export PROJECT_ID="project_id_of_test_project"
-  export PARENT_RESOURCE_PROJECT="project_id_of_test_project"
-  export PARENT_RESOURCE_FOLDER="folder_id_of_test_folder"
-  export PARENT_RESOURCE_ORGANIZATION="org_id_of_test_organization"
-  export PARENT_RESOURCE_BILLING_ACCOUNT="billing_account_id_of_test_billing_account"
-  export SUITE="test_suite_name"  # Leave empty to run all tests
-  ```
-
-4. Run the testing container in interactive mode:
-
-  ```
-  make docker_run
-  ```
-
-  The module root directory will be loaded into the Docker container at `/cft/workdir/`.
-5. Run kitchen-terraform to test the infrastructure:
-
-  1. `make docker_create` creates Terraform state and downloads modules, if applicable.
-  2. `make docker_converge` creates the underlying resources. Run `source test/ci_integration.sh && setup_environment && kitchen converge <INSTANCE_NAME>` to run a specific test case.
-  3. `make docker_verify` tests the created infrastructure. Run `source test/ci_integration.sh && setup_environment && kitchen verify <INSTANCE_NAME>` to run a specific test case.
-  4. `make docker_destroy` tears down the underlying resources created by `make docker_converge`. Run `source test/ci_integration.sh && setup_environment && kitchen destroy <INSTANCE_NAME>` to tear down resources for a specific test case.
-
-Alternatively, you can simply run `make test_integration_docker` to run all the test steps non-interactively.
-
-### Autogeneration of documentation from .tf files
-Run
-```
-make generate_docs
-```
-
-### Linting
-The makefile in this project will lint or sometimes just format any shell,
-Python, golang, Terraform, or Dockerfiles. The linters will only be run if
-the makefile finds files with the appropriate file extension.
-
-All of the linter checks are in the default make target, so you just have to
-run
-
-```
-make -s
-```
-
-The -s is for 'silent'. Successful output looks like this
-
-```
-Running shellcheck
-Running flake8
-Running go fmt and go vet
-Running terraform validate
-Running hadolint on Dockerfiles
-Checking for required files
-Testing the validity of the header check
-..
-----------------------------------------------------------------------
-Ran 2 tests in 0.026s
-
-OK
-Checking file headers
-The following lines have trailing whitespace
-```
-
-The linters
-are as follows:
-* Shell - shellcheck. Can be found in homebrew
-* Python - flake8. Can be installed with 'pip install flake8'
-* Golang - gofmt. gofmt comes with the standard golang installation. golang
-is a compiled language so there is no standard linter.
-* Terraform - terraform has a built-in linter in the 'terraform validate'
-command.
-* Dockerfiles - hadolint. Can be found in homebrew
