@@ -36,3 +36,18 @@ variable "delete_contents_on_destroy" {
   default     = "true"
 }
 
+variable "default_table_expiration_ms" {
+  description = "Default table expiration time (in ms)"
+  default     = 3600000
+}
+
+variable "description" {
+  description = "A use-friendly description of the dataset"
+  default     = "Log export dataset"
+}
+
+variable "labels" {
+  description = "Dataset labels"
+  type        = map
+  default     = {}
+}
