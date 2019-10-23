@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Fields description, labels and default_table_expiration_ms [#36]
+
 ## [3.0.1] - 2019-XX-YY
 
 ### Changed
@@ -64,4 +67,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#19]: https://github.com/terraform-google-modules/terraform-google-log-export/pull/19
 [#18]: https://github.com/terraform-google-modules/terraform-google-log-export/pull/18
 [#16]: https://github.com/terraform-google-modules/terraform-google-log-export/pull/16
-

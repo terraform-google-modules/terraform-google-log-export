@@ -39,10 +39,13 @@ resource "google_project_service" "enable_destination_api" {
 # Bigquery dataset #
 #------------------#
 resource "google_bigquery_dataset" "dataset" {
-  dataset_id                 = var.dataset_name
-  project                    = google_project_service.enable_destination_api.project
-  location                   = var.location
-  delete_contents_on_destroy = var.delete_contents_on_destroy
+  dataset_id                  = var.dataset_name
+  project                     = google_project_service.enable_destination_api.project
+  location                    = var.location
+  description                 = var.description
+  delete_contents_on_destroy  = var.delete_contents_on_destroy
+  default_table_expiration_ms = var.default_table_expiration_ms
+  labels                      = var.labels
 }
 
 #--------------------------------#
@@ -53,4 +56,3 @@ resource "google_project_iam_member" "bigquery_sink_member" {
   role    = "roles/bigquery.dataEditor"
   member  = var.log_sink_writer_identity
 }
-
