@@ -24,7 +24,7 @@ module "log_export" {
   log_sink_name          = "pubsub_example_logsink"
   parent_resource_id     = var.parent_resource_id
   parent_resource_type   = "billing_account"
-  unique_writer_identity = "true"
+  unique_writer_identity = true
 }
 
 module "destination" {
@@ -32,6 +32,6 @@ module "destination" {
   project_id               = var.project_id
   topic_name               = "pubsub-example"
   log_sink_writer_identity = module.log_export.writer_identity
-  create_subscriber        = "true"
+  create_subscriber        = true
 }
 

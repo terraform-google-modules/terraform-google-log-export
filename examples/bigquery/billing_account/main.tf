@@ -24,7 +24,7 @@ module "log_export" {
   log_sink_name          = "bigquery_example_logsink"
   parent_resource_id     = var.parent_resource_id
   parent_resource_type   = "billing_account"
-  unique_writer_identity = "true"
+  unique_writer_identity = true
 }
 
 module "destination" {
