@@ -31,6 +31,6 @@ module "destination" {
   project_id               = var.project_id
   topic_name               = "splunk-sink"
   log_sink_writer_identity = module.log_export.writer_identity
-  create_subscriber        = "true"
+  create_subscriber        = true
 }
 
