@@ -16,7 +16,7 @@ module "log_export" {
   log_sink_name          = "storage_example_logsink"
   parent_resource_id     = "sample-project"
   parent_resource_type   = "project"
-  unique_writer_identity = "true"
+  unique_writer_identity = true
 }
 
 module "destination" {

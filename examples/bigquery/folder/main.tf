@@ -20,8 +20,8 @@ provider "google" {
 
 resource "random_string" "suffix" {
   length  = 4
-  upper   = "false"
-  special = "false"
+  upper   = false
+  special = false
 }
 
 module "log_export" {
@@ -31,7 +31,7 @@ module "log_export" {
   log_sink_name          = "bigquery_folder_${random_string.suffix.result}"
   parent_resource_id     = var.parent_resource_id
   parent_resource_type   = "folder"
-  unique_writer_identity = "true"
+  unique_writer_identity = true
 }
 
 module "destination" {
