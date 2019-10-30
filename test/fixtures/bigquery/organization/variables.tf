@@ -16,9 +16,11 @@
 
 variable "project_id" {
   description = "The ID of the project in which the log export will be created."
+  type        = string
 }
 
 variable "parent_resource_organization" {
   description = "The ID of the parent resource organization in which the destination will be created."
+  type        = string
 }
 

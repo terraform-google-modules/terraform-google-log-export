@@ -16,7 +16,7 @@ module "log_export" {
   log_sink_name          = "pubsub_example_logsink"
   parent_resource_id     = "sample-project"
   parent_resource_type   = "project"
-  unique_writer_identity = "true"
+  unique_writer_identity = true
 }
 
 module "destination" {
@@ -24,7 +24,7 @@ module "destination" {
   project_id               = "sample-project"
   topic_name               = "sample-topic"
   log_sink_writer_identity = "${module.log_export.writer_identity}"
-  create_subscriber        = "true"
+  create_subscriber        = true
 }
 ```
 
@@ -37,7 +37,7 @@ so that all dependencies are met.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| create\_subscriber | Whether to create a subscription to the topic that was created and used for log entries matching the filter. If 'true', a subscription is created along with a service account that is granted roles/pubsub.subscriber and roles/pubsub.viewer to the topic. | string | `"false"` | no |
+| create\_subscriber | Whether to create a subscription to the topic that was created and used for log entries matching the filter. If 'true', a subscription is created along with a service account that is granted roles/pubsub.subscriber and roles/pubsub.viewer to the topic. | bool | `"false"` | no |
 | log\_sink\_writer\_identity | The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module). | string | n/a | yes |
 | project\_id | The ID of the project in which the pubsub topic will be created. | string | n/a | yes |
 | topic\_labels | A set of key/value label pairs to assign to the pubsub topic. | map(string) | `<map>` | no |

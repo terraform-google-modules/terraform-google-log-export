@@ -16,13 +16,16 @@
 
 variable "project_id" {
   description = "The ID of the project in which the log export will be created."
+  type        = string
 }
 
 variable "parent_resource_folder" {
   description = "The ID of the parent resource folder in which the destination and the test project will be created."
+  type        = string
 }
 
 variable "parent_resource_billing_account" {
   description = "The ID of the billing account in which the test project will be created."
+  type        = string
 }
 
