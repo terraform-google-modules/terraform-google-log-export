@@ -31,7 +31,7 @@ locals {
 #----------------#
 resource "google_project_service" "enable_destination_api" {
   project            = var.project_id
-  service            = "bigquery-json.googleapis.com"
+  service            = "bigquery.googleapis.com"
   disable_on_destroy = false
 }
 
