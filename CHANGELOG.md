@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.1] - 2019-12-10
+
+### Fixed
+
+- The correct name for the BigQuery service. [#39]
+
 ## [3.1.0] - 2019-10-23
 
 ### Added
@@ -54,7 +60,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release of log export module.
 
-[Unreleased]: https://github.com/terraform-google-modules/terraform-google-log-export/compare/v3.1.0...HEAD
+[Unreleased]: https://github.com/terraform-google-modules/terraform-google-log-export/compare/v3.1.1...HEAD
+[3.1.1]: https://github.com/terraform-google-modules/terraform-google-log-export/compare/v3.1.0...v3.1.1
 [3.1.0]: https://github.com/terraform-google-modules/terraform-google-log-export/compare/v3.0.0...v3.1.0
 [3.0.1]: https://github.com/terraform-google-modules/terraform-google-log-export/compare/v3.0.0...v3.0.1
 [3.0.0]: https://github.com/terraform-google-modules/terraform-google-log-export/compare/v2.3.0...v3.0.0
@@ -63,6 +70,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [2.1.0]: https://github.com/terraform-google-modules/terraform-google-log-export/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/terraform-google-modules/terraform-google-log-export/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/terraform-google-modules/terraform-google-log-export/releases/tag/v1.0.0
+[#39]: https://github.com/terraform-google-modules/terraform-google-log-export/issues/39
 [#33]: https://github.com/terraform-google-modules/terraform-google-log-export/pull/33
 [#22]: https://github.com/terraform-google-modules/terraform-google-log-export/pull/22
 [#19]: https://github.com/terraform-google-modules/terraform-google-log-export/pull/19
