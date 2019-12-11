@@ -16,7 +16,7 @@
 
 module "project" {
   source  = "terraform-google-modules/project-factory/google"
-  version = "~> 3.0"
+  version = "~> 5.0"
 
   name              = "ci-log-export"
   random_project_id = true
@@ -29,7 +29,7 @@ module "project" {
     "oslogin.googleapis.com",
     "serviceusage.googleapis.com",
     "compute.googleapis.com",
-    "bigquery-json.googleapis.com",
+    "bigquery.googleapis.com",
     "pubsub.googleapis.com",
     "storage-component.googleapis.com",
     "storage-api.googleapis.com",
