@@ -14,10 +14,6 @@
  * limitations under the License.
  */
 
-provider "google" {
-  version = "~> 2.0"
-}
-
 module "log_export" {
   source                 = "../../../"
   destination_uri        = module.destination.destination_uri
