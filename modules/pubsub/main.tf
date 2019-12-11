@@ -28,6 +28,10 @@ locals {
     concat(google_pubsub_subscription.pubsub_subscription.*.id, [""]),
     0,
   )
+  pubsub_push_subscription = element(
+    concat(google_pubsub_subscription.pubsub_push_subscription.*.id, [""]),
+    0,
+  )
 }
 
 #----------------#
@@ -91,3 +95,13 @@ resource "google_pubsub_subscription" "pubsub_subscription" {
   topic   = local.topic_name
 }
 
+resource "google_pubsub_subscription" "pubsub_push_subscription" {
+  count   = var.create_push_subscriber ? 1 : 0
+  name    = "${local.topic_name}-push-subscription"
+  project = var.project_id
+  topic   = local.topic_name
+
+  push_config {
+    push_endpoint = var.push_endpoint
+  }
+}
