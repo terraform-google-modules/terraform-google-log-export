@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 
-provider "google" {
-  version = "~> 2.0"
-}
 
 module "log_export" {
   source               = "terraform-google-modules/log-export/google"

@@ -19,4 +19,3 @@ module "log_export" {
   parent_resource_id = var.parent_resource_folder
   project_id         = var.project_id
 }
-
