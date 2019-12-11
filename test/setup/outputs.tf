@@ -18,7 +18,7 @@ output "project_id" {
   value = module.project.project_id
 }
 
-output "sa_key" {
+output "sa_json" {
   value     = google_service_account_key.int_test.private_key
   sensitive = true
 }
