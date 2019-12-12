@@ -29,7 +29,7 @@ module "project" {
     "oslogin.googleapis.com",
     "serviceusage.googleapis.com",
     "compute.googleapis.com",
-    "bigquery.googleapis.com",
+    "bigquery-json.googleapis.com",
     "pubsub.googleapis.com",
     "storage-component.googleapis.com",
     "storage-api.googleapis.com",
