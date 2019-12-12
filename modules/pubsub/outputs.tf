@@ -49,3 +49,7 @@ output "pubsub_subscription" {
   value       = local.pubsub_subscription
 }
 
+output "pubsub_push_subscription" {
+  description = "Pub/Sub push subscription id (if any)"
+  value       = local.pubsub_push_subscription
+}
