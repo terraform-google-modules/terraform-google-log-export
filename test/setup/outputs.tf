@@ -23,6 +23,10 @@ output "sa_key" {
   sensitive = true
 }
 
+output "parent_resource_project" {
+  value = module.project.project_id
+}
+
 output "parent_resource_folder" {
   value = var.folder_id
 }
