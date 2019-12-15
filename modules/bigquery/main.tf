@@ -52,7 +52,7 @@ resource "google_bigquery_dataset" "dataset" {
 #------------------------------#
 # Bigquery dataset - no expiry #
 #------------------------------#
-resource "google_bigquery_dataset" "dataset" {
+resource "google_bigquery_dataset" "dataset-noexp" {
   count                       = var.default_table_expiration_ms == "0" ? 1 : 0
   dataset_id                  = var.dataset_name
   project                     = google_project_service.enable_destination_api.project
