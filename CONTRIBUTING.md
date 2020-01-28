@@ -38,7 +38,34 @@ submodules, and example modules are all functionally correct.
 ### Test Environment
 The easiest way to test the module is in an isolated test project. The setup for such a project is defined in [test/setup](./test/setup/) directory.
 
-To use this setup, you need a service account with Project Creator access on a folder. Export the Service Account credentials to your environment like so:
+To use this setup, you need:
+
+- A service account, with the following permissions:
+  * Project Creator access on a defined folder
+  * Billing account Admin on a billing account
+  * Logging Admin on the organisation
+  * Logging Admin on a defined folder
+  * Organisation Admin on the organisation
+  These permissions seem quite broad, but are needed to be able to test the organisational logging sink exports.
+- The project where this service-account resides needs to have the following APIs enabled:
+  * bigquery.googleapis.com
+  * bigquerystorage.googleapis.com
+  * cloudapis.googleapis.com
+  * cloudbilling.googleapis.com
+  * cloudresourcemanager.googleapis.com
+  * iam.googleapis.com
+  * iamcredentials.googleapis.com
+  * servicemanagement.googleapis.com
+  * serviceusage.googleapis.com
+  * storage-api.googleapis.com
+  * storage-component.googleapis.com
+- No organisational policies in place that prevent things, such as:
+  * No location restrictions
+  * No enforcement of bucket policy only
+  * No disabling of the creation of the default network.
+  For these policies it is ok if you 'undo' them at the defined folder.
+
+Export the Service Account credentials to your environment like so:
 
 ```
 export SERVICE_ACCOUNT_JSON=$(< credentials.json)

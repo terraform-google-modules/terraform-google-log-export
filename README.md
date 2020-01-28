@@ -70,7 +70,7 @@ so that all dependencies are met.
 ## Requirements
 ### Terraform plugins
 - [Terraform](https://www.terraform.io/downloads.html) 0.12.x
-- [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) plugin ~> v2.7.x
+- [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) plugin ~> v3.5.x
 
 ### Configure a Service Account
 In order to execute this module you must have a Service Account with the following:
@@ -106,7 +106,7 @@ In order to operate with the Service Account you must activate the following API
 - Service Usage API - serviceusage.googleapis.com
 - Stackdriver Logging API - logging.googleapis.com
 - Cloud Storage JSON API - storage-api.googleapis.com
-- BigQuery API - bigquery-json.googleapis.com
+- BigQuery API - bigquery.googleapis.com
 - Cloud Pub/Sub API - pubsub.googleapis.com
 
 ## Install

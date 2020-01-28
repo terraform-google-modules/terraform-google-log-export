@@ -16,7 +16,7 @@
 
 
 module "log_export" {
-  source               = "terraform-google-modules/log-export/google"
+  source               = "../.."
   destination_uri      = module.destination.destination_uri
   log_sink_name        = "test-splunk-sink"
   parent_resource_id   = var.parent_resource_id
@@ -24,10 +24,9 @@ module "log_export" {
 }
 
 module "destination" {
-  source                   = "terraform-google-modules/log-export/google//modules/pubsub"
+  source                   = "../..//modules/pubsub"
   project_id               = var.project_id
   topic_name               = "splunk-sink"
   log_sink_writer_identity = module.log_export.writer_identity
   create_subscriber        = true
 }
-
