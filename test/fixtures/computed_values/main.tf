@@ -29,7 +29,6 @@ resource "google_project" "computed" {
 
 module "log_export" {
   source             = "../../../examples/storage/project"
-  parent_resource_id = google_project.computed.id
-  project_id         = google_project.computed.id
+  parent_resource_id = google_project.computed.project_id
+  project_id         = google_project.computed.project_id
 }
-
