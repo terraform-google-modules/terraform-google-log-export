@@ -4,6 +4,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.0.0](https://www.github.com/terraform-google-modules/terraform-google-log-export/compare/v3.2.0...v4.0.0) (2020-02-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* Minimum Google provider version changed to 3.5.x
+
+Work done:
+- upgraded all version-files to google-provider 3.5.x
+- upgraded the project factory to version 7.0
+- switched to bigquery.googleapis.com, since bigquery-json doesn't work on new projects anymore
+- fixed 1 id-usage where project-id should be used
+- updated test setup documentation to fix the issues I ran into when setting up my test environment
+- altered the splunk-sink sample to use the locally referenced module, in stead of the one in the terraform registry
+
+Update versions.tf
+
+Co-Authored-By: Morgante Pell <morgante.pell@morgante.net>
+
+Fix linting errors
+
+### Features
+
+* Add the option to define 'bucket_policy_only' value on buckets ([#47](https://www.github.com/terraform-google-modules/terraform-google-log-export/issues/47)) ([702f411](https://www.github.com/terraform-google-modules/terraform-google-log-export/commit/702f4119429f30b23494f248232a2663a64f84b6))
+* Upgrade to google-provider 3.5.x. ([#46](https://www.github.com/terraform-google-modules/terraform-google-log-export/issues/46)) ([311d603](https://www.github.com/terraform-google-modules/terraform-google-log-export/commit/311d603416c5dc70cfb3785a613054447ea3d7eb))
+
 ## [Unreleased]
 - Migrated to Google Provider version 3.5.x [#45]
 
