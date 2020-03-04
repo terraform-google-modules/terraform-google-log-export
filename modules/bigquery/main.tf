@@ -19,11 +19,7 @@
 #-----------------#
 
 locals {
-  dataset_name = element(
-    concat(google_bigquery_dataset.dataset.*.dataset_id, [""]),
-    0,
-  )
-  destination_uri = "bigquery.googleapis.com/projects/${var.project_id}/datasets/${local.dataset_name}"
+  destination_uri = "bigquery.googleapis.com/projects/${var.project_id}/datasets/${module.dataset.bigquery_dataset.dataset_id}"
 }
 
 #----------------#
@@ -38,21 +34,26 @@ resource "google_project_service" "enable_destination_api" {
 #------------------#
 # Bigquery dataset #
 #------------------#
-resource "google_bigquery_dataset" "dataset" {
+module "dataset" {
+  source  = "terraform-google-modules/bigquery/google"
+  version = "~> 4.0"
+
   dataset_id                  = var.dataset_name
-  project                     = google_project_service.enable_destination_api.project
+  project_id                  = google_project_service.enable_destination_api.project
   location                    = var.location
+  access                      = var.access
   description                 = var.description
-  delete_contents_on_destroy  = var.delete_contents_on_destroy
   default_table_expiration_ms = var.default_table_expiration_ms
-  labels                      = var.labels
+
+  # labels                      = var.labels
+  # delete_contents_on_destroy  = var.delete_contents_on_destroy
 }
 
 #--------------------------------#
 # Service account IAM membership #
 #--------------------------------#
 resource "google_project_iam_member" "bigquery_sink_member" {
-  project = google_bigquery_dataset.dataset.project
+  project = module.dataset.project
   role    = "roles/bigquery.dataEditor"
   member  = var.log_sink_writer_identity
 }

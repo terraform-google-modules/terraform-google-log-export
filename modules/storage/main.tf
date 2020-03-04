@@ -15,8 +15,7 @@
  */
 
 locals {
-  storage_bucket_name = element(concat(google_storage_bucket.bucket.*.name, [""]), 0)
-  destination_uri     = "storage.googleapis.com/${local.storage_bucket_name}"
+  destination_uri = "storage.googleapis.com/${module.bucket.bucket.name}"
 }
 
 #----------------#
@@ -31,13 +30,20 @@ resource "google_project_service" "enable_destination_api" {
 #----------------#
 # Storage bucket #
 #----------------#
-resource "google_storage_bucket" "bucket" {
+module "bucket" {
+  source  = "terraform-google-modules/cloud-storage/google//modules/simple_bucket"
+  version = "~> 1.4"
+
   name               = var.storage_bucket_name
-  project            = google_project_service.enable_destination_api.project
+  project_id         = google_project_service.enable_destination_api.project
   storage_class      = var.storage_class
   location           = var.location
-  force_destroy      = true
+  force_destroy      = var.force_destroy
   bucket_policy_only = var.bucket_policy_only
+  iam_members = var.iam_members + [{
+    role   = "roles/storage.objectCreator"
+    member = var.log_sink_writer_identity
+  }]
 }
 
 #--------------------------------#
@@ -48,4 +54,3 @@ resource "google_storage_bucket_iam_member" "storage_sink_member" {
   role   = "roles/storage.objectCreator"
   member = var.log_sink_writer_identity
 }
-

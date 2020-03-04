@@ -30,9 +30,15 @@ variable "project_id" {
 }
 
 variable "location" {
-  description = "The location of the storage bucket."
+  description = "The location of the bigquery dataset."
   type        = string
   default     = "US"
+}
+
+variable "access" {
+  description = "The access for the bigquery dataset."
+  type        = any
+  default     = null
 }
 
 variable "delete_contents_on_destroy" {
