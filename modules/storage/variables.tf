@@ -38,11 +38,17 @@ variable "location" {
 variable "storage_class" {
   description = "The storage class of the storage bucket."
   type        = string
-  default     = "MULTI_REGIONAL"
+  default     = null
 }
 
 variable "bucket_policy_only" {
   description = "Enables Bucket Policy Only access to a bucket."
+  type        = bool
+  default     = true
+}
+
+variable "force_destroy" {
+  description = "Whether to delete all contained objects when the bucket is deleted."
   type        = bool
   default     = false
 }
