@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [4.0.1](https://www.github.com/terraform-google-modules/terraform-google-log-export/compare/v4.0.0...v4.0.1) (2020-04-03)
+
+
+### Bug Fixes
+
+* Add necessary IAM permissions to Splunk Sink example ([#53](https://www.github.com/terraform-google-modules/terraform-google-log-export/issues/53)) ([b0b0619](https://www.github.com/terraform-google-modules/terraform-google-log-export/commit/b0b061996151b59e5002c3c7dc298a25128953a0))
+
 ## [4.0.0](https://www.github.com/terraform-google-modules/terraform-google-log-export/compare/v3.2.0...v4.0.0) (2020-02-04)
 
 
