@@ -21,13 +21,13 @@ resource "random_string" "suffix" {
 }
 
 module "log_export" {
-  source                 = "../../../"
-  destination_uri        = module.destination.destination_uri
-  filter                 = "resource.type = gce_instance"
-  log_sink_name          = "bigquery_project_${random_string.suffix.result}"
-  parent_resource_id     = var.parent_resource_id
-  parent_resource_type   = "project"
-  unique_writer_identity = true
+  source               = "../../../"
+  destination_uri      = module.destination.destination_uri
+  filter               = "resource.type = gce_instance"
+  log_sink_name        = "bigquery_project_${random_string.suffix.result}"
+  parent_resource_id   = var.parent_resource_id
+  parent_resource_type = "project"
+  bigquery_options     = var.bigquery_options
 }
 
 module "destination" {

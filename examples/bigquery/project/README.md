@@ -7,6 +7,7 @@ This example configures a project-level log sink that feeds a bigquery dataset d
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
+| bigquery\_options | (Optional) Options that affect sinks exporting data to BigQuery. use_partitioned_tables - (Required) Whether to use BigQuery's partition tables. | object | `"null"` | no |
 | parent\_resource\_id | The ID of the project in which BigQuery dataset destination will be created. | string | n/a | yes |
 | project\_id | The ID of the project in which the log export will be created. | string | n/a | yes |
 
