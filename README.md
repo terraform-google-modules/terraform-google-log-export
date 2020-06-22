@@ -47,6 +47,7 @@ so that all dependencies are met.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
+| bigquery\_options | (Optional) Options that affect sinks exporting data to BigQuery. use_partitioned_tables - (Required) Whether to use BigQuery's partition tables. | object | `"null"` | no |
 | destination\_uri | The self_link URI of the destination resource (This is available as an output coming from one of the destination submodules) | string | n/a | yes |
 | filter | The filter to apply when exporting logs. Only log entries that match the filter are exported. Default is '' which exports all logs. | string | `""` | no |
 | include\_children | Only valid if 'organization' or 'folder' is chosen as var.parent_resource.type. Determines whether or not to include children organizations/folders in the sink export. If true, logs associated with child projects are also exported; otherwise only logs relating to the provided organization/folder are included. | bool | `"false"` | no |
@@ -96,6 +97,16 @@ To use a Google Cloud Storage bucket as the destination:
 To use a BigQuery dataset as the destination, one must grant:
 - `roles/bigquery.dataEditor` on the destination project (to create a BigQuery dataset)
 
+#### BigQuery Options
+To use BigQuery `use_partitioned_tables` argument you must also have `unique_writer_identity` set to `true`.
+
+ Usage in module:
+ ```
+ bigquery_options = {
+    use_partitioned_tables = true
+  }
+```
+ Enabling this option will store logs into a single table that is internally partitioned by day which can improve query performance.
 
 ### Enable API's
 In order to operate with the Service Account you must activate the following API's on the base project where the Service Account was created:
