@@ -52,3 +52,23 @@ variable "unique_writer_identity" {
   type        = bool
   default     = false
 }
+
+# variable "bigquery_options" {
+#   description = "(Optional) Options that affect sinks exporting data to BigQuery. use_partitioned_tables - (Required) Whether to use BigQuery's partition tables."
+#   type        = map
+#   default     = null
+# }
+
+# variable "use_partitioned_tables" {
+#   description = "(Optional) Only valid if Bigquery Sink Service is chosen. Enabling this option will store logs into a single bigquery table that is internally partitioned by day which can improve query performance."
+#   type        = bool
+#   default     = false
+# }
+
+variable "bigquery_options" {
+  default     = null
+  description = "(Optional) Options that affect sinks exporting data to BigQuery. use_partitioned_tables - (Required) Whether to use BigQuery's partition tables."
+  type = object({
+    use_partitioned_tables = bool
+  })
+}

@@ -24,3 +24,9 @@ variable "parent_resource_id" {
   type        = string
 }
 
+variable "bigquery_options" {
+  description = "(Optional) Options that affect sinks exporting data to BigQuery. use_partitioned_tables - (Required) Whether to use BigQuery's partition tables."
+  type        = map
+  default     = null
+}
+
