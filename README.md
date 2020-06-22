@@ -106,7 +106,7 @@ To use BigQuery `use_partitioned_tables` argument you must also have `unique_wri
     use_partitioned_tables = true
   }
 ```
- Enabling this option will store logs into a single table that is internally partitioned by day which can improve query performance. 
+ Enabling this option will store logs into a single table that is internally partitioned by day which can improve query performance.
 
 ### Enable API's
 In order to operate with the Service Account you must activate the following API's on the base project where the Service Account was created:
