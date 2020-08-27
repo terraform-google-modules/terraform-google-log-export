@@ -16,7 +16,7 @@
 
 module "project" {
   source  = "terraform-google-modules/project-factory/google"
-  version = "~> 7.0"
+  version = "~> 9.0"
 
   name              = "ci-log-export"
   random_project_id = true
