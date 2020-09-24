@@ -1,4 +1,4 @@
-# Example: Deploy BigQuery Log Alerting solutiuon in terraform-example-foundation
+# Example: Deploy BigQuery Log Alerting solution in terraform-example-foundation
 
 The solution deploys the BigQuery Log Alerting submodule in the logging project created in step `1 org` of the [terraform-example-foundation](https://github.com/terraform-google-modules/terraform-example-foundation).
 
