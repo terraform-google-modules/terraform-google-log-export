@@ -50,7 +50,7 @@ getTimeseries = function(value) {
 }
 
 function createFindingObject (source_name, labels) {
-  const eventTime = new Date(labels.eventTimestamp).getTime();
+  const eventTime = new Date(labels.eventTimestamp.value).getTime();
   const sourceProperties = {};
   for (const key in labels) {
     if (key !== 'eventTimestamp' &&
