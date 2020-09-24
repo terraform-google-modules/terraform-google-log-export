@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@google-cloud/bigquery": ">=0.10.0",
+    "@google-cloud/security-center": ">=3.0.1",
+    "crypto-js": "^3.0.0"
+  }
+}
