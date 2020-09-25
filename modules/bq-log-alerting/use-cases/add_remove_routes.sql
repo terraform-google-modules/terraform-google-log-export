@@ -17,7 +17,9 @@ SELECT
     log_table.timestamp AS eventTimestamp,
     log_table.protopayload_auditlog.requestMetadata.callerIp,
     log_table.protopayload_auditlog.authenticationInfo.principalEmail,
-    log_table.protopayload_auditlog.resourceName
+    log_table.protopayload_auditlog.resourceName,
+    log_table.protopayload_auditlog.serviceName,
+    log_table.insertId
 FROM
     `${project}.${dataset}.cloudaudit_googleapis_com_activity_*` AS log_table
 WHERE
