@@ -21,45 +21,6 @@ locals {
   actual_source_name = var.source_name != "" ? var.source_name : google_scc_source.bq_log_alerts[0].name
 }
 
-#----------------#
-# API activation #
-#----------------#
-resource "google_project_service" "enable_bigquery_api" {
-  project            = var.logging_project
-  service            = "bigquery.googleapis.com"
-  disable_on_destroy = false
-}
-
-resource "google_project_service" "enable_cloudfunctions_api" {
-  project            = var.logging_project
-  service            = "cloudfunctions.googleapis.com"
-  disable_on_destroy = false
-}
-
-resource "google_project_service" "enable_cloudbuild_api" {
-  project            = var.logging_project
-  service            = "cloudbuild.googleapis.com"
-  disable_on_destroy = false
-}
-
-resource "google_project_service" "enable_cloudscheduler_api" {
-  project            = var.logging_project
-  service            = "cloudscheduler.googleapis.com"
-  disable_on_destroy = false
-}
-
-resource "google_project_service" "enable_securitycenter_api" {
-  project            = var.logging_project
-  service            = "securitycenter.googleapis.com"
-  disable_on_destroy = false
-}
-
-resource "google_project_service" "enable_pubsub_api" {
-  project            = var.logging_project
-  service            = "pubsub.googleapis.com"
-  disable_on_destroy = false
-}
-
 #--------------------------#
 # Service account creation #
 #--------------------------#
@@ -74,12 +35,6 @@ resource "google_service_account" "gcf_service_account" {
   project      = var.logging_project
   account_id   = "cloudfunction-${random_string.service_account.result}"
   display_name = "Cloud Function Service Account"
-
-  depends_on = [
-    google_project_service.enable_cloudscheduler_api,
-    google_project_service.enable_cloudbuild_api,
-    google_project_service.enable_cloudfunctions_api,
-  ]
 }
 
 #--------------------------------#
@@ -105,10 +60,6 @@ resource "google_scc_source" "bq_log_alerts" {
   display_name = "BQ Log Alerts"
   organization = var.org_id
   description  = "Findings from BQ Alerting Solution"
-
-  depends_on = [
-    google_project_service.enable_securitycenter_api
-  ]
 }
 
 #------------------------#
@@ -124,10 +75,6 @@ resource "google_bigquery_dataset" "views_dataset" {
   labels = {
     env = "default"
   }
-
-  depends_on = [
-    google_project_service.enable_bigquery_api
-  ]
 }
 
 #-----------------------------#
