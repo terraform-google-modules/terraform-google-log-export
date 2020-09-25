@@ -25,7 +25,7 @@ const dataset_name = 'views';
 const invocation_name = 'securityalert_invocation';
 const result_name = 'securityalert_result';
 const source_name = process.env.CSCC_SOURCE;
-const dry_run = process.env.DRY_RUN;
+const dry_run = (process.env.DRY_RUN === 'true');
 
 // Not currently used, was for original version of the cloud function
 getMetric = function(name, labels) {
