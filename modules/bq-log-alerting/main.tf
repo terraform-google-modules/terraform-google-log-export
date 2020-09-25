@@ -33,8 +33,8 @@ resource "random_string" "service_account" {
 
 resource "google_service_account" "gcf_service_account" {
   project      = var.logging_project
-  account_id   = "cloudfunction-${random_string.service_account.result}"
-  display_name = "Cloud Function Service Account"
+  account_id   = "sa-bq-log-alerting-cf-${random_string.service_account.result}"
+  display_name = "BigQuery Log Alerting Cloud Function Service Account"
 }
 
 #--------------------------------#
