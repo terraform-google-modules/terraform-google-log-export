@@ -29,9 +29,32 @@ for this to function, the security center API needs to be enabled in the Terrafo
 
 ## Usage
 
-The [examples](../../examples) directory contain an example for deploying the BigQuery Log Alerting solution on the logging project created in [Terraform Example Foundation](https://github.com/terraform-google-modules/terraform-example-foundation).
+Basic usage of this module is as follows:
 
-**Note:** On deployment a Security Command Center Source called "BQ Log Alerts" will be created. If this source already exist due to the solution been deployed at least once before, run `gcloud scc sources describe <ORG_ID> --source-display-name="BQ Log Alerts"  --format="value(name)" --impersonate-service-account=<TERRAFORM_SERVICE_ACCOUNT_EMAIL>` to obtain the Source name to be used for the terraform variable **source_name**.
+```hcl
+module "bq-log-alerting" {
+  source          = "terraform-google-modules/log-export/google//modules/bq-log-alerting"
+  logging_project = <LOGGING_PROJECT>
+  region          = <REGION>
+  org_id          = <ORG_ID>
+  dry_run         = false
+}
+```
+
+The [examples](../../examples) directory contain an example for deploying the BigQuery Log Alerting solution.
+
+**Note 1:** On deployment, a Security Command Center Source called "BQ Log Alerts" will be created. If this source already exist due to the solution been deployed at least once before in the organization, obtain the existing Source name to be used in the terraform variable **source_name**. Run:
+
+```shell
+gcloud scc sources describe <ORG_ID> \
+--source-display-name="BQ Log Alerts" \
+--format="value(name)" \
+--impersonate-service-account=<TERRAFORM_SERVICE_ACCOUNT_EMAIL>
+```
+
+The **source_name** format is `organizations/<ORG_ID>/sources/<SOURCE_ID>`.
+
+**Note 2:** The module has a **dry_run** optional mode (`dry_run = true`). In this mode, instead of creating the finding in Security Command Center the module writes the finding to Google logging.
 
 ## Requirements
 
@@ -40,7 +63,16 @@ order to invoke this module.
 
 ### General
 
-* [Google App Engine](https://cloud.google.com/appengine) must be enabled in the project. Use `gcloud app create --region=<DEFAULT_REGION> --project=<LOGGING_PROJECT>` to enable it.
+* It is necessary to use a Service Account to authenticate the Google Terraform provider to be able to create the Security Command Center "BQ Log Alerts" Source.
+This is a restriction of the Security Command Center API
+* [Google App Engine](https://cloud.google.com/appengine) must be enabled in the project. To enable it manually use:
+
+```shell
+gcloud app create \
+--region=<REGION> \
+--project=<LOGGING_PROJECT> \
+--impersonate-service-account=<TERRAFORM_SERVICE_ACCOUNT_EMAIL>
+```
 
 **Note:** The selected region cannot be changed after creation.
 
@@ -51,17 +83,16 @@ order to invoke this module.
 
 ### IAM Roles
 
-The Service Account which will be used to invoke this module must have the following IAM roles at project level:
+The Service Account which will be used to invoke this module must have the following IAM roles:
 
-* Cloud Functions Developer: `roles/cloudfunctions.developer`
-* Storage Admin: `roles/storage.admin`
-* Pub/Sub Admin: `roles/pubsub.admin`
-* Service Account User: `roles/iam.serviceAccountUser`
-
-At organization level
-
-* Security Center Sources Editor: `roles/securitycenter.sourcesEditor`
-* Security Admin: `roles/iam.securityAdmin`
+* Project level:
+  * Cloud Functions Developer: `roles/cloudfunctions.developer`
+  * Storage Admin: `roles/storage.admin`
+  * Pub/Sub Admin: `roles/pubsub.admin`
+  * Service Account User: `roles/iam.serviceAccountUser`
+* Organization level
+  * Security Center Sources Editor: `roles/securitycenter.sourcesEditor`
+  * Security Admin: `roles/iam.securityAdmin`
 
 You you are deploying this module in the logging project of the Terraform Example Foundation using the Terraform Service account created in the Foundation it already has all the necessary permissions in the logging project.
 

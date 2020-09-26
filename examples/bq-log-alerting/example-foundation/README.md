@@ -1,37 +1,46 @@
-# Example: Deploy BigQuery Log Alerting solution in terraform-example-foundation
+# Example: BigQuery Log Alerting solution
 
-The solution deploys the BigQuery Log Alerting submodule in the logging project created in step `1 org` of the [terraform-example-foundation](https://github.com/terraform-google-modules/terraform-example-foundation).
+This example deploys the BigQuery Log Alerting submodule in an existing project.
 
 ## Prerequisites
 
 To run this example, you'll need:
 
-- To deploy the terraform-example-foundation up to step `1-org`.
-- To use the Terraform Service Account and the Terraform state bucket created in the terraform-example-foundation step `0-bootstrap`.
-- To enable [Google App Engine](https://cloud.google.com/appengine) in the terraform-example-foundation logging project.
+- An existing "logging" project
+- A [Log export](https://github.com/terraform-google-modules/terraform-google-log-export) with a [BigQuery destination](https://github.com/terraform-google-modules/terraform-google-log-export/tree/master/modules/bigquery) in the logging project. The export filter should include at least:
+  - "logName: /logs/cloudaudit.googleapis.com%2Factivity"
+  - "logName: /logs/cloudaudit.googleapis.com%2Fdata_access"
+  - "logName: /logs/compute.googleapis.com%2Fvpc_flows"
+- A Terraform Service Account with the [IAM Roles](../../../modules/bq-log-alerting/README.md) listed in the module documentation.
+- To enable the [APIs](../../../modules/bq-log-alerting/README.md) listed in the module documentation in the logging project.
+- To enable [Google App Engine](https://cloud.google.com/appengine) in the logging project.
 To enable it manually use:
 
 ```shell
 gcloud app create \
---region=<DEFAULT_REGION> \
+--region=<REGION> \
 --project=<LOGGING_PROJECT> \
 --impersonate-service-account=<TERRAFORM_SERVICE_ACCOUNT_EMAIL>
 ```
 
-**Note:** The selected Google App Engine region cannot be changed after creation.
+**Note 1:** The selected Google App Engine region cannot be changed after creation.
 
-**Note:** On deployment a Security Command Center Source called "BQ Log Alerts" will be created. If this source already exist due to the solution been deployed at least once before, run `gcloud scc sources describe <ORG_ID> --source-display-name="BQ Log Alerts"  --format="value(name)" --impersonate-service-account=<TERRAFORM_SERVICE_ACCOUNT_EMAIL>` to obtain the Source name to be used for the terraform variable **source_name**.
+**Note 2:** On deployment a Security Command Center Source called "BQ Log Alerts" will be created. If this source already exist due to the solution been deployed at least once before,  obtain the existing Source name to be used in the terraform variable **source_name**. Run:
+
+```shell
+gcloud scc sources describe <ORG_ID> \
+--source-display-name="BQ Log Alerts" \
+--format="value(name)" \
+--impersonate-service-account=<TERRAFORM_SERVICE_ACCOUNT_EMAIL>
+```
+
+The [terraform-example-foundation](https://github.com/terraform-google-modules/terraform-example-foundation) can be used as a reference for the creation of the project, service account and log export.
 
 ## Instructions
 
-1. Fill the required variables in the `terraform.tfvars.sample` file located in this directory and rename the file to `terraform.tfvars`.
-1. Run the Terraform automation:
-   1. Run `terraform init`
-   1. Run `terraform plan` and review output.
-   1. Run `terraform apply`
-1. Rename file `backend.tf.sample` to `backend.tf` and update `backend.tf` with the terraform-example-foundation Terraform state GCS bucket.
-1. Re-run `terraform init` and agree to copy state to GCS when prompted
-    1. (Optional) Run `terraform apply` to verify state is configured correctly
+1. Run `terraform init`
+1. Run `terraform plan` provide the requested variables values and review the output.
+1. Run `terraform apply`
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
