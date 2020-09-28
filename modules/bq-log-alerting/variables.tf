@@ -35,6 +35,24 @@ variable "logging_project" {
   type        = string
 }
 
+variable "job_schedule" {
+  description = "The schedule on which the job will be executed in the unix-cron string format (https://cloud.google.com/scheduler/docs/configuring/cron-job-schedules#defining_the_job_schedule). Defaults to 15 minutes."
+  type        = string
+  default     = "*/15 * * * *"
+}
+
+variable "time_window_unit" {
+  description = "The time window unit used in the query in the view in BigQuery. Valid values are 'MICROSECOND', 'MILLISECOND', 'SECOND', 'MINUTE', 'HOUR'"
+  type        = string
+  default     = "MINUTE"
+}
+
+variable "time_window_quantity" {
+  description = "The time window quantity used in the query in the view in BigQuery."
+  type        = string
+  default     = "20"
+}
+
 variable "dry_run" {
   description = "Enable dry_run execution of the Cloud Function. If is true it will just print the object the would be converted as a finding"
   type        = bool

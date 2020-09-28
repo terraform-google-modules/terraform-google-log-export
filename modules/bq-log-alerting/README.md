@@ -6,14 +6,16 @@ This submodule allows you to configure a BigQuery Log Alerting solution on GCP. 
 
 ### Cloud Logging
 
-The high-level overview of the solution is that log sinks are created to send all Cloud Audit Logs and VPC Flow Logs to BigQuery located in a centralized logging project.
+The high-level overview of the solution is that [log sinks](https://github.com/terraform-google-modules/terraform-google-log-export) send all Cloud Audit Logs and VPC Flow Logs to [BigQuery](https://github.com/terraform-google-modules/terraform-google-log-export/tree/master/modules/bigquery) located in a centralized logging project.
 Custom views in BigQuery are created that look for specific activities in these logs, defined by a SQL query, e.g. looking for events that match `v1.compute.routes.insert` or `v1.compute.routes.delete`.
-On a regular interval (default 15 minutes), Cloud Scheduler writes a message containing a time window parameter (default 20 minutes) to PubSub.
+On a regular interval (`job_schedule` variable , default 15 minutes), Cloud Scheduler writes a message containing a time window parameter (`time_window_quantity` and `time_window_quantity` variables, default 20 minutes) to PubSub.
 This 15 minute schedule with 20 minute window is used to ensure some overlap between runs of the function, to catch cases where events may occur just as the Cloud Function run has kicked-off.
 The message in PubSub acts as the trigger for the Google Cloud Function (GCF) which reads from the views that exist (one for each use case) and writes any events it finds to Cloud Security Command Center (CSCC).
 These events are called "findings" in CSCC parlance and represent events that are actionable, e.g. can close them after investigation.
 Any duplicate findings are ignored, as the unique ID for the finding is generated from a series of constants describing a particular event, and is thus repeatable.
 This represents the overall flow of alerts in this solution.
+
+**Note:** If you want to change the Cloud Scheduler interval and the time window parameter make sure to ensure some overlap between runs of the function.
 
 ### Security Command Center
 
@@ -63,9 +65,14 @@ order to invoke this module.
 
 ### General
 
+* You need an existing "logging" project.
+* A [Log export](https://github.com/terraform-google-modules/terraform-google-log-export) with a [BigQuery destination](https://github.com/terraform-google-modules/terraform-google-log-export/tree/master/modules/bigquery) in the logging project. The export filter should include at least:
+  * "logName: /logs/cloudaudit.googleapis.com%2Factivity"
+  * "logName: /logs/cloudaudit.googleapis.com%2Fdata_access"
+  * "logName: /logs/compute.googleapis.com%2Fvpc_flows"
 * It is necessary to use a Service Account to authenticate the Google Terraform provider to be able to create the Security Command Center "BQ Log Alerts" Source.
 This is a restriction of the Security Command Center API
-* [Google App Engine](https://cloud.google.com/appengine) must be enabled in the project. To enable it manually use:
+* [Google App Engine](https://cloud.google.com/appengine) must be enabled in the logging project. To enable it manually use:
 
 ```shell
 gcloud app create \
@@ -75,11 +82,6 @@ gcloud app create \
 ```
 
 **Note:** The selected region cannot be changed after creation.
-
-### Software Dependencies
-
-* [Terraform][terraform-site] v0.12
-* [Terraform Provider for Google Cloud Platform][terraform-provider-gcp-site] v2.5
 
 ### IAM Roles
 
@@ -111,16 +113,24 @@ following APIs enabled:
 * Cloud Storage API: `storage-component.googleapis.com`
 * Security Command Center API: `securitycenter.googleapis.com`
 
+### Software Dependencies
+
+* [Terraform][terraform-site] v0.12
+* [Terraform Provider for Google Cloud Platform][terraform-provider-gcp-site] v2.5
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | dry\_run | Enable dry_run execution of the Cloud Function. If is true it will just print the object the would be converted as a finding | bool | `"false"` | no |
+| job\_schedule | The schedule on which the job will be executed in the unix-cron string format (https://cloud.google.com/scheduler/docs/configuring/cron-job-schedules#defining_the_job_schedule). Defaults to 15 minutes. | string | `"*/15 * * * *"` | no |
 | logging\_project | The project to deploy the solution | string | n/a | yes |
 | org\_id | The organization id for the associated services | string | n/a | yes |
 | region | Region for BigQuery resources. | string | n/a | yes |
 | source\_name | The Security Command Center Source name for the "BQ Log Alerts" Source if the source had been created before. The format is `organizations/<ORG_ID>/sources/<SOURCE_ID>` | string | `""` | no |
+| time\_window\_quantity | The time window quantity used in the query in the view in BigQuery. | string | `"20"` | no |
+| time\_window\_unit | The time window unit used in the query in the view in BigQuery. Valid values are 'MICROSECOND', 'MILLISECOND', 'SECOND', 'MINUTE', 'HOUR' | string | `"MINUTE"` | no |
 
 ## Outputs
 

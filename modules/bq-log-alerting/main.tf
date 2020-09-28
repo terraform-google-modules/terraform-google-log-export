@@ -86,8 +86,8 @@ module "bq-log-alerting" {
   project_id                     = var.logging_project
   job_name                       = "bq-alerts-event-trigger"
   job_description                = "publish to pubsub to trigger cloud function"
-  job_schedule                   = "*/15 * * * *"
-  message_data                   = base64encode("{\"unit\":\"MINUTE\",\"quantity\":\"20\"}")
+  job_schedule                   = var.job_schedule
+  message_data                   = base64encode("{\"unit\":\"${var.time_window_unit}\",\"quantity\":\"${var.time_window_quantity}\"}")
   function_description           = "read from BQ view to generate alerts"
   function_entry_point           = "cronPubSub"
   function_source_directory      = "${path.module}/logging/cloud_function"
