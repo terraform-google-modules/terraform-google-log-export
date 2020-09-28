@@ -19,8 +19,8 @@ variable "org_id" {
   type        = string
 }
 
-variable "terraform_service_account" {
-  description = "Service account email of the account to impersonate to run Terraform."
+variable "credentials_path" {
+  description = "Path to a service account credentials file with rights to run Terraform. Service Account must have the roles listed in the Requirements section of the README file."
   type        = string
 }
 

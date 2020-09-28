@@ -14,28 +14,16 @@
  * limitations under the License.
  */
 
-provider "google" {
-  alias = "impersonate"
-
-  scopes = [
-    "https://www.googleapis.com/auth/cloud-platform",
-    "https://www.googleapis.com/auth/userinfo.email",
-  ]
+locals {
+  credentials_file_path = var.credentials_path
 }
 
-data "google_service_account_access_token" "default" {
-  provider               = google.impersonate
-  target_service_account = var.terraform_service_account
-  scopes                 = ["userinfo-email", "cloud-platform"]
-  lifetime               = "600s"
-}
-
-/******************************************
-  Provider credential configuration
- *****************************************/
+/*****************************
+  Provider configuration
+ ****************************/
 provider "google" {
-  access_token = data.google_service_account_access_token.default.access_token
-  version      = "~> 3.30"
+  credentials = file(local.credentials_file_path)
+  version     = "~> 3.30"
 }
 
 module "bq-log-alerting" {
