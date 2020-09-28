@@ -25,7 +25,7 @@ locals {
 # Service account creation #
 #--------------------------#
 resource "random_string" "service_account" {
-  length  = 12
+  length  = 6
   upper   = "false"
   number  = "false"
   special = "false"
