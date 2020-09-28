@@ -66,7 +66,7 @@ function createFindingObject (source_name, labels) {
       state: 'ACTIVE',
       // Resource the finding is associated with.  This is an
       // example any resource identifier can be used.
-      resourceName: '//' + labels.serviceName + '/' + labels.resourceName,
+      resourceName: labels.resourceName,
       // A free-form category.
       category: "" + labels.query,
       // The time associated with discovering the issue.
