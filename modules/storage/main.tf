@@ -32,12 +32,11 @@ resource "google_project_service" "enable_destination_api" {
 # Storage bucket #
 #----------------#
 resource "google_storage_bucket" "bucket" {
-  name               = var.storage_bucket_name
-  project            = google_project_service.enable_destination_api.project
-  storage_class      = var.storage_class
-  location           = var.location
-  force_destroy      = true
-  bucket_policy_only = var.bucket_policy_only
+  name                        = var.storage_bucket_name
+  project                     = google_project_service.enable_destination_api.project
+  storage_class               = var.storage_class
+  location                    = var.location
+  uniform_bucket_level_access = var.bucket_policy_only
 }
 
 #--------------------------------#
@@ -48,4 +47,3 @@ resource "google_storage_bucket_iam_member" "storage_sink_member" {
   role   = "roles/storage.objectCreator"
   member = var.log_sink_writer_identity
 }
-
