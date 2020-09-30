@@ -46,3 +46,9 @@ variable "bucket_policy_only" {
   type        = bool
   default     = false
 }
+
+variable "expiration_days" {
+  description = "Object expiration time. If unset logs will never be deleted."
+  type        = number
+  default     = null
+}
