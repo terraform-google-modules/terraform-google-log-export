@@ -37,9 +37,9 @@ so that all dependencies are met.
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | dataset\_name | The name of the bigquery dataset to be created and used for log entries matching the filter. | string | n/a | yes |
-| default\_table\_expiration\_ms | Default table expiration time (in ms) | number | `"3600000"` | no |
 | delete\_contents\_on\_destroy | (Optional) If set to true, delete all the tables in the dataset when destroying the resource; otherwise, destroying the resource will fail if tables are present. | bool | `"true"` | no |
 | description | A use-friendly description of the dataset | string | `"Log export dataset"` | no |
+| expiration\_days | Table expiration time. If unset logs will never be deleted. | number | `"null"` | no |
 | labels | Dataset labels | map(string) | `<map>` | no |
 | location | The location of the storage bucket. | string | `"US"` | no |
 | log\_sink\_writer\_identity | The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module). | string | n/a | yes |
