@@ -41,10 +41,10 @@ variable "delete_contents_on_destroy" {
   default     = true
 }
 
-variable "default_table_expiration_ms" {
-  description = "Default table expiration time (in ms)"
+variable "expiration_days" {
+  description = "Table expiration time. If unset logs will never be deleted."
   type        = number
-  default     = 3600000
+  default     = null
 }
 
 variable "description" {
