@@ -46,3 +46,9 @@ variable "uniform_bucket_level_access" {
   type        = bool
   default     = true
 }
+
+variable "expiration_days" {
+  description = "Object expiration time. If unset logs will never be deleted."
+  type        = number
+  default     = null
+}

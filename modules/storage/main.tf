@@ -37,6 +37,19 @@ resource "google_storage_bucket" "bucket" {
   storage_class               = var.storage_class
   location                    = var.location
   uniform_bucket_level_access = var.uniform_bucket_level_access
+
+  dynamic "lifecycle_rule" {
+    for_each = var.expiration_days == null ? [] : [var.expiration_days]
+    content {
+      action {
+        type = "Delete"
+      }
+      condition {
+        age        = var.expiration_days
+        with_state = "ANY"
+      }
+    }
+  }
 }
 
 #--------------------------------#
