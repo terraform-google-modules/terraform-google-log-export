@@ -21,7 +21,8 @@ SELECT
   protopayload_auditlog.serviceName,
   CONCAT('//', protopayload_auditlog.serviceName, '/projects/', resource.labels.project_id) as resourceName,
   bindings.role,
-  bindings.member
+  bindings.member,
+  insertId
 FROM
   `${project}.${dataset}.cloudaudit_googleapis_com_activity_*`
   CROSS JOIN UNNEST(

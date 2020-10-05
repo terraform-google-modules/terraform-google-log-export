@@ -19,6 +19,7 @@ WITH log_table AS (
     protopayload_auditlog.requestMetadata.callerIp AS callerIp,
     protopayload_auditlog.authenticationInfo.principalEmail AS principalEmail,
     logName,
+    log.insertId,
     log.resource.labels.project_id AS projectId,
     REGEXP_EXTRACT(authInfo.resource,'services/([^/]*)') AS serviceName
   FROM
@@ -40,6 +41,7 @@ SELECT
   callerIp,
   CONCAT('//', serviceName, '/projects/', projectId) as resourceName,
   principalEmail,
+  insertId,
   serviceName
 FROM
   log_table

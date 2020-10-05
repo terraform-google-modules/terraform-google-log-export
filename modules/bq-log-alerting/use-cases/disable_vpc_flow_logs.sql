@@ -17,6 +17,7 @@ SELECT
   timestamp as eventTimestamp,
   protopayload_auditlog.requestMetadata.callerIp,
   protopayload_auditlog.authenticationInfo.principalEmail,
+  protopayload_auditlog.serviceName,
   resource.labels.project_id,
   resource.labels.location,
   resource.labels.subnetwork_id,
