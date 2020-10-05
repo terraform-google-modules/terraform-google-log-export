@@ -38,7 +38,7 @@ so that all dependencies are met.
 |------|-------------|:----:|:-----:|:-----:|
 | dataset\_name | The name of the bigquery dataset to be created and used for log entries matching the filter. | string | n/a | yes |
 | default\_table\_expiration\_ms | Default table expiration time (in ms) | number | `"3600000"` | no |
-| delete\_contents\_on\_destroy | (Optional) If set to true, delete all the tables in the dataset when destroying the resource; otherwise, destroying the resource will fail if tables are present. | bool | `"true"` | no |
+| delete\_contents\_on\_destroy | (Optional) If set to true, delete all the tables in the dataset when destroying the resource; otherwise, destroying the resource will fail if tables are present. | bool | `"false"` | no |
 | description | A use-friendly description of the dataset | string | `"Log export dataset"` | no |
 | labels | Dataset labels | map(string) | `<map>` | no |
 | location | The location of the storage bucket. | string | `"US"` | no |
