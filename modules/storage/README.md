@@ -37,6 +37,7 @@ so that all dependencies are met.
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | bucket\_policy\_only | Enables Bucket Policy Only access to a bucket. | bool | `"false"` | no |
+| expiration\_days | Object expiration time. If unset logs will never be deleted. | number | `"null"` | no |
 | location | The location of the storage bucket. | string | `"US"` | no |
 | log\_sink\_writer\_identity | The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module). | string | n/a | yes |
 | project\_id | The ID of the project in which the storage bucket will be created. | string | n/a | yes |
