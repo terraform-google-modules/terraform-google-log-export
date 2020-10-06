@@ -15,7 +15,7 @@ module "gcs" {
 - version           = "v4.0"
 + version           = "v5.0"
 
-+  delete_contents_on_destroy    = true
++ delete_contents_on_destroy    = true
 
 - default_table_expiration_ms = 3600000 # 1 hour
 + expiration_days             = 1 # 1 day
