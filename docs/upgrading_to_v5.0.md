@@ -1,7 +1,7 @@
 # Upgrading to Log Export v5.0
 
 The v5.0 release of Log Export is a backwards incompatible release and features many quality of life improvements.
-Changes are only made to the storage and bigquery submodules.
+Breaking changes have only been made to the storage and bigquery submodules.
 Other modules can safely update the version without needing any changes.
 
 ## Migration Instructions
