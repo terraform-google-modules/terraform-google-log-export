@@ -6,7 +6,7 @@ Other modules can safely update the version without needing any changes.
 
 ## Migration Instructions
 
-NOTE: Users should prefer to let terraform update their resources to the newer defaults.
+NOTE: Users should prefer to let Terraform update their resources to the newer defaults.
 To preserve the existing defaults, see below:
 
 ```diff
