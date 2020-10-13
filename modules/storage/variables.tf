@@ -53,7 +53,7 @@ variable "expiration_days" {
   default     = null
 }
 
-variable "retention_policy" {
+variable "retention_days" {
   description = "Configuration of the bucket's data retention policy for how long objects in the bucket should be retained."
   type = object({
     is_locked        = bool

@@ -54,10 +54,10 @@ resource "google_storage_bucket" "bucket" {
   }
 
   dynamic "retention_policy" {
-    for_each = var.retention_policy == null ? [] : [var.retention_policy]
+    for_each = var.retention_days == null ? [] : [var.retention_days]
     content {
-      is_locked        = var.retention_policy.is_locked
-      retention_period = var.retention_policy.retention_period
+      is_locked        = var.retention_days.is_locked
+      retention_period = var.retention_days.retention_period
     }
   }
 }
