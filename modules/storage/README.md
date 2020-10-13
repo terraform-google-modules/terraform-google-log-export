@@ -41,7 +41,7 @@ so that all dependencies are met.
 | location | The location of the storage bucket. | string | `"US"` | no |
 | log\_sink\_writer\_identity | The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module). | string | n/a | yes |
 | project\_id | The ID of the project in which the storage bucket will be created. | string | n/a | yes |
-| retention\_days | Configuration of the bucket's data retention policy for how long objects in the bucket should be retained. | object | `"null"` | no |
+| retention\_policy | Configuration of the bucket's data retention policy for how long objects in the bucket should be retained. | object | `"null"` | no |
 | storage\_bucket\_name | The name of the storage bucket to be created and used for log entries matching the filter. | string | n/a | yes |
 | storage\_class | The storage class of the storage bucket. | string | `"MULTI_REGIONAL"` | no |
 
