@@ -38,7 +38,7 @@ variable "location" {
 variable "storage_class" {
   description = "The storage class of the storage bucket."
   type        = string
-  default     = null
+  default     = "STANDARD"
 }
 
 variable "uniform_bucket_level_access" {
