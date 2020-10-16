@@ -38,7 +38,7 @@ variable "location" {
 variable "storage_class" {
   description = "The storage class of the storage bucket."
   type        = string
-  default     = null
+  default     = "STANDARD"
 }
 
 variable "uniform_bucket_level_access" {
@@ -57,4 +57,13 @@ variable "force_destroy" {
   description = "When deleting a bucket, this boolean option will delete all contained objects."
   type        = bool
   default     = false
+}
+
+variable "retention_policy" {
+  description = "Configuration of the bucket's data retention policy for how long objects in the bucket should be retained."
+  type = object({
+    is_locked             = bool
+    retention_period_days = number
+  })
+  default = null
 }
