@@ -10,7 +10,7 @@ NOTE: Users should prefer to let Terraform update their resources to the newer d
 To preserve the existing defaults, see below:
 
 ```diff
-module "gcs" {
+module "bq" {
   source            = "terraform-google-modules/log-export/google//modules/bigquery"
 - version           = "v4.0"
 + version           = "v5.0"
