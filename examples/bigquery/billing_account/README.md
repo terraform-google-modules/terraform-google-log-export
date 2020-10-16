@@ -6,9 +6,9 @@ This example configures a billing-account-level log sink that feeds a bigquery d
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| parent\_resource\_id | The ID of the project in which BigQuery dataset destination will be created. | string | n/a | yes |
-| project\_id | The ID of the project in which the log export will be created. | string | n/a | yes |
+|------|-------------|------|---------|:--------:|
+| parent\_resource\_id | The ID of the project in which BigQuery dataset destination will be created. | `string` | n/a | yes |
+| project\_id | The ID of the project in which the log export will be created. | `string` | n/a | yes |
 
 ## Outputs
 

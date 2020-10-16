@@ -35,15 +35,15 @@ so that all dependencies are met.
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| expiration\_days | Object expiration time. If unset logs will never be deleted. | number | `"null"` | no |
-| force\_destroy | When deleting a bucket, this boolean option will delete all contained objects. | bool | `"false"` | no |
-| location | The location of the storage bucket. | string | `"US"` | no |
-| log\_sink\_writer\_identity | The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module). | string | n/a | yes |
-| project\_id | The ID of the project in which the storage bucket will be created. | string | n/a | yes |
-| storage\_bucket\_name | The name of the storage bucket to be created and used for log entries matching the filter. | string | n/a | yes |
-| storage\_class | The storage class of the storage bucket. | string | `"null"` | no |
-| uniform\_bucket\_level\_access | Enables Uniform bucket-level access access to a bucket. | bool | `"true"` | no |
+|------|-------------|------|---------|:--------:|
+| expiration\_days | Object expiration time. If unset logs will never be deleted. | `number` | `null` | no |
+| force\_destroy | When deleting a bucket, this boolean option will delete all contained objects. | `bool` | `false` | no |
+| location | The location of the storage bucket. | `string` | `"US"` | no |
+| log\_sink\_writer\_identity | The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module). | `string` | n/a | yes |
+| project\_id | The ID of the project in which the storage bucket will be created. | `string` | n/a | yes |
+| storage\_bucket\_name | The name of the storage bucket to be created and used for log entries matching the filter. | `string` | n/a | yes |
+| storage\_class | The storage class of the storage bucket. | `string` | `null` | no |
+| uniform\_bucket\_level\_access | Enables Uniform bucket-level access access to a bucket. | `bool` | `true` | no |
 
 ## Outputs
 
@@ -54,6 +54,6 @@ so that all dependencies are met.
 | project | The project in which the storage bucket was created. |
 | resource\_id | The resource id for the destination storage bucket |
 | resource\_name | The resource name for the destination storage bucket |
-| self\_link | The self_link URI for the destination storage bucket |
+| self\_link | The self\_link URI for the destination storage bucket |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
