@@ -38,19 +38,25 @@ variable "location" {
 variable "storage_class" {
   description = "The storage class of the storage bucket."
   type        = string
-  default     = "MULTI_REGIONAL"
+  default     = "STANDARD"
 }
 
-variable "bucket_policy_only" {
-  description = "Enables Bucket Policy Only access to a bucket."
+variable "uniform_bucket_level_access" {
+  description = "Enables Uniform bucket-level access access to a bucket."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "expiration_days" {
   description = "Object expiration time. If unset logs will never be deleted."
   type        = number
   default     = null
+}
+
+variable "force_destroy" {
+  description = "When deleting a bucket, this boolean option will delete all contained objects."
+  type        = bool
+  default     = false
 }
 
 variable "retention_policy" {
