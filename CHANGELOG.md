@@ -4,6 +4,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.0.0](https://www.github.com/terraform-google-modules/terraform-google-log-export/compare/v4.1.0...v5.0.0) (2020-10-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* improvements to gcs and bigquery defaults (#64)
+* replace bq expiration with expiration days for consistency with storage (#65)
+* add support for expiration days in storage module (#63)
+
+### Features
+
+* Add retention policy support ([#68](https://www.github.com/terraform-google-modules/terraform-google-log-export/issues/68)) ([22b94a6](https://www.github.com/terraform-google-modules/terraform-google-log-export/commit/22b94a65cbcd87940789c7296f6bc1e5978a4c33))
+* add support for expiration days in storage module ([#63](https://www.github.com/terraform-google-modules/terraform-google-log-export/issues/63)) ([add774a](https://www.github.com/terraform-google-modules/terraform-google-log-export/commit/add774ac1b7274a42a8c9bab8e466e53a64169aa))
+* improvements to gcs and bigquery defaults ([#64](https://www.github.com/terraform-google-modules/terraform-google-log-export/issues/64)) ([5a3b925](https://www.github.com/terraform-google-modules/terraform-google-log-export/commit/5a3b9256344434b022416d4e69d122c7d2ccdf71))
+* replace bq expiration with expiration days for consistency with storage ([#65](https://www.github.com/terraform-google-modules/terraform-google-log-export/issues/65)) ([a643101](https://www.github.com/terraform-google-modules/terraform-google-log-export/commit/a643101c8a08095524617d67f317ce7b7e6e78ab))
+
+
+### Bug Fixes
+
+* Bump provider version ([#61](https://www.github.com/terraform-google-modules/terraform-google-log-export/issues/61)) ([50c2f8f](https://www.github.com/terraform-google-modules/terraform-google-log-export/commit/50c2f8f11fbf76c5e38b4ce55003a3c26590f48f)), closes [#60](https://www.github.com/terraform-google-modules/terraform-google-log-export/issues/60)
+
 ## [4.1.0](https://www.github.com/terraform-google-modules/terraform-google-log-export/compare/v4.0.1...v4.1.0) (2020-08-28)
 
 
