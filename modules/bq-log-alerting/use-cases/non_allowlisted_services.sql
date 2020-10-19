@@ -50,4 +50,4 @@ WHERE
   AND NOT REGEXP_CONTAINS(
     serviceName,
     'dns.googleapis.com|iap.googleapis.com|compute.googleapis.com|file.googleapis.com|stackdriver.googleapis.com'
-  ); 
+  );

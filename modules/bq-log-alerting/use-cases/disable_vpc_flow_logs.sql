@@ -37,4 +37,4 @@ WHERE
       protopayload_auditlog.requestJson,
       '$.logConfig.enable'
     ) = "false"
-  ); 
+  );

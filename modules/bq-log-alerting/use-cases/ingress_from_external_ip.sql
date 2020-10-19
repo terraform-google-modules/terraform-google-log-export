@@ -48,4 +48,4 @@ WHERE
     OR NET.IP_TRUNC(src_ip_parsed, 16) = b"\x23\xBF\x00\x00" # 35.191.0.0/16 GLB range.
   )
 LIMIT
-  50; # Currently implemented to limit the noisy results 
+  50; # Currently implemented to limit the noisy results
