@@ -12,7 +12,7 @@ On a regular interval (`job_schedule` variable , default 15 minutes), Cloud Sche
 This 15 minute schedule with 20 minute window is used to ensure some overlap between runs of the function, to catch cases where events may occur just as the Cloud Function run has kicked-off.
 The message in PubSub acts as the trigger for the Google Cloud Function (GCF) which reads from the views that exist (one for each use case) and writes any events it finds to Cloud Security Command Center (CSCC).
 These events are called "findings" in CSCC parlance and represent events that are actionable, e.g. can close them after investigation.
-Any duplicate findings are ignored, as the unique ID for the finding is generated from a series of constants describing a particular event, and is thus repeatable.
+Any duplicate findings are ignored, as the unique ID for the finding (a MD5 hash calculated from the concatenation of the bq view name, the eventTimestamp, the callerIp, the principalEmail and the resourceName) is generated describing a particular event, and is thus repeatable.
 This represents the overall flow of alerts in this solution.
 
 **Note:** If you want to change the Cloud Scheduler interval and the time window parameter make sure to ensure some overlap between runs of the function.
