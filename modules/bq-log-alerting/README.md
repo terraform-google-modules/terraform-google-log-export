@@ -6,7 +6,7 @@ This submodule allows you to configure a BigQuery Log Alerting solution on GCP. 
 
 ### Cloud Logging
 
-The high-level overview of the solution is that [log sinks](https://github.com/terraform-google-modules/terraform-google-log-export) send all Cloud Audit Logs and VPC Flow Logs to [BigQuery](https://github.com/terraform-google-modules/terraform-google-log-export/tree/master/modules/bigquery) located in a centralized logging project.
+The overview of this solution is as follows. [Log sinks](https://github.com/terraform-google-modules/terraform-google-log-export) sends all Cloud Audit Logs and VPC Flow Logs to [BigQuery](https://github.com/terraform-google-modules/terraform-google-log-export/tree/master/modules/bigquery) located in a centralized logging project.
 Custom views in BigQuery are created that look for specific activities in these logs, defined by a SQL query, e.g. looking for events that match `v1.compute.routes.insert` or `v1.compute.routes.delete`.
 On a regular interval (`job_schedule` variable , default 15 minutes), Cloud Scheduler writes a message containing a time window parameter (`time_window_quantity` and `time_window_quantity` variables, default 20 minutes) to PubSub.
 This 15 minute schedule with 20 minute window is used to ensure some overlap between runs of the function, to catch cases where events may occur just as the Cloud Function run has kicked-off.
@@ -96,7 +96,7 @@ The Service Account which will be used to invoke this module must have the follo
   * Security Center Sources Editor: `roles/securitycenter.sourcesEditor`
   * Security Admin: `roles/iam.securityAdmin`
 
-You you are deploying this module in the logging project of the Terraform Example Foundation using the Terraform Service account created in the Foundation it already has all the necessary permissions in the logging project.
+If you are deploying this module in the logging project of the Terraform Example Foundation using the Terraform Service account created in the Foundation, it already has all the necessary permissions in the logging project.
 
 ### APIs
 
