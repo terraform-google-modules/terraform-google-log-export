@@ -19,16 +19,6 @@ variable "org_id" {
   type        = string
 }
 
-variable "credentials_path" {
-  description = "Path to a service account credentials file with rights to run Terraform. Service Account must have the roles listed in the Requirements section of the README file."
-  type        = string
-}
-
-variable "region" {
-  description = "Region for BigQuery resources."
-  type        = string
-}
-
 variable "source_name" {
   description = "The Security Command Center Source name for the \"BQ Log Alerts\" Source if the source had been created before. The format is `organizations/<ORG_ID>/sources/<SOURCE_ID>`"
   type        = string
@@ -38,10 +28,4 @@ variable "source_name" {
 variable "logging_project" {
   description = "The project to deploy the solution"
   type        = string
-}
-
-variable "dry_run" {
-  description = "Enable dry_run execution of the Cloud Function. If is true it will just print the object the would be converted as a finding"
-  type        = bool
-  default     = false
 }

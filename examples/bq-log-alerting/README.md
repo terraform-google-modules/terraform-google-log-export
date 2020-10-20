@@ -47,11 +47,8 @@ The [terraform-example-foundation](https://github.com/terraform-google-modules/t
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| credentials\_path | Path to a service account credentials file with rights to run Terraform. Service Account must have the roles listed in the Requirements section of the README file. | string | n/a | yes |
-| dry\_run | Enable dry_run execution of the Cloud Function. If is true it will just print the object the would be converted as a finding | bool | `"false"` | no |
 | logging\_project | The project to deploy the solution | string | n/a | yes |
 | org\_id | The organization id for the associated services | string | n/a | yes |
-| region | Region for BigQuery resources. | string | n/a | yes |
 | source\_name | The Security Command Center Source name for the "BQ Log Alerts" Source if the source had been created before. The format is `organizations/<ORG_ID>/sources/<SOURCE_ID>` | string | `""` | no |
 
 ## Outputs

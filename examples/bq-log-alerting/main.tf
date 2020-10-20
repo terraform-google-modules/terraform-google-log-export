@@ -14,23 +14,18 @@
  * limitations under the License.
  */
 
-locals {
-  credentials_file_path = var.credentials_path
-}
-
 /*****************************
   Provider configuration
  ****************************/
 provider "google" {
-  credentials = file(local.credentials_file_path)
-  version     = "~> 3.30"
+  version = "~> 3.30"
 }
 
 module "bq-log-alerting" {
   source          = "../..//modules/bq-log-alerting"
   logging_project = var.logging_project
-  region          = var.region
+  region          = "us-east4"
   org_id          = var.org_id
   source_name     = var.source_name
-  dry_run         = var.dry_run
+  dry_run         = false
 }
