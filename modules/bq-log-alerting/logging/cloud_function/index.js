@@ -27,28 +27,6 @@ const result_name = 'securityalert_result';
 const source_name = process.env.CSCC_SOURCE;
 const dry_run = (process.env.DRY_RUN === 'true');
 
-// Not currently used, was for original version of the cloud function
-getMetric = function(name, labels) {
-  return {
-    type: `custom.googleapis.com/${name}`,
-    labels: labels
-  };
-}
-
-getResource = function(labels) {
-  return {
-    type: 'global',
-    labels: labels
-  };
-}
-
-getTimeseries = function(value) {
-  return [{
-    interval: {endTime: {seconds: Date.now() / 1000}},
-    value: value
-  }];
-}
-
 function createFindingObject (source_name, labels) {
   const eventTime = new Date(labels.eventTimestamp.value).getTime();
   const sourceProperties = {};
