@@ -116,7 +116,7 @@ following APIs enabled:
 ### Software Dependencies
 
 * [Terraform][terraform-site] v0.12
-* [Terraform Provider for Google Cloud Platform][terraform-provider-gcp-site] v2.5
+* [Terraform Provider for Google Cloud Platform][terraform-provider-gcp-site] v3.25.0
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
