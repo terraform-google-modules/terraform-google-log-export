@@ -101,8 +101,12 @@ exports.cronPubSub = async function (event, context, callback) {
     const cscc_client = new SecurityCenterClient();
     const pubsubMessage = event;
     const payload = JSON.parse(Buffer.from(pubsubMessage.data, 'base64').toString()||'{}');
-    const quantity = parseInt(pubsubMessage.attributes ? (pubsubMessage.attributes.quantity ? pubsubMessage.attributes.quantity : 1) : (payload ? ( payload.quantity ? payload.quantity : 1) : 1));
-    const unit = pubsubMessage.attributes ? (pubsubMessage.attributes.unit ? pubsubMessage.attributes.unit : 'HOUR') : (payload ? ( payload.unit ? payload.unit : 'HOUR') : 'HOUR');
+    const payloadQuantity = payload ? payload.quantity : '';
+    const attributeQuantity = pubsubMessage.attributes ? pubsubMessage.attributes.quantity : '';
+    const quantity = parseInt(payloadQuantity ? payloadQuantity : (attributeQuantity ? attributeQuantity : 1));
+    const payloadUnit = payload ? payload.unit : '';
+    const attributeUnit = pubsubMessage.attributes ? pubsubMessage.attributes.unit : '';
+    const unit = payloadUnit ? payloadUnit : (attributeUnit ? attributeUnit : 'HOUR');
     const createTime = new Date();
 
     if (!Number.isInteger(quantity)) {
