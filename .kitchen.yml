@@ -147,3 +147,16 @@ suites:
           backend: gcp
           controls:
             - gcp
+  - name: "bq-log-alerting"
+    driver:
+      root_module_directory: test/fixtures/bq-log-alerting/
+    verifier:
+      systems:
+        - name: local
+          backend: local
+          controls:
+            - gcloud
+        - name: inspec-gcp
+          backend: gcp
+          controls:
+            - gcp
