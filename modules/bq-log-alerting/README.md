@@ -124,6 +124,8 @@ following APIs enabled:
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | dry\_run | Enable dry_run execution of the Cloud Function. If is true it will just print the object the would be converted as a finding | bool | `"false"` | no |
+| function\_memory | The amount of memory in megabytes allotted for the Cloud function to use. | number | `"256"` | no |
+| function\_timeout | The amount of time in seconds allotted for the execution of the function. | number | `"540"` | no |
 | job\_schedule | The schedule on which the job will be executed in the unix-cron string format (https://cloud.google.com/scheduler/docs/configuring/cron-job-schedules#defining_the_job_schedule). Defaults to 15 minutes. | string | `"*/15 * * * *"` | no |
 | logging\_project | The project to deploy the solution | string | n/a | yes |
 | org\_id | The organization id for the associated services | string | n/a | yes |

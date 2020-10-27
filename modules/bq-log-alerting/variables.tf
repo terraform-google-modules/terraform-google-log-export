@@ -58,3 +58,15 @@ variable "dry_run" {
   type        = bool
   default     = false
 }
+
+variable "function_timeout" {
+  description = "The amount of time in seconds allotted for the execution of the function."
+  type        = number
+  default     = "540"
+}
+
+variable "function_memory" {
+  description = "The amount of memory in megabytes allotted for the Cloud function to use."
+  type        = number
+  default     = "256"
+}
