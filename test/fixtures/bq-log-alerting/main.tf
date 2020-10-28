@@ -16,10 +16,10 @@
 
 module "bq-log-alerting" {
   source               = "../../../modules/bq-log-alerting"
-  org_id               = var.org_id
+  org_id               = var.parent_resource_organization
   region               = var.region
   source_name          = var.source_name
-  logging_project      = var.logging_project
+  logging_project      = var.project_id
   job_schedule         = var.job_schedule
   time_window_unit     = var.time_window_unit
   time_window_quantity = var.time_window_quantity

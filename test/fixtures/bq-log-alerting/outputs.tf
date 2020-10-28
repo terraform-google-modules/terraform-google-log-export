@@ -45,7 +45,7 @@ output "bq_views_dataset_id" {
 }
 
 output "logging_project" {
-  value       = var.logging_project
+  value       = var.project_id
   description = "The name of the job created"
 }
 

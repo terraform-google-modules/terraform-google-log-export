@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-variable "org_id" {
+variable "parent_resource_organization" {
   description = "The organization id for the associated services"
   type        = string
 }
@@ -22,6 +22,7 @@ variable "org_id" {
 variable "region" {
   description = "Region for BigQuery resources."
   type        = string
+  default     = "us-central1"
 }
 
 variable "source_name" {
@@ -30,7 +31,7 @@ variable "source_name" {
   default     = ""
 }
 
-variable "logging_project" {
+variable "project_id" {
   description = "The project to deploy the solution"
   type        = string
 }
