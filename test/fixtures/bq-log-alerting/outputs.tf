@@ -60,7 +60,7 @@ output "region" {
 }
 
 output "org_id" {
-  value       = var.org_id
+  value       = var.parent_resource_organization
   description = "The organization id for the associated services"
 }
 
