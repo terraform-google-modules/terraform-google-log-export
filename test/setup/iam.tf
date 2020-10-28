@@ -42,6 +42,9 @@ locals {
     # Needed for the bq-log-alerting submodule to create/delete a cloud function
     "roles/cloudfunctions.developer",
 
+    # Needed for the bq-log-alerting submodule to grant service account roles
+    "roles/iam.serviceAccountUser",
+
     # Needed for the bq-log-alerting submodule to create/delete a cloud scheduler job
     "roles/cloudscheduler.admin"
   ]
