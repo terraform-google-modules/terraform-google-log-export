@@ -41,6 +41,9 @@ locals {
 
     # Needed for the bq-log-alerting submodule to create/delete a cloud function
     "roles/cloudfunctions.developer",
+
+    # Needed for the bq-log-alerting submodule to create/delete a cloud scheduler job
+    "roles/cloudscheduler.admin"
   ]
 
   log_export_billing_account_roles = [
@@ -58,8 +61,8 @@ locals {
     # Required to create a Security Center Source
     "roles/securitycenter.sourcesEditor",
 
-    # Required to create findings
-    "roles/iam.securityAdmin",
+    # Required to get/set IAM policies
+    "roles/resourcemanager.organizationAdmin",
   ]
 
   log_export_folder_roles = [
