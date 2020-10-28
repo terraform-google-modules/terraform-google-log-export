@@ -38,6 +38,9 @@ locals {
 
     # Required to create log sinks from the project level
     "roles/logging.configWriter",
+
+    # Needed for the bq-log-alerting submodule to create/delete a cloud function
+    "roles/cloudfunctions.developer",
   ]
 
   log_export_billing_account_roles = [
@@ -51,6 +54,12 @@ locals {
 
     # Required to associate billing accounts to new projects
     "roles/billing.projectManager",
+
+    # Required to create a Security Center Source
+    "roles/securitycenter.sourcesEditor",
+
+    # Required to create findings
+    "roles/iam.securityAdmin",
   ]
 
   log_export_folder_roles = [
