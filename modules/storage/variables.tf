@@ -42,7 +42,7 @@ variable "storage_class" {
 }
 
 variable "uniform_bucket_level_access" {
-  description = "Enables Uniform bucket-level access access to a bucket."
+  description = "Enables Uniform bucket-level access to a bucket."
   type        = bool
   default     = true
 }
