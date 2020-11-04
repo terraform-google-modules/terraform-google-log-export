@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [5.0.1](https://www.github.com/terraform-google-modules/terraform-google-log-export/compare/v5.0.0...v5.0.1) (2020-11-04)
+
+
+### Bug Fixes
+
+* typo on documentation variable ([#71](https://www.github.com/terraform-google-modules/terraform-google-log-export/issues/71)) ([82b95b5](https://www.github.com/terraform-google-modules/terraform-google-log-export/commit/82b95b50abedb4338d199110f9bf1bdfc74b4ab4))
+
 ## [5.0.0](https://www.github.com/terraform-google-modules/terraform-google-log-export/compare/v4.1.0...v5.0.0) (2020-10-16)
 
 
