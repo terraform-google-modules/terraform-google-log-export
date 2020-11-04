@@ -44,7 +44,7 @@ so that all dependencies are met.
 | retention\_policy | Configuration of the bucket's data retention policy for how long objects in the bucket should be retained. | <pre>object({<br>    is_locked             = bool<br>    retention_period_days = number<br>  })</pre> | `null` | no |
 | storage\_bucket\_name | The name of the storage bucket to be created and used for log entries matching the filter. | `string` | n/a | yes |
 | storage\_class | The storage class of the storage bucket. | `string` | `"STANDARD"` | no |
-| uniform\_bucket\_level\_access | Enables Uniform bucket-level access access to a bucket. | `bool` | `true` | no |
+| uniform\_bucket\_level\_access | Enables Uniform bucket-level access to a bucket. | `bool` | `true` | no |
 
 ## Outputs
 
