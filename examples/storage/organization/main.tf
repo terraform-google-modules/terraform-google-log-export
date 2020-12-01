@@ -36,5 +36,6 @@ module "destination" {
   project_id               = var.project_id
   storage_bucket_name      = "storage_org_${random_string.suffix.result}"
   log_sink_writer_identity = module.log_export.writer_identity
+  versioning               = true
 }
 

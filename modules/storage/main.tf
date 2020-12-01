@@ -39,6 +39,10 @@ resource "google_storage_bucket" "bucket" {
   force_destroy               = var.force_destroy
   uniform_bucket_level_access = var.uniform_bucket_level_access
 
+  versioning {
+    enabled = var.versioning
+  }
+
   dynamic "lifecycle_rule" {
     for_each = var.expiration_days == null ? [] : [var.expiration_days]
     content {
