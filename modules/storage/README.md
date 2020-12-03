@@ -45,6 +45,7 @@ so that all dependencies are met.
 | storage\_bucket\_name | The name of the storage bucket to be created and used for log entries matching the filter. | `string` | n/a | yes |
 | storage\_class | The storage class of the storage bucket. | `string` | `"STANDARD"` | no |
 | uniform\_bucket\_level\_access | Enables Uniform bucket-level access to a bucket. | `bool` | `true` | no |
+| versioning | Toggles bucket versioning, ability to retain a non-current object version when the live object version gets replaced or deleted. | `bool` | `false` | no |
 
 ## Outputs
 

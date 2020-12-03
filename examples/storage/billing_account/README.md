@@ -1,6 +1,6 @@
 # Log Export: Storage destination at Billing Account level
 
-This example configures a billing-account-level log sink that feeds a storage bucket destination
+This example configures a billing-account-level log sink that feeds a storage bucket destination. Storage bucket versioning is turned on to mitigate possible modify or delete log events.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
