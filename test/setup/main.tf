@@ -26,6 +26,11 @@ module "project" {
   skip_gcloud_download = true
 
   activate_apis = [
+    "appengine.googleapis.com",
+    "cloudbuild.googleapis.com",
+    "cloudfunctions.googleapis.com",
+    "cloudscheduler.googleapis.com",
+    "securitycenter.googleapis.com",
     "cloudresourcemanager.googleapis.com",
     "oslogin.googleapis.com",
     "serviceusage.googleapis.com",
