@@ -46,10 +46,10 @@ The [terraform-example-foundation](https://github.com/terraform-google-modules/t
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| logging\_project | The project to deploy the solution | string | n/a | yes |
-| org\_id | The organization id for the associated services | string | n/a | yes |
-| source\_name | The Security Command Center Source name for the "BQ Log Alerts" Source if the source had been created before. The format is `organizations/<ORG_ID>/sources/<SOURCE_ID>` | string | `""` | no |
+|------|-------------|------|---------|:--------:|
+| logging\_project | The project to deploy the solution | `string` | n/a | yes |
+| org\_id | The organization id for the associated services | `string` | n/a | yes |
+| source\_name | The Security Command Center Source name for the "BQ Log Alerts" Source if the source had been created before. The format is `organizations/<ORG_ID>/sources/<SOURCE_ID>` | `string` | `""` | no |
 
 ## Outputs
 

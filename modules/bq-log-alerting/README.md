@@ -122,17 +122,17 @@ following APIs enabled:
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| dry\_run | Enable dry_run execution of the Cloud Function. If is true it will just print the object the would be converted as a finding | bool | `"false"` | no |
-| function\_memory | The amount of memory in megabytes allotted for the Cloud function to use. | number | `"256"` | no |
-| function\_timeout | The amount of time in seconds allotted for the execution of the function. | number | `"540"` | no |
-| job\_schedule | The schedule on which the job will be executed in the unix-cron string format (https://cloud.google.com/scheduler/docs/configuring/cron-job-schedules#defining_the_job_schedule). Defaults to 15 minutes. | string | `"*/15 * * * *"` | no |
-| logging\_project | The project to deploy the solution | string | n/a | yes |
-| org\_id | The organization id for the associated services | string | n/a | yes |
-| region | Region for BigQuery resources. | string | n/a | yes |
-| source\_name | The Security Command Center Source name for the "BQ Log Alerts" Source if the source had been created before. The format is `organizations/<ORG_ID>/sources/<SOURCE_ID>` | string | `""` | no |
-| time\_window\_quantity | The time window quantity used in the query in the view in BigQuery. | string | `"20"` | no |
-| time\_window\_unit | The time window unit used in the query in the view in BigQuery. Valid values are 'MICROSECOND', 'MILLISECOND', 'SECOND', 'MINUTE', 'HOUR' | string | `"MINUTE"` | no |
+|------|-------------|------|---------|:--------:|
+| dry\_run | Enable dry\_run execution of the Cloud Function. If is true it will just print the object the would be converted as a finding | `bool` | `false` | no |
+| function\_memory | The amount of memory in megabytes allotted for the Cloud function to use. | `number` | `"256"` | no |
+| function\_timeout | The amount of time in seconds allotted for the execution of the function. | `number` | `"540"` | no |
+| job\_schedule | The schedule on which the job will be executed in the unix-cron string format (https://cloud.google.com/scheduler/docs/configuring/cron-job-schedules#defining_the_job_schedule). Defaults to 15 minutes. | `string` | `"*/15 * * * *"` | no |
+| logging\_project | The project to deploy the solution | `string` | n/a | yes |
+| org\_id | The organization id for the associated services | `string` | n/a | yes |
+| region | Region for BigQuery resources. | `string` | n/a | yes |
+| source\_name | The Security Command Center Source name for the "BQ Log Alerts" Source if the source had been created before. The format is `organizations/<ORG_ID>/sources/<SOURCE_ID>` | `string` | `""` | no |
+| time\_window\_quantity | The time window quantity used in the query in the view in BigQuery. | `string` | `"20"` | no |
+| time\_window\_unit | The time window unit used in the query in the view in BigQuery. Valid values are 'MICROSECOND', 'MILLISECOND', 'SECOND', 'MINUTE', 'HOUR' | `string` | `"MINUTE"` | no |
 
 ## Outputs
 
