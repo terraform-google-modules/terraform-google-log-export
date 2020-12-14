@@ -118,7 +118,7 @@ Anomalous usage is the use of the terraform service account by someone that is n
 - Query File: `superadmin_login_v2.sql`
 - Description: This use case creates an alert for a variety of login events including success, failure, suspicious login, and login verification required, for super administrator accounts. While the current implementation includes a list of email addresses to be monitored, it can be assumed that all logins represent an event, since only super admin accounts are verified through Cloud Identity.
 - Usage: Change the values of `<user1>@<domain>` and `<user2>@<domain>` with the users that you want to monitor.
-- Testing: First make sure that you enabled the [Admin audit log](https://supportproject_id.google.com/a/answer/4579579?hl=en) to export logs to GCP. If you deploy the module on a organization level, you just need to login to generate an alert. If you deployed on a folder then:
+- Testing: First make sure that you enabled the [Admin audit log](https://support.google.com/a/answer/9320190?hl=en) to export logs to GCP. If you deploy the module on a organization level, you just need to login to generate an alert. If you deployed on a folder then:
 
 Create a new sink on the organization to catch the logs:
 
