@@ -12,8 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This a 'v2' use case because it uses a different log source than the original
-
 SELECT
   timestamp AS eventTimestamp,
   receiveTimestamp,
