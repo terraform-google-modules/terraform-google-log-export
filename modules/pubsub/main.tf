@@ -93,6 +93,7 @@ resource "google_pubsub_subscription" "pubsub_subscription" {
   name    = "${local.topic_name}-subscription"
   project = var.project_id
   topic   = local.topic_name
+  labels  = var.subscription_labels
 }
 
 resource "google_pubsub_subscription" "pubsub_push_subscription" {

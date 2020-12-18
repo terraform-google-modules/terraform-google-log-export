@@ -20,6 +20,12 @@ variable "create_subscriber" {
   default     = false
 }
 
+variable "subscription_labels" {
+  type        = map(string)
+  default     = {}
+  description = "A set of key/value label pairs to assign to the pubsub subscription."
+}
+
 variable "create_push_subscriber" {
   description = "Whether to add a push configuration to the subcription. If 'true', a push subscription is created along with a service account that is granted roles/pubsub.subscriber and roles/pubsub.viewer to the topic."
   type        = bool
