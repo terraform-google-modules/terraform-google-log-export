@@ -1,29 +1,33 @@
 # Use Cases
 
-After install the BigQuery Log Alerting Solution, you will need to add some use cases to see the application working.
+After install the BigQuery Log Alerting tool, you will need to add some use cases to see it working.
 We provided a few examples in this repository, with some queries that can be use to populate Security Command Center with findings.
 
 ## Prerequisites
 
-1. BigQuery Log Alerting Solution installed.
+1. BigQuery Log Alerting tool installed.
 1. BigQuery log Sinks created.
 1. Tables created by the sinks logs exported ( e.g.: `cloudaudit_googleapis_com_activity_*`)
 1. To have permission to create BigQuery views in the logging project.
 
 ## General Usage
 
-In this folder you will find several SQL files, you must change the variables `${project}`and `${dataset}`
-to the real logging project id and log sink dataset name created in the BigQuery log Sinks deploy. Follow the specific usage of **each use case** for more details.
+In this folder you will find several SQL files, you must change the variables `${project}`and `${dataset}` in each file
+to the real logging project id and log sink dataset name created in the BigQuery log Sinks deploy.
+Follow the specific usage of **each use case** for more details.
 
 After this, you can follow the instruction of [How create Views in BigQuery](https://cloud.google.com/bigquery/docs/views#console) using the queries on the files.
 
-You **must** save the views on `views` dataset for the solution to work. You can use the files names as views names if you want. The view name will be used for the category of the finding that will be created.
+You **must** save the views on the `views` dataset for the tool to work.
+You can use the files names as views names if you want.
+The view name will be used for the **category** of the finding that will be created.
 
 ## Cases description
 
 ### Services not on Allow List
 
 - Query File: `non_allowlisted_services.sql`
+- Query Table used: `cloudaudit_googleapis_com_activity_*`
 - Description: This use case aims to alert when a service outside of the accepted list of services is enabled for a project. This list is hardcoded in the query. The current list is:
   - dns.googleapis.com
   - iap.googleapis.com
@@ -38,7 +42,7 @@ You **must** save the views on `views` dataset for the solution to work. You can
 - Testing: Just enable a service that is not present in the list like `translate.googleapis.com`. You can enable a service running the following command:
 
 ```bash
-export project_id=<Any project that its audit logs go to the sink>
+export project_id=<Any project that sends its audit logs go to the sink>
 gcloud services enable \
 translate.googleapis.com \
 --project ${project_id}
@@ -47,6 +51,7 @@ translate.googleapis.com \
 ### IAM Policy granted on User Outside of Customer Approved Domain List
 
 - Query File: `iam_role_add.sql`
+- Query Table used: `cloudaudit_googleapis_com_activity_*`
 - Description: This use case alerts on any IAM role being granted on a user with a domain outside of an approved list. The approved domain list is hardcoded within the view query like `%domain1.com%` and `%domain2.com%`.
 - Usage: Change the values `%domain1.com%` and `%domain2.com%` with your respective domains like `%yourrealdomain1.com%` and `%yourrealdomain2.com%`.
 - Testing: Grant a permission to a user outside your domains in GCP console or using gcloud commands like:
@@ -60,6 +65,7 @@ gcloud projects add-iam-policy-binding <PROJECT_ID> \
 ### Alert on Changes to Logging
 
 - Query File: `logging_changes.sql`
+- Query Table used: `cloudaudit_googleapis_com_activity_*`
 - Description: This use case aims to detect any modifications made to logging within a project. This includes creating or deleting log sinks, or deleting logs themselves. This does not include modifications to VPC flow logs.
 - Usage: The query doesn't need changes besides the ones described in section [General Usage](./README.md#general-usage) .
 - Testing: There are some ways to generate logs:
@@ -74,6 +80,7 @@ gcloud projects add-iam-policy-binding <PROJECT_ID> \
 ### Alert on VPC Flow Logs being disabled
 
 - Query File: `disable_vpc_flow_logs.sql`
+- Query Table used: `cloudaudit_googleapis_com_activity_*`
 - Description: This creates an alert when VPC flow logs for a particular subnet are disabled. It looks for modifications to the `gce_subnetwork` resource type where `enableFlowLogs = False`.
 - Usage: The query doesn't need changes besides the ones described in section [General Usage](./README.md#general-usage).
 - Testing: Go to GCP console, select a subnetwork and edit its **Flow logs** option to **off**
@@ -81,6 +88,7 @@ gcloud projects add-iam-policy-binding <PROJECT_ID> \
 ### Add or Remove Routes
 
 - Query File: `add_remove_routes.sql`
+- Query Table used: `cloudaudit_googleapis_com_activity_*`
 - Description: This creates an alert when GCE Route is created or deleted.
 - Usage: The query doesn't need changes besides the ones described in section [General Usage](./README.md#general-usage).
 - Testing: Go to GCP console and create or delete a GCE Route.
@@ -88,6 +96,7 @@ gcloud projects add-iam-policy-binding <PROJECT_ID> \
 ### VPC Flow logs with ingress from IP Addresses outside of expected private address ranges
 
 - Query File: `ingress_from_external_ip.sql`
+- Query Table used: `compute_googleapis_com_vpc_flows_*`
 - Description: This use case examines the VPC flow logs for all source projects and looks for ingress from IPs outside of known good IP ranges, such as on premise IPs or Google Cloud IPs. Those IP ranges are hardcoded in the query.
 - Usage: To look for a new IP ranges just add a new `OR` clause in the query like: `OR NET.IP_TRUNC(src_ip_parsed, NETMASK) = b"\xDD\xDD\xDD\xDD"` where `NETMASK` is the value of the netmask and `\xDD\xDD\xDD\xDD"` is the IP range in hexadecimal format. Make sure to substitute correctly the `DD` to hexadecimal values and to maintain the `\xDD` format.
 - Testing: First make sure that VPC Flow logs are enabled. If already have a gce instance, its communication to google address will produce the logs.
@@ -95,6 +104,7 @@ gcloud projects add-iam-policy-binding <PROJECT_ID> \
 ### Abnormal amount of data movement out of the cloud
 
 - Query File: `bytes_sent.sql`
+- Query Table used: `compute_googleapis_com_vpc_flows_*`
 - Description: This use case creates an alert when a VM sends an amount of data beyond a specific threshold to an unknown, or untrusted IP address. This is done by examining the bytes sent field of the VPC flow logs, summing over the amount of data sent between a pair of particular IPs. Those IP ranges are hardcoded in the query as well as the data threshold.
 - Usage: To look for a new range of IPs just add a new `OR` clause in the query like: `OR NET.IP_TRUNC(NET.SAFE_IP_FROM_STRING(jsonPayload.connection.dest_ip),NETMASK) = b"\xDD\xDD\xDD\xDD"` where `NETMASK` is the value of the netmask and `\xDD\xDD\xDD\xDD"` is the IP range in hexadecimal format. Make sure to substitute correctly the `DD` to hexadecimal values and to maintain the `\xDD` format. To change the data threshold just change the `ẀHERE bytes_sent > 1E9;` clause with a new value
 - Testing: First make sure that VPC Flow logs are enabled. If you already have a VM instance you can reduce the data threshold to see the logs.
@@ -102,6 +112,7 @@ gcloud projects add-iam-policy-binding <PROJECT_ID> \
 ### Anomalous Privileged Terraform Service Account Usage
 
 - Query File: `anomalous_terraform_sa_usage.sql`
+- Query Table used: `cloudaudit_googleapis_com_activity_*`
 - Description: This use case creates an alert for anomalous usage of a privileged service account that is used by a CI/CD work flow to deploy the infrastructure using terraform.
 Anomalous usage is the use of the terraform service account by someone that is not the CI/CD service account. See [Terraform Example Foundation](https://github.com/terraform-google-modules/terraform-example-foundation) for [Google Cloud Build](https://cloud.google.com/cloud-build) or Jenkins examples of CI/CD to deploy infrastructure.
 - Usage: Change the values of `<TERRAFORM_SERVICE_ACCOUNT_EMAIL>` and `<CICD_SERVICE_ACCOUNT_EMAIL>`:
@@ -115,7 +126,8 @@ Anomalous usage is the use of the terraform service account by someone that is n
 
 **NOTE:** This use case needs configurations on **organization level**.
 
-- Query File: `superadmin_login_v2.sql`
+- Query File: `superadmin_login.sql`
+- Query Table used: `cloudaudit_googleapis_com_data_access_*`
 - Description: This use case creates an alert for a variety of login events including success, failure, suspicious login, and login verification required, for super administrator accounts. While the current implementation includes a list of email addresses to be monitored, it can be assumed that all logins represent an event, since only super admin accounts are verified through Cloud Identity.
 - Usage: Change the values of `<user1>@<domain>` and `<user2>@<domain>` with the users that you want to monitor.
 - Testing: First make sure that you enabled the [Admin audit log](https://support.google.com/a/answer/9320190?hl=en) to export logs to GCP. If you deploy the module on a organization level, you just need to login to generate an alert. If you deployed on a folder then:

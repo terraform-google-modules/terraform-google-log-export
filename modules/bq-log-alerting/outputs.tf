@@ -21,7 +21,7 @@ output "name" {
 
 output "pubsub_topic_name" {
   value       = module.bq-log-alerting.pubsub_topic_name
-  description = "PubSub topic name"
+  description = "Pub/Sub topic name"
 }
 
 output "scheduler_job" {

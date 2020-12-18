@@ -59,7 +59,7 @@ resource "google_scc_source" "bq_log_alerts" {
   count        = var.source_name == "" ? 1 : 0
   display_name = "BQ Log Alerts"
   organization = var.org_id
-  description  = "Findings from BQ Alerting Solution"
+  description  = "Findings from BQ Alerting tool"
 }
 
 #------------------------#
