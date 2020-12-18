@@ -20,14 +20,24 @@ SELECT
   protopayload_auditlog.authenticationInfo.principalEmail,
   protopayload_auditlog.resourceName,
   protopayload_auditlog.methodName,
-  protopayload_auditlog.authenticationInfo.serviceAccountDelegationInfo[OFFSET(0)].firstPartyPrincipal.principalEmail AS originalPrincipalEmail,
+  CASE ARRAY_LENGTH(protopayload_auditlog.authenticationInfo.serviceAccountDelegationInfo)
+    WHEN 0 THEN "No Impersonation"
+  ELSE
+  protopayload_auditlog.authenticationInfo.serviceAccountDelegationInfo[
+OFFSET
+  (0)].firstPartyPrincipal.principalEmail
+END
+  AS originalPrincipalEmail
 FROM
   `${project}.${dataset}.cloudaudit_googleapis_com_activity_*`
 WHERE
   protopayload_auditlog.authenticationInfo.principalEmail = "<TERRAFORM_SERVICE_ACCOUNT_EMAIL>"
-  AND ARRAY_LENGTH(protopayload_auditlog.authenticationInfo.serviceAccountDelegationInfo) > 0
-  AND "<CICD_SERVICE_ACCOUNT_EMAIL>" NOT IN (
-    SELECT
-      firstPartyPrincipal.principalEmail
-    FROM
-      UNNEST(protopayload_auditlog.authenticationInfo.serviceAccountDelegationInfo))
+  AND ((ARRAY_LENGTH(protopayload_auditlog.authenticationInfo.serviceAccountDelegationInfo) > 0
+      AND "<CICD_SERVICE_ACCOUNT_EMAIL>" NOT IN (
+      SELECT
+        firstPartyPrincipal.principalEmail
+      FROM
+        UNNEST(protopayload_auditlog.authenticationInfo.serviceAccountDelegationInfo)))
+    OR ((ARRAY_LENGTH(protopayload_auditlog.authenticationInfo.serviceAccountDelegationInfo) = 0)
+      AND NOT operation.last = TRUE)
+    OR protopayload_auditlog.authenticationInfo.serviceAccountKeyName IS NOT NULL)
