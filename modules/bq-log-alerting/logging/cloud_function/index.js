@@ -67,7 +67,12 @@ async function createFinding(cscc_client, source_name, labels) {
     }
     return 1;
   } catch (err) {
-    console.error("" + err);
+    let errorMsg = "" + err;
+    if (!errorMsg.includes("6 ALREADY_EXISTS")) {
+      throw new Error(errorMsg);
+    } else {
+      console.log("createFinding: " + errorMsg);
+    }
   }
   return 0;
 }
@@ -113,7 +118,7 @@ exports.cronPubSub = async function (event, context, callback) {
       throw new Error(`Quantity ${quantity} is not an integer.`);
     }
     if (unit !== 'MICROSECOND' && unit !== 'MILLISECOND' && unit !== 'SECOND' && unit !== 'MINUTE' && unit !== 'HOUR'){
-      throw new Error('Unit %s is not in valid list (see docs for BigQuery standard SQL)', unit);
+      throw new Error(`Unit ${unit} is not in valid list (see docs for BigQuery standard SQL)`);
     }
 
     console.log('quantity: ' + quantity + ' unit: '+ unit);
@@ -135,6 +140,7 @@ exports.cronPubSub = async function (event, context, callback) {
         findingCount += await createFindingsFromResult(cscc_client, source_name, table_name, result);
       } catch (err) {
         console.error("" + err);
+        throw new Error("" + err);
       }
     }
     if (findingCount == 0) {
