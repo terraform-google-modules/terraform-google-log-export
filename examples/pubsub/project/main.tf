@@ -33,8 +33,10 @@ module "log_export" {
 module "destination" {
   source                   = "../../..//modules/pubsub"
   project_id               = var.project_id
+  topic_labels             = { topic_key : "topic_label" }
   topic_name               = "pubsub-project-${random_string.suffix.result}"
   log_sink_writer_identity = module.log_export.writer_identity
   create_subscriber        = true
+  subscription_labels      = { subscription_key : "subscription_label" }
 }
 
