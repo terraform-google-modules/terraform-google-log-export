@@ -1,4 +1,4 @@
-# Example: BigQuery Log Alerting solution
+# Example: BigQuery Log Alerting
 
 This example deploys the BigQuery Log Alerting submodule in an existing project.
 
@@ -25,7 +25,8 @@ gcloud app create \
 
 **Note 1:** The selected Google App Engine region cannot be changed after creation.
 
-**Note 2:** On deployment a Security Command Center Source called "BQ Log Alerts" will be created. If this source already exist due to the solution been deployed at least once before,  obtain the existing Source name to be used in the terraform variable **source_name**. Run:
+**Note 2:** On deployment a Security Command Center Source called "BQ Log Alerts" will be created. If this source already exist due to the submodule been deployed at least once before, you need to obtain the existing Source name to be used in the terraform variable **source_name**.
+Run:
 
 ```shell
 gcloud scc sources describe <ORG_ID> \
@@ -47,7 +48,7 @@ The [terraform-example-foundation](https://github.com/terraform-google-modules/t
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| logging\_project | The project to deploy the solution | `string` | n/a | yes |
+| logging\_project | The project to deploy the submodule | `string` | n/a | yes |
 | org\_id | The organization id for the associated services | `string` | n/a | yes |
 | source\_name | The Security Command Center Source name for the "BQ Log Alerts" Source if the source had been created before. The format is `organizations/<ORG_ID>/sources/<SOURCE_ID>` | `string` | `""` | no |
 

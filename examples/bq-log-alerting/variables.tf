@@ -26,6 +26,6 @@ variable "source_name" {
 }
 
 variable "logging_project" {
-  description = "The project to deploy the solution"
+  description = "The project to deploy the submodule"
   type        = string
 }
