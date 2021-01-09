@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-output "name" {
+output "cloud_scheduler_job_name" {
   value       = module.bq-log-alerting.name
-  description = "The name of the job created"
+  description = "The name of the Cloud Scheduler job created"
 }
 
 output "pubsub_topic_name" {
@@ -24,7 +24,7 @@ output "pubsub_topic_name" {
   description = "Pub/Sub topic name"
 }
 
-output "scheduler_job" {
+output "cloud_scheduler_job" {
   value       = module.bq-log-alerting.scheduler_job
   description = "The Cloud Scheduler job instance"
 }

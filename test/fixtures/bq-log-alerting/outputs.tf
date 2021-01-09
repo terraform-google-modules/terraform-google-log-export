@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-output "name" {
-  value       = module.bq-log-alerting.name
-  description = "The name of the job created"
+output "cloud_scheduler_job_name" {
+  value       = module.bq-log-alerting.cloud_scheduler_job_name
+  description = "The name of the Cloud Scheduler job created"
 }
 
 output "pubsub_topic_name" {
@@ -24,8 +24,8 @@ output "pubsub_topic_name" {
   description = "PubSub topic name"
 }
 
-output "scheduler_job" {
-  value       = module.bq-log-alerting.scheduler_job
+output "cloud_scheduler_job" {
+  value       = module.bq-log-alerting.cloud_scheduler_job
   description = "The Cloud Scheduler job instance"
 }
 
@@ -61,7 +61,7 @@ output "region" {
 
 output "org_id" {
   value       = var.parent_resource_organization
-  description = "The organization id for the associated services"
+  description = "The organization ID for the associated services"
 }
 
 output "job_schedule" {

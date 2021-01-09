@@ -15,7 +15,7 @@
  */
 
 variable "parent_resource_organization" {
-  description = "The organization id for the associated services"
+  description = "The organization ID for the associated services"
   type        = string
 }
 

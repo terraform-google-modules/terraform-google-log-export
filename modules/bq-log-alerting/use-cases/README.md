@@ -1,28 +1,28 @@
 # Use Cases
 
-After install the BigQuery Log Alerting tool, you will need to add some use cases to see it working.
+After installing the BigQuery Log Alerting tool, you will need to add some use cases to see it working.
 We provided a few examples in this repository, with some queries that can be use to populate Security Command Center with findings.
 
 ## Prerequisites
 
 1. BigQuery Log Alerting tool installed.
-1. BigQuery log Sinks created.
+1. BigQuery log sinks created.
 1. Tables created by the sinks logs exported ( e.g.: `cloudaudit_googleapis_com_activity_*`)
 1. To have permission to create BigQuery views in the logging project.
 
 ## General Usage
 
 In this folder you will find several SQL files, you must change the variables `${project}`and `${dataset}` in each file
-to the real logging project id and log sink dataset name created in the BigQuery log Sinks deploy.
+to the real logging project ID and log sink dataset name created in the BigQuery log sinks deploy.
 Follow the specific usage of **each use case** for more details.
 
 After this, you can follow the instruction of [How create Views in BigQuery](https://cloud.google.com/bigquery/docs/views#console) using the queries on the files.
 
 You **must** save the views on the `views` dataset for the tool to work.
-You can use the files names as views names if you want.
+You can use the filename as the view name, if you want.
 The view name will be used for the **category** of the finding that will be created.
 
-## Cases description
+## Use Case descriptions
 
 ### Services not on Allow List
 
@@ -143,4 +143,4 @@ Create a new sink on the organization to catch the logs:
   --organization=${organization_id}
 ```
 
-where `project_id` is the project id used to deploy the module.
+where `project_id` is the project ID used to deploy the module.

@@ -49,7 +49,8 @@ The [terraform-example-foundation](https://github.com/terraform-google-modules/t
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | logging\_project | The project to deploy the submodule | `string` | n/a | yes |
-| org\_id | The organization id for the associated services | `string` | n/a | yes |
+| org\_id | The organization ID for the associated services | `string` | n/a | yes |
+| region | Region for BigQuery resources. | `string` | n/a | yes |
 | source\_name | The Security Command Center Source name for the "BQ Log Alerts" Source if the source had been created before. The format is `organizations/<ORG_ID>/sources/<SOURCE_ID>` | `string` | `""` | no |
 
 ## Outputs
@@ -58,9 +59,9 @@ The [terraform-example-foundation](https://github.com/terraform-google-modules/t
 |------|-------------|
 | bq\_views\_dataset\_id | The ID of the BigQuery Views dataset |
 | cloud\_function\_service\_account\_email | The email of the service account created to be used by the cloud function |
-| name | The name of the job created |
+| cloud\_scheduler\_job | The Cloud Scheduler job instance |
+| cloud\_scheduler\_job\_name | The name of the Cloud Scheduler job created |
 | pubsub\_topic\_name | PubSub topic name |
-| scheduler\_job | The Cloud Scheduler job instance |
 | source\_name | The Security Command Center Source name for the "BQ Log Alerts" Source |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

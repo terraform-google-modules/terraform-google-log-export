@@ -4,7 +4,7 @@ depends:
     git: https://github.com/inspec/inspec-gcp.git
     tag: v1.8.0
 attributes:
-  - name: name
+  - name: cloud_scheduler_job_name
     required: true
     type: string
   - name: pubsub_topic_name

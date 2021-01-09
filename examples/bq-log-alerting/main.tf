@@ -24,7 +24,7 @@ provider "google" {
 module "bq-log-alerting" {
   source          = "../..//modules/bq-log-alerting"
   logging_project = var.logging_project
-  region          = "us-east4"
+  region          = var.region
   org_id          = var.org_id
   source_name     = var.source_name
   dry_run         = false

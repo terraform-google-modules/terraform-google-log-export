@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name = attribute('name')
+cloud_scheduler_job_name = attribute('cloud_scheduler_job_name')
 org_id = attribute('org_id')
 logging_project = attribute('logging_project')
 region = attribute('region')
