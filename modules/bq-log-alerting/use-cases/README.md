@@ -1,7 +1,7 @@
 # Use Cases
 
 After installing the BigQuery Log Alerting tool, you will need to add some use cases to see it working.
-We provided a few examples in this repository, with some queries that can be use to populate Security Command Center with findings.
+We provided a few examples in this submodule, with some queries that can be use to populate Security Command Center with findings.
 
 ## Prerequisites
 
@@ -81,7 +81,7 @@ gcloud projects add-iam-policy-binding <PROJECT_ID> \
 
 - Query File: `disable_vpc_flow_logs.sql`
 - Query Table used: `cloudaudit_googleapis_com_activity_*`
-- Description: This creates an alert when VPC flow logs for a particular subnet are disabled. It looks for modifications to the `gce_subnetwork` resource type where `enableFlowLogs = False`.
+- Description: This use case creates an alert when VPC flow logs for a particular subnet are disabled. It looks for modifications to the `gce_subnetwork` resource type where `enableFlowLogs = False`.
 - Usage: The query doesn't need changes besides the ones described in section [General Usage](./README.md#general-usage).
 - Testing: Go to GCP console, select a subnetwork and edit its **Flow logs** option to **off**
 
@@ -89,7 +89,7 @@ gcloud projects add-iam-policy-binding <PROJECT_ID> \
 
 - Query File: `add_remove_routes.sql`
 - Query Table used: `cloudaudit_googleapis_com_activity_*`
-- Description: This creates an alert when GCE Route is created or deleted.
+- Description: This use case creates an alert when a GCE Route is created or deleted.
 - Usage: The query doesn't need changes besides the ones described in section [General Usage](./README.md#general-usage).
 - Testing: Go to GCP console and create or delete a GCE Route.
 
@@ -130,9 +130,9 @@ Anomalous usage is the use of the terraform service account by someone that is n
 - Query Table used: `cloudaudit_googleapis_com_data_access_*`
 - Description: This use case creates an alert for a variety of login events including success, failure, suspicious login, and login verification required, for super administrator accounts. While the current implementation includes a list of email addresses to be monitored, it can be assumed that all logins represent an event, since only super admin accounts are verified through Cloud Identity.
 - Usage: Change the values of `<user1>@<domain>` and `<user2>@<domain>` with the users that you want to monitor.
-- Testing: First make sure that you enabled the [Admin audit log](https://support.google.com/a/answer/9320190?hl=en) to export logs to GCP. If you deploy the module on a organization level, you just need to login to generate an alert. If you deployed on a folder then:
+- Testing: First make sure that you enabled the [Admin audit log](https://support.google.com/a/answer/9320190?hl=en) to export logs to GCP. If you created the [Log Export](https://github.com/terraform-google-modules/terraform-google-log-export) at the organization level, you just need to login to generate an alert. If you create the Log Export at folder or project level then you will need to create a new log sink:
 
-Create a new sink on the organization to catch the logs:
+Create a new sink on the organization to catch the `data_access` logs:
 
 ```bash
   export project_id=<PROJECT_ID>
@@ -143,4 +143,4 @@ Create a new sink on the organization to catch the logs:
   --organization=${organization_id}
 ```
 
-where `project_id` is the project ID used to deploy the module.
+where `project_id` is the project ID used to deploy the submodule.

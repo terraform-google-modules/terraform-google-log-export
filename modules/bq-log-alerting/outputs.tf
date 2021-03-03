@@ -36,7 +36,7 @@ output "source_name" {
 
 output "cloud_function_service_account_email" {
   value       = google_service_account.gcf_service_account.email
-  description = "The email of the service account created to be used by the cloud function"
+  description = "The email of the service account created to be used by the Cloud Function"
 }
 
 output "bq_views_dataset_id" {

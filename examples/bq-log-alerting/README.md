@@ -11,21 +11,20 @@ To run this example, you'll need:
   - "logName: /logs/cloudaudit.googleapis.com%2Factivity"
   - "logName: /logs/cloudaudit.googleapis.com%2Fdata_access"
   - "logName: /logs/compute.googleapis.com%2Fvpc_flows"
-- A Terraform Service Account with the [IAM Roles](../../../modules/bq-log-alerting/README.md) listed in the module documentation.
-- To enable the [APIs](../../../modules/bq-log-alerting/README.md) listed in the module documentation in the logging project.
-- To enable [Google App Engine](https://cloud.google.com/appengine) in the logging project.
+- A Terraform Service Account with the [IAM Roles](../../../modules/bq-log-alerting/README.md) listed in the submodule documentation.
+- To enable in the logging project the [APIs](../../../modules/bq-log-alerting/README.md) listed in the submodule documentation.
+- To enable in the logging project [Google App Engine](https://cloud.google.com/appengine).
 To enable it manually use:
 
 ```shell
 gcloud app create \
 --region=<REGION> \
---project=<LOGGING_PROJECT> \
---impersonate-service-account=<TERRAFORM_SERVICE_ACCOUNT_EMAIL>
+--project=<LOGGING_PROJECT>
 ```
 
-**Note 1:** The selected Google App Engine region cannot be changed after creation.
+**Note 1:** The selected Google App Engine region cannot be changed after creation and only project Owners (`role/owner`) can enable Google App Engine.
 
-**Note 2:** On deployment a Security Command Center Source called "BQ Log Alerts" will be created. If this source already exist due to the submodule been deployed at least once before, you need to obtain the existing Source name to be used in the terraform variable **source_name**.
+**Note 2:** On deployment a Security Command Center Source called "BQ Log Alerts" will be created. If this source already exist due to the submodule been deployed at least once before, you need to obtain the existing Source name to be informed in the terraform variable **source_name**.
 Run:
 
 ```shell
@@ -35,7 +34,9 @@ gcloud scc sources describe <ORG_ID> \
 --impersonate-service-account=<TERRAFORM_SERVICE_ACCOUNT_EMAIL>
 ```
 
-The [terraform-example-foundation](https://github.com/terraform-google-modules/terraform-example-foundation) can be used as a reference for the creation of the project, service account and log export.
+The source name format is `organizations/<ORG_ID>/sources/<SOURCE_ID>`.
+
+The [terraform-example-foundation](https://github.com/terraform-google-modules/terraform-example-foundation) can be used as a reference for the creation of the logging project, the service account and the log export.
 
 ## Instructions
 

@@ -12,17 +12,17 @@ The overview of this tool is as follows:
 * Custom views in BigQuery are created that look for specific activities in these logs, defined by a SQL query, e.g. looking for events that match `v1.compute.routes.insert` or `v1.compute.routes.delete`.
 * On a regular interval (`job_schedule` variable , default 15 minutes), [Cloud Scheduler](https://cloud.google.com/scheduler/docs) writes a message containing a time window parameter (`time_window_quantity` and `time_window_unit` variables, default 20 minutes) to [Cloud Pub/Sub](https://cloud.google.com/pubsub).
 * This 15 minute schedule with 20 minute window is used to ensure some overlap between runs of the function, to catch cases where events may occur just as the [Cloud Function](https://cloud.google.com/functions) run has kicked-off.
-* The message in Pub/Sub acts as the trigger for the Cloud Function which reads from the views that exist (one for each use case) and writes any events it finds to Security Command Center.
+* The message posted in Cloud Pub/Sub acts as the trigger for the Cloud Function which reads from the views that exist (one for each use case) and writes any events it finds to Security Command Center.
 These events are called "findings" in Security Command Center parlance and represent events that are actionable, e.g. you can close them after investigation.
 * Any duplicate findings are ignored, as the unique ID for the finding (a MD5 hash calculated from the concatenation of the BigQuery view name, the eventTimestamp, the callerIp, the principalEmail and the resourceName) is generated describing a particular event, and is thus deterministic.
 
 This represents the overall flow of alerts in this tool.
 
-**Note:** If you want to change the Cloud Scheduler interval and the time window parameter make sure to ensure some overlap between runs of the function.
+**Note:** If you want to change the Cloud Scheduler [cron job interval](https://cloud.google.com/scheduler/docs/configuring/cron-job-schedules) (`job_schedule`) and the time window parameters (`time_window_quantity` and `time_window_unit`) make sure to to have some **overlap between runs of the function** so that there is no gap where log entries could be ignored.
 
 ### Cloud Logging and BigQuery
 
-Before using this submodule it is necesary to use the [root module](https://github.com/terraform-google-modules/terraform-google-log-export) to create a log export and the [BigQuery submodule](https://github.com/terraform-google-modules/terraform-google-log-export/tree/master/modules/bigquery) to create a destination for the logs.
+Before using this submodule it is necessary to use the [root module](https://github.com/terraform-google-modules/terraform-google-log-export) to create a log export and the [BigQuery submodule](https://github.com/terraform-google-modules/terraform-google-log-export/tree/master/modules/bigquery) to create a destination for the logs.
 
 The log export filter must have at least the logs listed in the general requirements section of this README to be used by the Log Alerting tool.
 
@@ -33,17 +33,17 @@ Security Command Center is an organization level tool that creates a single pane
 Custom findings, based on events, can be configured for a variety of sources and can be [exported](https://cloud.google.com/security-command-center/docs/how-to-notifications) to other tools or notification systems for follow-up, triage, and investigation.
 For this project, we make use of a custom source for all findings.
 
-To create this source we need to grant org. level Security Command Center permissions to the Terraform service account (`roles/securitycenter.sourcesEditor`).
+To create this source we need to grant the organization level Security Command Center role "Security Center Sources Editor" (`roles/securitycenter.sourcesEditor`) to the Terraform service account.
 
 Findings can be filtered based on "category", which corresponds to the particular use case for the alert.
-In order to create findings, we grant the alerting Cloud Function service account `roles/securitycenter.findingsEditor`.
+In order to create findings, we grant the BigQuery Log Alerting Cloud Function service account the "Security Center Findings Editor" role (`roles/securitycenter.findingsEditor`).
 
 **Note:** Security Command Center sources can only be created with a service account and
-for this to function, the Security Command Center API needs to be enabled in the Terraform admin project.
+for this to work, the Security Command Center API needs to be enabled in the Terraform admin project.
 
 ## Usage
 
-Basic usage of this module is as follows:
+Basic usage of this submodule is as follows:
 
 ```hcl
 module "bq-log-alerting" {
@@ -68,15 +68,14 @@ gcloud scc sources describe <ORG_ID> \
 
 The **source_name** format is `organizations/<ORG_ID>/sources/<SOURCE_ID>`.
 
-**Note 2:** The module has a **dry_run** optional mode (`dry_run = true`). In this mode, instead of creating the finding in Security Command Center the module writes the finding to Cloud Logging.
-
+**Note 2:** The submodule has a **dry_run** optional mode (`dry_run = true`). In this mode, instead of creating the finding in Security Command Center the submodule writes the finding to Cloud Logging. You can use the filter `resource.labels.function_name="generate-alerts" AND "DRY_RUN: scc finding:"` in the [Logs Explorer](https://console.cloud.google.com/logs/viewer) to find the logs created.
 
 ## Monitoring
 
 You can [monitor the execution of the Cloud Function](https://cloud.google.com/functions/docs/monitoring) execution using:
 
 * Google [Error Reporting](https://cloud.google.com/error-reporting/docs) and checking errors in the [Error Reporting dashboard](https://cloud.google.com/error-reporting/docs/viewing-errors)
-* Google [Monitoring]() adding a graph based in [Cloud Functions metrics](https://cloud.google.com/monitoring/api/metrics_gcp#gcp-cloudfunctions) for `function/execution_count` to your dashboard
+* Google [Monitoring](https://cloud.google.com/monitoring/docs) adding a graph based in [Cloud Functions metrics](https://cloud.google.com/monitoring/api/metrics_gcp#gcp-cloudfunctions) for `function/execution_count` to your dashboard
 * Google [Cloud Logging](https://cloud.google.com/logging/docs):
   * Filtering and exploring logs in the [Log Explorer](https://cloud.google.com/logging/docs/view/logs-viewer-interface) with query `resource.labels.function_name="generate-alerts"`
   * Creating a counter [User-defined metric](https://cloud.google.com/logging/docs/logs-based-metrics) to be used in a Cloud Monitoring dashboard with filter: `resource.labels.function_name="generate-alerts" AND severity>=ERROR`
@@ -88,7 +87,7 @@ We recommend configuring a [billing budget](https://cloud.google.com/billing/doc
 ## Requirements
 
 The following sections describe the requirements which must be met in
-order to invoke this module.
+order to invoke this submodule.
 
 ### General
 
@@ -104,15 +103,14 @@ This is a restriction of the Security Command Center API
 ```shell
 gcloud app create \
 --region=<REGION> \
---project=<LOGGING_PROJECT> \
---impersonate-service-account=<TERRAFORM_SERVICE_ACCOUNT_EMAIL>
+--project=<LOGGING_PROJECT>
 ```
 
-**Note:** The selected region cannot be changed after creation.
+**Note:** The selected region cannot be changed after creation and only project Owners (`role/owner`) can enable Google App Engine. If you are not an Owner of the project, but the service account is, you can add `--impersonate-service-account=<TERRAFORM_SERVICE_ACCOUNT_EMAIL>` to the command like it was used when the Security Command Center source was created.
 
 ### IAM Roles
 
-The service account which will be used to invoke this module must have the following IAM roles:
+The service account which will be used to invoke this submodule must have the following IAM roles:
 
 * Project level
   * Cloud Functions Developer: `roles/cloudfunctions.developer`
@@ -123,11 +121,11 @@ The service account which will be used to invoke this module must have the follo
   * Security Center Sources Editor: `roles/securitycenter.sourcesEditor`
   * Security Admin: `roles/iam.securityAdmin`
 
-If you are deploying this module in the logging project of the Terraform Example Foundation using the Terraform service account created in the Foundation, it already has all the necessary permissions in the logging project.
+If you are deploying this submodule in the logging project of the Terraform Example Foundation using the Terraform service account created in the Foundation, it already has all the necessary permissions in the logging project.
 
 ### APIs
 
-The project against which this module will be invoked must have the
+The project against which this submodule will be invoked must have the
 following APIs enabled:
 
 * App Engine Admin API: `appengine.googleapis.com`
@@ -166,7 +164,7 @@ following APIs enabled:
 | Name | Description |
 |------|-------------|
 | bq\_views\_dataset\_id | The ID of the BigQuery Views dataset |
-| cloud\_function\_service\_account\_email | The email of the service account created to be used by the cloud function |
+| cloud\_function\_service\_account\_email | The email of the service account created to be used by the Cloud Function |
 | cloud\_scheduler\_job | The Cloud Scheduler job instance |
 | cloud\_scheduler\_job\_name | The name of the Cloud Scheduler job created |
 | pubsub\_topic\_name | Pub/Sub topic name |
