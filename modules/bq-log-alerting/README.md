@@ -113,13 +113,16 @@ gcloud app create \
 The service account which will be used to invoke this submodule must have the following IAM roles:
 
 * Project level
+  * BigQuery Data Owner: `roles/bigquery.dataOwner`
   * Cloud Functions Developer: `roles/cloudfunctions.developer`
-  * Storage Admin: `roles/storage.admin`
+  * Cloud Scheduler Admin: `roles/cloudscheduler.admin`
   * Pub/Sub Admin: `roles/pubsub.admin`
+  * Service Account Admin: `roles/iam.serviceAccountAdmin`
   * Service Account User: `roles/iam.serviceAccountUser`
+  * Storage Admin: `roles/storage.admin`
 * Organization level
-  * Security Center Sources Editor: `roles/securitycenter.sourcesEditor`
   * Security Admin: `roles/iam.securityAdmin`
+  * Security Center Sources Editor: `roles/securitycenter.sourcesEditor`
 
 If you are deploying this submodule in the logging project of the Terraform Example Foundation using the Terraform service account created in the Foundation, it already has all the necessary permissions in the logging project.
 
@@ -134,8 +137,10 @@ following APIs enabled:
 * Cloud Functions API: `cloudfunctions.googleapis.com`
 * Cloud Logging API: `logging.googleapis.com`
 * Cloud Pub/Sub API: `pubsub.googleapis.com`
+* Cloud Resource Manager API: `cloudresourcemanager.googleapis.com`
 * Cloud Scheduler API: `cloudscheduler.googleapis.com`
 * Cloud Storage API: `storage-component.googleapis.com`
+* Identity and Access Management (IAM) API: `iam.googleapis.com`
 * Security Command Center API: `securitycenter.googleapis.com`
 
 ### Software Dependencies
