@@ -20,6 +20,12 @@ variable "create_subscriber" {
   default     = false
 }
 
+variable "subscriber_id" {
+  description = "The ID to give the pubsub pull subscriber service account (optional)."
+  type        = string
+  default     = ""
+}
+
 variable "subscription_labels" {
   type        = map(string)
   default     = {}

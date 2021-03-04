@@ -42,6 +42,7 @@ so that all dependencies are met.
 | log\_sink\_writer\_identity | The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module). | `string` | n/a | yes |
 | project\_id | The ID of the project in which the pubsub topic will be created. | `string` | n/a | yes |
 | push\_endpoint | The URL locating the endpoint to which messages should be pushed. | `string` | `""` | no |
+| subscriber\_id | The ID to give the pubsub pull subscriber service account (optional). | `string` | `""` | no |
 | subscription\_labels | A set of key/value label pairs to assign to the pubsub subscription. | `map(string)` | `{}` | no |
 | topic\_labels | A set of key/value label pairs to assign to the pubsub topic. | `map(string)` | `{}` | no |
 | topic\_name | The name of the pubsub topic to be created and used for log entries matching the filter. | `string` | n/a | yes |

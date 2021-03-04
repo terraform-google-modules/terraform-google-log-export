@@ -32,6 +32,7 @@ locals {
     concat(google_pubsub_subscription.pubsub_push_subscription.*.id, [""]),
     0,
   )
+  subscriber_id = var.subscriber_id == "" ? "${local.topic_name}-subscriber" : var.subscriber_id
 }
 
 #----------------#
@@ -67,7 +68,7 @@ resource "google_pubsub_topic_iam_member" "pubsub_sink_member" {
 #-----------------------------------------------#
 resource "google_service_account" "pubsub_subscriber" {
   count        = var.create_subscriber ? 1 : 0
-  account_id   = "${local.topic_name}-subscriber"
+  account_id   = local.subscriber_id
   display_name = "${local.topic_name} Topic Subscriber"
   project      = var.project_id
 }
