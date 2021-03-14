@@ -19,26 +19,26 @@ control "gcp" do
   title "Log exports - project level storage destination"
 
   describe google_storage_bucket(
-    name: destination_map["resource_name"]
+    name: destination_map[:resource_name]
   ) do
     it { should exist }
   end
 
   describe google_logging_project_sink(
-    project: log_export_map["parent_resource_id"],
-    sink: log_export_map["log_sink_resource_name"]
+    project: log_export_map[:parent_resource_id],
+    name: log_export_map[:log_sink_resource_name]
   ) do
     it { should exist }
-    its('destination') { should eq destination_map["destination_uri"] }
-    its('filter') { should eq log_export_map["filter"] }
-    its('writer_identity') { should eq log_export_map["writer_identity"] }
+    its('destination') { should eq destination_map[:destination_uri] }
+    its('filter') { should eq log_export_map[:filter] }
+    its('writer_identity') { should eq log_export_map[:writer_identity] }
   end
 
   describe google_storage_bucket_iam_binding(
-    bucket: destination_map["resource_name"],
+    bucket: destination_map[:resource_name],
     role: "roles/storage.objectCreator",
   ) do
     it { should exist }
-    its('members') { should include log_export_map["writer_identity"] }
+    its('members') { should include log_export_map[:writer_identity] }
   end
 end

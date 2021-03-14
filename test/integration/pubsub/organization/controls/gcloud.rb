@@ -18,7 +18,7 @@ destination_map  = attribute('destination_map')
 control "gcloud" do
   title "Log exports - organization level pubsub destination - gcloud commands"
 
-describe command("gcloud beta pubsub topics get-iam-policy #{destination_map['resource_name']} --project #{destination_map['project']} --format json") do
+describe command("gcloud beta pubsub topics get-iam-policy #{destination_map[:resource_name]} --project #{destination_map[:project]} --format json") do
     its('exit_status') { should eq 0 }
     its('stderr') { should eq '' }
     let(:bindings) do
@@ -29,15 +29,15 @@ describe command("gcloud beta pubsub topics get-iam-policy #{destination_map['re
       end
     end
 
-    it "does include #{log_export_map['writer_identity']} in the roles/pubsub.publisher IAM binding" do
+    it "does include #{log_export_map[:writer_identity]} in the roles/pubsub.publisher IAM binding" do
       expect(bindings).to include(
-        members: including("#{log_export_map['writer_identity']}"),
+        members: including("#{log_export_map[:writer_identity]}"),
         role: "roles/pubsub.publisher"
       )
     end
   end
 
-  describe command("gcloud logging sinks list --organization #{log_export_map['parent_resource_id']} --filter=\"name:#{log_export_map['log_sink_resource_name']}\" --format json") do
+  describe command("gcloud logging sinks list --organization #{log_export_map[:parent_resource_id]} --filter=\"name:#{log_export_map[:log_sink_resource_name]}\" --format json") do
     its('exit_status') { should eq 0 }
     its('stderr') { should eq '' }
     let(:sink) do
@@ -50,25 +50,25 @@ describe command("gcloud beta pubsub topics get-iam-policy #{destination_map['re
 
     it "does return the correct log sink" do
       expect(sink).to include(
-        name: log_export_map["log_sink_resource_name"]
+        name: log_export_map[:log_sink_resource_name]
       )
     end
 
-    it "does contain the writerIdentity of #{log_export_map['writer_identity']}" do
+    it "does contain the writerIdentity of #{log_export_map[:writer_identity]}" do
       expect(sink).to include(
-        writerIdentity: log_export_map["writer_identity"]
+        writerIdentity: log_export_map[:writer_identity]
       )
     end
 
-    it "does contain the destination of #{destination_map['destination_uri']}" do
+    it "does contain the destination of #{destination_map[:destination_uri]}" do
       expect(sink).to include(
-        destination: destination_map["destination_uri"]
+        destination: destination_map[:destination_uri]
       )
     end
 
-    it "does contain the filter of #{log_export_map['filter']}" do
+    it "does contain the filter of #{log_export_map[:filter]}" do
       expect(sink).to include(
-        filter: log_export_map["filter"]
+        filter: log_export_map[:filter]
       )
     end
   end

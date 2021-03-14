@@ -19,8 +19,8 @@ control "gcp" do
   title "Log exports - organization level pubsub destination - native resources"
 
   describe google_pubsub_topic(
-    project: destination_map["project"],
-    name: destination_map["resource_name"],
+    project: destination_map[:project],
+    name: destination_map[:resource_name],
   ) do
     it { should exist }
   end
