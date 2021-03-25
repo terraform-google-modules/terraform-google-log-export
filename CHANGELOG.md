@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.0.0](https://www.github.com/terraform-google-modules/terraform-google-log-export/compare/v5.2.0...v6.0.0) (2021-03-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* add Terraform 0.13 constraint and module attribution (#86)
+
+### Features
+
+* add Terraform 0.13 constraint and module attribution ([#86](https://www.github.com/terraform-google-modules/terraform-google-log-export/issues/86)) ([2b94062](https://www.github.com/terraform-google-modules/terraform-google-log-export/commit/2b940624854998c26d7fba59884c928d4d278745))
+* Cloud Logging Alert Module ([#77](https://www.github.com/terraform-google-modules/terraform-google-log-export/issues/77)) ([84975c0](https://www.github.com/terraform-google-modules/terraform-google-log-export/commit/84975c0d74c7891b6cc52dcb2ceddcfe765b577f))
+
 ## [5.2.0](https://www.github.com/terraform-google-modules/terraform-google-log-export/compare/v5.1.0...v5.2.0) (2021-03-05)
 
 
