@@ -15,7 +15,7 @@
  */
 
 provider "google" {
-  version = "~> 3.41.0"
+  version = "~> 3.53.0"
 }
 
 locals {

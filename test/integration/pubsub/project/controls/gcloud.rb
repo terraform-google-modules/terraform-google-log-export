@@ -18,7 +18,7 @@ destination_map  = attribute('destination_map')
 control "gcloud" do
   title "Log exports - project level pubsub destination - gcloud commands"
 
-  describe command("gcloud beta pubsub topics get-iam-policy #{destination_map['resource_name']} --project #{destination_map['project']} --format json") do
+  describe command("gcloud beta pubsub topics get-iam-policy #{destination_map[:resource_name]} --project #{destination_map[:project]} --format json") do
     its('exit_status') { should eq 0 }
     its('stderr') { should eq '' }
     let(:bindings) do
@@ -29,9 +29,9 @@ control "gcloud" do
       end
     end
 
-    it "does include #{log_export_map['writer_identity']} in the roles/pubsub.publisher IAM binding" do
+    it "does include #{log_export_map[:writer_identity]} in the roles/pubsub.publisher IAM binding" do
       expect(bindings).to include(
-        members: including("#{log_export_map['writer_identity']}"),
+        members: including("#{log_export_map[:writer_identity]}"),
         role: "roles/pubsub.publisher"
       )
     end

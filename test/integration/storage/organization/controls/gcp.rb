@@ -19,16 +19,16 @@ control "gcp" do
   title "Log exports - organization level storage destination - native resources"
 
   describe google_storage_bucket(
-    name: destination_map["resource_name"]
+    name: destination_map[:resource_name]
   ) do
     it { should exist }
   end
 
   describe google_storage_bucket_iam_binding(
-    bucket: destination_map["resource_name"],
+    bucket: destination_map[:resource_name],
     role: "roles/storage.objectCreator",
   ) do
     it { should exist }
-    its('members') { should include log_export_map["writer_identity"] }
+    its('members') { should include log_export_map[:writer_identity] }
   end
 end
