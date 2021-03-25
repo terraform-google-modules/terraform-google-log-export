@@ -1,0 +1,33 @@
+name: bq_log_alert
+depends:
+  - name: inspec-gcp
+    git: https://github.com/inspec/inspec-gcp.git
+    tag: v1.8.0
+attributes:
+  - name: cloud_scheduler_job_name
+    required: true
+    type: string
+  - name: pubsub_topic_name
+    required: true
+    type: string
+  - name: source_name
+    required: true
+    type: string
+  - name: cf_service_account_email
+    required: true
+    type: string
+  - name: logging_project
+    required: true
+    type: string
+  - name: dry_run
+    required: true
+    type: boolean
+  - name: region
+    required: true
+    type: string
+  - name: org_id
+    required: true
+    type: string
+  - name: job_schedule
+    required: true
+    type: string

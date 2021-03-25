@@ -38,6 +38,15 @@ locals {
 
     # Required to create log sinks from the project level
     "roles/logging.configWriter",
+
+    # Needed for the bq-log-alerting submodule to create/delete a cloud function
+    "roles/cloudfunctions.developer",
+
+    # Needed for the bq-log-alerting submodule to grant service account roles
+    "roles/iam.serviceAccountUser",
+
+    # Needed for the bq-log-alerting submodule to create/delete a cloud scheduler job
+    "roles/cloudscheduler.admin"
   ]
 
   log_export_billing_account_roles = [
@@ -51,6 +60,12 @@ locals {
 
     # Required to associate billing accounts to new projects
     "roles/billing.projectManager",
+
+    # Required to create a Security Center Source
+    "roles/securitycenter.sourcesEditor",
+
+    # Required to get/set IAM policies
+    "roles/resourcemanager.organizationAdmin",
   ]
 
   log_export_folder_roles = [
