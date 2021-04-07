@@ -11,18 +11,18 @@ To run this example, you'll need:
   - "logName: /logs/cloudaudit.googleapis.com%2Factivity"
   - "logName: /logs/cloudaudit.googleapis.com%2Fdata_access"
   - "logName: /logs/compute.googleapis.com%2Fvpc_flows"
-- A Terraform Service Account with the [IAM Roles](../../../modules/bq-log-alerting/README.md) listed in the submodule documentation.
-- To enable in the logging project the [APIs](../../../modules/bq-log-alerting/README.md) listed in the submodule documentation.
+- A Terraform Service Account with the [IAM Roles](../../modules/bq-log-alerting/README.md#iam-roles) listed in the submodule documentation.
+- To enable in the logging project the [APIs](../../modules/bq-log-alerting/README.md#apis) listed in the submodule documentation.
 - To enable in the logging project [Google App Engine](https://cloud.google.com/appengine).
 To enable it manually use:
 
 ```shell
 gcloud app create \
---region=<REGION> \
+--region=<GAE_LOCATION> \
 --project=<LOGGING_PROJECT>
 ```
 
-**Note 1:** The selected Google App Engine region cannot be changed after creation and only project Owners (`role/owner`) can enable Google App Engine.
+**Note 1:** The selected [Google App Engine location](https://cloud.google.com/appengine/docs/locations) cannot be changed after creation and only project Owners (`role/owner`) can enable Google App Engine.
 
 **Note 2:** On deployment a Security Command Center Source called "BQ Log Alerts" will be created. If this source already exist due to the submodule been deployed at least once before, you need to obtain the existing Source name to be informed in the terraform variable **source_name**.
 Run:
@@ -49,9 +49,10 @@ The [terraform-example-foundation](https://github.com/terraform-google-modules/t
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| bigquery\_location | Location for BigQuery resources. | `string` | `"US"` | no |
+| function\_region | Region for the Cloud function resources. | `string` | n/a | yes |
 | logging\_project | The project to deploy the submodule | `string` | n/a | yes |
 | org\_id | The organization ID for the associated services | `string` | n/a | yes |
-| region | Region for BigQuery resources. | `string` | n/a | yes |
 | source\_name | The Security Command Center Source name for the "BQ Log Alerts" Source if the source had been created before. The format is `organizations/<ORG_ID>/sources/<SOURCE_ID>` | `string` | `""` | no |
 
 ## Outputs

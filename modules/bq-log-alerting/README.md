@@ -47,11 +47,12 @@ Basic usage of this submodule is as follows:
 
 ```hcl
 module "bq-log-alerting" {
-  source          = "terraform-google-modules/log-export/google//modules/bq-log-alerting"
-  logging_project = <LOGGING_PROJECT>
-  region          = <REGION>
-  org_id          = <ORG_ID>
-  dry_run         = false
+  source            = "terraform-google-modules/log-export/google//modules/bq-log-alerting"
+  logging_project   = <LOGGING_PROJECT>
+  bigquery_location = <BIGQUERY_LOCATION>
+  function_region   = <CLOUD_FUNCTION_REGION>
+  org_id            = <ORG_ID>
+  dry_run           = false
 }
 ```
 
@@ -102,11 +103,11 @@ This is a restriction of the Security Command Center API
 
 ```shell
 gcloud app create \
---region=<REGION> \
+--region=<GAE_LOCATION> \
 --project=<LOGGING_PROJECT>
 ```
 
-**Note:** The selected region cannot be changed after creation and only project Owners (`role/owner`) can enable Google App Engine. If you are not an Owner of the project, but the service account is, you can add `--impersonate-service-account=<TERRAFORM_SERVICE_ACCOUNT_EMAIL>` to the command like it was used when the Security Command Center source was created.
+**Note:** The selected [Google App Engine location](https://cloud.google.com/appengine/docs/locations) cannot be changed after creation and only project Owners (`role/owner`) can enable Google App Engine. If you are not an Owner of the project, but the service account is, you can add `--impersonate-service-account=<TERRAFORM_SERVICE_ACCOUNT_EMAIL>` to the command like it was used when the Security Command Center source was created.
 
 ### IAM Roles
 
@@ -145,7 +146,7 @@ following APIs enabled:
 
 ### Software Dependencies
 
-* [Terraform][terraform-site] v0.12
+* [Terraform][terraform-site] v0.13
 * [Terraform Provider for Google Cloud Platform][terraform-provider-gcp-site] v3.25.0
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
@@ -153,13 +154,14 @@ following APIs enabled:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| bigquery\_location | Location for BigQuery resources. | `string` | `"US"` | no |
 | dry\_run | Enable dry\_run execution of the Cloud Function. If is true it will just print the object the would be converted as a finding | `bool` | `false` | no |
 | function\_memory | The amount of memory in megabytes allotted for the Cloud function to use. | `number` | `"256"` | no |
+| function\_region | Region for the Cloud function resources. | `string` | n/a | yes |
 | function\_timeout | The amount of time in seconds allotted for the execution of the function. | `number` | `"540"` | no |
 | job\_schedule | The schedule on which the job will be executed in the unix-cron string format (https://cloud.google.com/scheduler/docs/configuring/cron-job-schedules#defining_the_job_schedule). Defaults to 15 minutes. | `string` | `"*/15 * * * *"` | no |
 | logging\_project | The project to deploy the tool. | `string` | n/a | yes |
 | org\_id | The organization ID for the associated services | `string` | n/a | yes |
-| region | Region for BigQuery resources. | `string` | n/a | yes |
 | source\_name | The Security Command Center Source name for the "BQ Log Alerts" Source if the source had been created before. The format is `organizations/<ORG_ID>/sources/<SOURCE_ID>` | `string` | `""` | no |
 | time\_window\_quantity | The time window quantity used in the query in the view in BigQuery. | `string` | `"20"` | no |
 | time\_window\_unit | The time window unit used in the query in the view in BigQuery. Valid values are 'MICROSECOND', 'MILLISECOND', 'SECOND', 'MINUTE', 'HOUR' | `string` | `"MINUTE"` | no |

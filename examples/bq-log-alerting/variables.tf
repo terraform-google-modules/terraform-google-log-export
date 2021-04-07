@@ -19,9 +19,15 @@ variable "org_id" {
   type        = string
 }
 
-variable "region" {
-  description = "Region for BigQuery resources."
+variable "function_region" {
+  description = "Region for the Cloud function resources."
   type        = string
+}
+
+variable "bigquery_location" {
+  description = "Location for BigQuery resources."
+  type        = string
+  default     = "US"
 }
 
 variable "source_name" {

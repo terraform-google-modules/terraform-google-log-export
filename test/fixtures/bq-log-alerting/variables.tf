@@ -19,10 +19,16 @@ variable "parent_resource_organization" {
   type        = string
 }
 
-variable "region" {
-  description = "Region for BigQuery resources."
+variable "function_region" {
+  description = "Region for the Cloud function resources."
   type        = string
   default     = "us-central1"
+}
+
+variable "bigquery_location" {
+  description = "Location for BigQuery resources."
+  type        = string
+  default     = "US"
 }
 
 variable "source_name" {

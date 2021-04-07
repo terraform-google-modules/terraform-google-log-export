@@ -22,7 +22,7 @@ attributes:
   - name: dry_run
     required: true
     type: boolean
-  - name: region
+  - name: function_region
     required: true
     type: string
   - name: org_id

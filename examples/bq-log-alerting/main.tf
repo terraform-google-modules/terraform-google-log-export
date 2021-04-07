@@ -14,18 +14,12 @@
  * limitations under the License.
  */
 
-/*****************************
-  Provider configuration
- ****************************/
-provider "google" {
-  version = "~> 3.30"
-}
-
 module "bq-log-alerting" {
-  source          = "../..//modules/bq-log-alerting"
-  logging_project = var.logging_project
-  region          = var.region
-  org_id          = var.org_id
-  source_name     = var.source_name
-  dry_run         = false
+  source            = "../..//modules/bq-log-alerting"
+  logging_project   = var.logging_project
+  bigquery_location = var.bigquery_location
+  function_region   = var.function_region
+  org_id            = var.org_id
+  source_name       = var.source_name
+  dry_run           = false
 }

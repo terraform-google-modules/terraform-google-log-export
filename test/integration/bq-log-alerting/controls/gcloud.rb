@@ -15,13 +15,13 @@
 cloud_scheduler_job_name = attribute('cloud_scheduler_job_name')
 org_id = attribute('org_id')
 logging_project = attribute('logging_project')
-region = attribute('region')
+function_region = attribute('function_region')
 pubsub_topic_name = attribute('pubsub_topic_name')
 job_schedule = attribute('job_schedule')
 source_name = attribute('source_name')
 
 job_name = 'bq-alerts-event-trigger'
-complete_job_name = "projects/#{logging_project}/locations/#{region}/jobs/#{job_name}"
+complete_job_name = "projects/#{logging_project}/locations/#{function_region}/jobs/#{job_name}"
 
 topic_name = "projects/#{logging_project}/topics/#{pubsub_topic_name}"
 

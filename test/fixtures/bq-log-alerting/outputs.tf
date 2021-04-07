@@ -54,9 +54,9 @@ output "dry_run" {
   description = "Enable dry_run execution of the Cloud Function. If is true it will just print the object the would be converted as a finding"
 }
 
-output "region" {
-  value       = var.region
-  description = "Region for BigQuery resources."
+output "function_region" {
+  value       = var.function_region
+  description = "Region for the Cloud function resources."
 }
 
 output "org_id" {

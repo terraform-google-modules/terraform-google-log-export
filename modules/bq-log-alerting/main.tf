@@ -69,7 +69,7 @@ resource "google_bigquery_dataset" "views_dataset" {
   dataset_id    = "views"
   friendly_name = "Log Views"
   description   = "Log view dataset"
-  location      = "US"
+  location      = var.bigquery_location
   project       = var.logging_project
 
   labels = {
@@ -97,7 +97,7 @@ module "bq-log-alerting" {
   function_timeout_s             = var.function_timeout
   function_available_memory_mb   = var.function_memory
   topic_name                     = "bq-alerts-function-trigger"
-  region                         = var.region
+  region                         = var.function_region
 
   function_environment_variables = {
     CSCC_SOURCE     = local.actual_source_name

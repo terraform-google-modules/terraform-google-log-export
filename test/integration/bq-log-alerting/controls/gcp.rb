@@ -17,7 +17,7 @@ source_name = attribute('source_name')
 cf_service_account_email = attribute('cf_service_account_email')
 logging_project = attribute('logging_project')
 dry_run = attribute('dry_run') ? 'true' : 'false'
-region = attribute('region')
+function_region = attribute('function_region')
 org_id = attribute('org_id')
 
 project_role = 'roles/bigquery.admin'
@@ -65,7 +65,7 @@ control 'gcp' do
 
   describe google_cloudfunctions_cloud_function(
     project: logging_project,
-    location: region,
+    location: function_region,
     name: cf_name
   ) do
     it { should exist }
