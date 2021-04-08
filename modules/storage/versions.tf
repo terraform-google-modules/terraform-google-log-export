@@ -25,7 +25,7 @@ terraform {
   }
 
   provider_meta "google" {
-    module_name = "blueprints/terraform/terraform-google-log-export:storage/v1.0.0"
+    module_name = "blueprints/terraform/terraform-google-log-export:storage/v6.0.0"
   }
 
 }
