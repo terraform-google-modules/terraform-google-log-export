@@ -154,10 +154,10 @@ following APIs enabled:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| bigquery\_location | Location for BigQuery resources. | `string` | `"US"` | no |
+| bigquery\_location | Location for BigQuery resources. See https://cloud.google.com/bigquery/docs/locations for valid values. | `string` | `"US"` | no |
 | dry\_run | Enable dry\_run execution of the Cloud Function. If is true it will just print the object the would be converted as a finding | `bool` | `false` | no |
 | function\_memory | The amount of memory in megabytes allotted for the Cloud function to use. | `number` | `"256"` | no |
-| function\_region | Region for the Cloud function resources. | `string` | n/a | yes |
+| function\_region | Region for the Cloud function resources. See https://cloud.google.com/functions/docs/locations for valid values. | `string` | n/a | yes |
 | function\_timeout | The amount of time in seconds allotted for the execution of the function. | `number` | `"540"` | no |
 | job\_schedule | The schedule on which the job will be executed in the unix-cron string format (https://cloud.google.com/scheduler/docs/configuring/cron-job-schedules#defining_the_job_schedule). Defaults to 15 minutes. | `string` | `"*/15 * * * *"` | no |
 | logging\_project | The project to deploy the tool. | `string` | n/a | yes |

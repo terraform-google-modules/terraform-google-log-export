@@ -49,8 +49,8 @@ The [terraform-example-foundation](https://github.com/terraform-google-modules/t
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| bigquery\_location | Location for BigQuery resources. | `string` | `"US"` | no |
-| function\_region | Region for the Cloud function resources. | `string` | n/a | yes |
+| bigquery\_location | Location for BigQuery resources. See https://cloud.google.com/bigquery/docs/locations for valid values. | `string` | `"US"` | no |
+| function\_region | Region for the Cloud function resources. See https://cloud.google.com/functions/docs/locations for valid values. | `string` | n/a | yes |
 | logging\_project | The project to deploy the submodule | `string` | n/a | yes |
 | org\_id | The organization ID for the associated services | `string` | n/a | yes |
 | source\_name | The Security Command Center Source name for the "BQ Log Alerts" Source if the source had been created before. The format is `organizations/<ORG_ID>/sources/<SOURCE_ID>` | `string` | `""` | no |

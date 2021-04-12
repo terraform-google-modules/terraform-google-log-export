@@ -56,7 +56,7 @@ output "dry_run" {
 
 output "function_region" {
   value       = var.function_region
-  description = "Region for the Cloud function resources."
+  description = "Region for the Cloud function resources. See https://cloud.google.com/functions/docs/locations for valid values."
 }
 
 output "org_id" {
