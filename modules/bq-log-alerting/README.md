@@ -43,6 +43,7 @@ for this to work, the Security Command Center API needs to be enabled in the Ter
 
 ## Usage
 
+The [examples](../../examples) directory contain a directory with an example for deploying the BigQuery Log Alerting tool.
 Basic usage of this submodule is as follows:
 
 ```hcl
@@ -55,8 +56,6 @@ module "bq-log-alerting" {
   dry_run           = false
 }
 ```
-
-The [examples](../../examples) directory contain an example for deploying the BigQuery Log Alerting tool.
 
 **Note 1:** On deployment, a Security Command Center Source called "BQ Log Alerts" will be created. If this source already exist due to the tool been deployed at least once before in the organization, obtain the existing Source name to be used in the Terraform variable **source_name**. Run:
 
@@ -93,12 +92,11 @@ order to invoke this submodule.
 ### General
 
 * You need an existing "logging" project.
-* A [Log export](https://github.com/terraform-google-modules/terraform-google-log-export) with a [BigQuery destination](https://github.com/terraform-google-modules/terraform-google-log-export/tree/master/modules/bigquery) in the logging project. The export filter should include at least:
+* A [Log export](https://github.com/terraform-google-modules/terraform-google-log-export) with a [BigQuery destination](https://github.com/terraform-google-modules/terraform-google-log-export/tree/master/modules/bigquery) created in the logging project. The export filter should include at least:
   * "logName: /logs/cloudaudit.googleapis.com%2Factivity"
   * "logName: /logs/cloudaudit.googleapis.com%2Fdata_access"
   * "logName: /logs/compute.googleapis.com%2Fvpc_flows"
-* It is necessary to use a service account to authenticate the Google Terraform provider to be able to create the Security Command Center "BQ Log Alerts" Source.
-This is a restriction of the Security Command Center API
+* In order to execute this submodule you must configure and use a Service Account.
 * [Google App Engine](https://cloud.google.com/appengine) must be enabled in the logging project. To enable it manually use:
 
 ```shell
@@ -124,8 +122,6 @@ The service account which will be used to invoke this submodule must have the fo
 * Organization level
   * Security Admin: `roles/iam.securityAdmin`
   * Security Center Sources Editor: `roles/securitycenter.sourcesEditor`
-
-If you are deploying this submodule in the logging project of the Terraform Example Foundation using the Terraform service account created in the Foundation, it already has all the necessary permissions in the logging project.
 
 ### APIs
 

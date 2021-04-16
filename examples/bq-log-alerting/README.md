@@ -7,7 +7,7 @@ This example deploys the BigQuery Log Alerting submodule in an existing project.
 To run this example, you'll need:
 
 - An existing "logging" project
-- A [Log export](https://github.com/terraform-google-modules/terraform-google-log-export) with a [BigQuery destination](https://github.com/terraform-google-modules/terraform-google-log-export/tree/master/modules/bigquery) in the logging project. The export filter should include at least:
+- A [Log export](https://github.com/terraform-google-modules/terraform-google-log-export) with a [BigQuery destination](https://github.com/terraform-google-modules/terraform-google-log-export/tree/master/modules/bigquery) created in the logging project. The export filter should include at least:
   - "logName: /logs/cloudaudit.googleapis.com%2Factivity"
   - "logName: /logs/cloudaudit.googleapis.com%2Fdata_access"
   - "logName: /logs/compute.googleapis.com%2Fvpc_flows"
