@@ -8,13 +8,13 @@ This tool **does not** intend to provide an exhaustive and complete security sol
 
 The overview of this tool is as follows:
 
-* [Log sinks](https://github.com/terraform-google-modules/terraform-google-log-export) sends all [Cloud Audit Logs](https://cloud.google.com/logging/docs/audit) and [VPC Flow Logs](https://cloud.google.com/vpc/docs/flow-logs) to [BigQuery](https://github.com/terraform-google-modules/terraform-google-log-export/tree/master/modules/bigquery) located in a centralized logging project.
-* Custom views in BigQuery are created that look for specific activities in these logs, defined by a SQL query, e.g. looking for events that match `v1.compute.routes.insert` or `v1.compute.routes.delete`.
-* On a regular interval (`job_schedule` variable , default 15 minutes), [Cloud Scheduler](https://cloud.google.com/scheduler/docs) writes a message containing a time window parameter (`time_window_quantity` and `time_window_unit` variables, default 20 minutes) to [Cloud Pub/Sub](https://cloud.google.com/pubsub).
-* This 15 minute schedule with 20 minute window is used to ensure some overlap between runs of the function, to catch cases where events may occur just as the [Cloud Function](https://cloud.google.com/functions) run has kicked-off.
-* The message posted in Cloud Pub/Sub acts as the trigger for the Cloud Function which reads from the views that exist (one for each use case) and writes any events it finds to Security Command Center.
+- [Log sinks](https://github.com/terraform-google-modules/terraform-google-log-export) sends all [Cloud Audit Logs](https://cloud.google.com/logging/docs/audit) and [VPC Flow Logs](https://cloud.google.com/vpc/docs/flow-logs) to [BigQuery](https://github.com/terraform-google-modules/terraform-google-log-export/tree/master/modules/bigquery) located in a centralized logging project.
+- Custom views in BigQuery are created that look for specific activities in these logs, defined by a SQL query, e.g. looking for events that match `v1.compute.routes.insert` or `v1.compute.routes.delete`.
+- On a regular interval (`job_schedule` variable , default 15 minutes), [Cloud Scheduler](https://cloud.google.com/scheduler/docs) writes a message containing a time window parameter (`time_window_quantity` and `time_window_unit` variables, default 20 minutes) to [Cloud Pub/Sub](https://cloud.google.com/pubsub).
+- This 15 minute schedule with 20 minute window is used to ensure some overlap between runs of the function, to catch cases where events may occur just as the [Cloud Function](https://cloud.google.com/functions) run has kicked-off.
+- The message posted in Cloud Pub/Sub acts as the trigger for the Cloud Function which reads from the views that exist (one for each use case) and writes any events it finds to Security Command Center.
 These events are called "findings" in Security Command Center parlance and represent events that are actionable, e.g. you can close them after investigation.
-* Any duplicate findings are ignored, as the unique ID for the finding (a MD5 hash calculated from the concatenation of the BigQuery view name, the eventTimestamp, the callerIp, the principalEmail and the resourceName) is generated describing a particular event, and is thus deterministic.
+- Any duplicate findings are ignored, as the unique ID for the finding (a MD5 hash calculated from the concatenation of the BigQuery view name, the eventTimestamp, the callerIp, the principalEmail and the resourceName) is generated describing a particular event, and is thus deterministic.
 
 This represents the overall flow of alerts in this tool.
 
@@ -24,7 +24,7 @@ This represents the overall flow of alerts in this tool.
 
 Before using this submodule it is necessary to use the [root module](https://github.com/terraform-google-modules/terraform-google-log-export) to create a log export and the [BigQuery submodule](https://github.com/terraform-google-modules/terraform-google-log-export/tree/master/modules/bigquery) to create a destination for the logs.
 
-The log export filter must have at least the logs listed in the general requirements section of this README to be used by the Log Alerting tool.
+The log export filter must have at least the logs listed in the [Configure a Log Export](./README.md#configure-a-log-export) requirements section of this README to be used by the Log Alerting tool.
 
 ### Security Command Center
 
@@ -44,6 +44,7 @@ for this to work, the Security Command Center API needs to be enabled in the Ter
 ## Usage
 
 The [examples](../../examples) directory contain a directory with an example for deploying the BigQuery Log Alerting tool.
+
 Basic usage of this submodule is as follows:
 
 ```hcl
@@ -56,6 +57,8 @@ module "bq-log-alerting" {
   dry_run           = false
 }
 ```
+
+After the deploy of the submodule you will need to add some [Use cases](./use-cases/README.md) to provide the data for the Security Command Center findings.
 
 **Note 1:** On deployment, a Security Command Center Source called "BQ Log Alerts" will be created. If this source already exist due to the tool been deployed at least once before in the organization, obtain the existing Source name to be used in the Terraform variable **source_name**. Run:
 
@@ -74,11 +77,11 @@ The **source_name** format is `organizations/<ORG_ID>/sources/<SOURCE_ID>`.
 
 You can [monitor the execution of the Cloud Function](https://cloud.google.com/functions/docs/monitoring) execution using:
 
-* Google [Error Reporting](https://cloud.google.com/error-reporting/docs) and checking errors in the [Error Reporting dashboard](https://cloud.google.com/error-reporting/docs/viewing-errors)
-* Google [Monitoring](https://cloud.google.com/monitoring/docs) adding a graph based in [Cloud Functions metrics](https://cloud.google.com/monitoring/api/metrics_gcp#gcp-cloudfunctions) for `function/execution_count` to your dashboard
-* Google [Cloud Logging](https://cloud.google.com/logging/docs):
-  * Filtering and exploring logs in the [Log Explorer](https://cloud.google.com/logging/docs/view/logs-viewer-interface) with query `resource.labels.function_name="generate-alerts"`
-  * Creating a counter [User-defined metric](https://cloud.google.com/logging/docs/logs-based-metrics) to be used in a Cloud Monitoring dashboard with filter: `resource.labels.function_name="generate-alerts" AND severity>=ERROR`
+- Google [Error Reporting](https://cloud.google.com/error-reporting/docs) and checking errors in the [Error Reporting dashboard](https://cloud.google.com/error-reporting/docs/viewing-errors)
+- Google [Monitoring](https://cloud.google.com/monitoring/docs) adding a graph based in [Cloud Functions metrics](https://cloud.google.com/monitoring/api/metrics_gcp#gcp-cloudfunctions) for `function/execution_count` to your dashboard
+- Google [Cloud Logging](https://cloud.google.com/logging/docs):
+  - Filtering and exploring logs in the [Log Explorer](https://cloud.google.com/logging/docs/view/logs-viewer-interface) with query `resource.labels.function_name="generate-alerts"`
+  - Creating a counter [User-defined metric](https://cloud.google.com/logging/docs/logs-based-metrics) to be used in a Cloud Monitoring dashboard with filter: `resource.labels.function_name="generate-alerts" AND severity>=ERROR`
 
 ### Budget Alerts
 
@@ -89,15 +92,62 @@ We recommend configuring a [billing budget](https://cloud.google.com/billing/doc
 The following sections describe the requirements which must be met in
 order to invoke this submodule.
 
-### General
+### Configure a Log Export
 
-* You need an existing "logging" project.
-* A [Log export](https://github.com/terraform-google-modules/terraform-google-log-export) with a [BigQuery destination](https://github.com/terraform-google-modules/terraform-google-log-export/tree/master/modules/bigquery) created in the logging project. The export filter should include at least:
-  * "logName: /logs/cloudaudit.googleapis.com%2Factivity"
-  * "logName: /logs/cloudaudit.googleapis.com%2Fdata_access"
-  * "logName: /logs/compute.googleapis.com%2Fvpc_flows"
-* In order to execute this submodule you must configure and use a Service Account.
-* [Google App Engine](https://cloud.google.com/appengine) must be enabled in the logging project. To enable it manually use:
+- You need an existing "logging" project.
+- You need A [Log export with a BigQuery destination](../../examples/bigquery/organization) created in the logging project.
+The minimal filter in the log export module is:
+
+```
+"logName: /logs/cloudaudit.googleapis.com%2Factivity OR logName: /logs/cloudaudit.googleapis.com%2Fdata_access OR logName: /logs/compute.googleapis.com%2Fvpc_flows"
+```
+
+### Configure a Service Account
+
+In order to execute this submodule you must have a Service Account with the following IAM Roles:
+
+#### Project level Roles
+
+- BigQuery Data Owner: `roles/bigquery.dataOwner`
+- Cloud Functions Developer: `roles/cloudfunctions.developer`
+- Cloud Scheduler Admin: `roles/cloudscheduler.admin`
+- Pub/Sub Admin: `roles/pubsub.admin`
+- Service Account Admin: `roles/iam.serviceAccountAdmin`
+- Service Account User: `roles/iam.serviceAccountUser`
+- Storage Admin: `roles/storage.admin`
+
+#### Organization level Roles
+
+- Security Admin: `roles/iam.securityAdmin`
+- Security Center Sources Editor: `roles/securitycenter.sourcesEditor`
+
+#### Impersonate the Service Account
+
+Grant the following IAM roles [on the service account](https://cloud.google.com/iam/docs/impersonating-service-accounts#impersonate-sa-level) to the user deploying this submodule:
+
+- Service Account User: `roles/iam.serviceAccountUser`
+- Service Account Token Creator: `roles/iam.serviceAccountTokenCreator`
+
+### Enable APIs
+
+The project against which this submodule will be invoked must have the
+following APIs enabled:
+
+- App Engine Admin API: `appengine.googleapis.com`
+- BigQuery API: `bigquery.googleapis.com`
+- Cloud Build API: `cloudbuild.googleapis.com`
+- Cloud Functions API: `cloudfunctions.googleapis.com`
+- Cloud Logging API: `logging.googleapis.com`
+- Cloud Pub/Sub API: `pubsub.googleapis.com`
+- Cloud Resource Manager API: `cloudresourcemanager.googleapis.com`
+- Cloud Scheduler API: `cloudscheduler.googleapis.com`
+- Cloud Storage API: `storage-component.googleapis.com`
+- Identity and Access Management (IAM) API: `iam.googleapis.com`
+- Security Command Center API: `securitycenter.googleapis.com`
+
+### Enable Google App Engine
+
+[Google App Engine](https://cloud.google.com/appengine) must be enabled in the logging project. To enable it manually use:
 
 ```shell
 gcloud app create \
@@ -107,43 +157,10 @@ gcloud app create \
 
 **Note:** The selected [Google App Engine location](https://cloud.google.com/appengine/docs/locations) cannot be changed after creation and only project Owners (`role/owner`) can enable Google App Engine. If you are not an Owner of the project, but the service account is, you can add `--impersonate-service-account=<TERRAFORM_SERVICE_ACCOUNT_EMAIL>` to the command like it was used when the Security Command Center source was created.
 
-### IAM Roles
+### Terraform plugins
 
-The service account which will be used to invoke this submodule must have the following IAM roles:
-
-* Project level
-  * BigQuery Data Owner: `roles/bigquery.dataOwner`
-  * Cloud Functions Developer: `roles/cloudfunctions.developer`
-  * Cloud Scheduler Admin: `roles/cloudscheduler.admin`
-  * Pub/Sub Admin: `roles/pubsub.admin`
-  * Service Account Admin: `roles/iam.serviceAccountAdmin`
-  * Service Account User: `roles/iam.serviceAccountUser`
-  * Storage Admin: `roles/storage.admin`
-* Organization level
-  * Security Admin: `roles/iam.securityAdmin`
-  * Security Center Sources Editor: `roles/securitycenter.sourcesEditor`
-
-### APIs
-
-The project against which this submodule will be invoked must have the
-following APIs enabled:
-
-* App Engine Admin API: `appengine.googleapis.com`
-* BigQuery API: `bigquery.googleapis.com`
-* Cloud Build API: `cloudbuild.googleapis.com`
-* Cloud Functions API: `cloudfunctions.googleapis.com`
-* Cloud Logging API: `logging.googleapis.com`
-* Cloud Pub/Sub API: `pubsub.googleapis.com`
-* Cloud Resource Manager API: `cloudresourcemanager.googleapis.com`
-* Cloud Scheduler API: `cloudscheduler.googleapis.com`
-* Cloud Storage API: `storage-component.googleapis.com`
-* Identity and Access Management (IAM) API: `iam.googleapis.com`
-* Security Command Center API: `securitycenter.googleapis.com`
-
-### Software Dependencies
-
-* [Terraform][terraform-site] v0.13
-* [Terraform Provider for Google Cloud Platform][terraform-provider-gcp-site] v3.25.0
+- [Terraform](https://www.terraform.io/downloads.html) >= 0.13.0
+- [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) plugin ~> v3.5.x
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs

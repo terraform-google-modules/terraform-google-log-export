@@ -2,29 +2,17 @@
 
 This example deploys the BigQuery Log Alerting submodule in an existing project.
 
-## Prerequisites
+## Requirements
 
-To run this example, you'll need:
+Make sure you have the requirements listed in the submodule [README](../../modules/bq-log-alerting/README.md) Before running this example.
 
-- An existing "logging" project
-- A [Log export](https://github.com/terraform-google-modules/terraform-google-log-export) with a [BigQuery destination](https://github.com/terraform-google-modules/terraform-google-log-export/tree/master/modules/bigquery) created in the logging project. The export filter should include at least:
-  - "logName: /logs/cloudaudit.googleapis.com%2Factivity"
-  - "logName: /logs/cloudaudit.googleapis.com%2Fdata_access"
-  - "logName: /logs/compute.googleapis.com%2Fvpc_flows"
-- A Terraform Service Account with the [IAM Roles](../../modules/bq-log-alerting/README.md#iam-roles) listed in the submodule documentation.
-- To enable in the logging project the [APIs](../../modules/bq-log-alerting/README.md#apis) listed in the submodule documentation.
-- To enable in the logging project [Google App Engine](https://cloud.google.com/appengine).
-To enable it manually use:
+## Instructions
 
-```shell
-gcloud app create \
---region=<GAE_LOCATION> \
---project=<LOGGING_PROJECT>
-```
+### Check if the Source "BQ Log Alerts" exist
 
-**Note 1:** The selected [Google App Engine location](https://cloud.google.com/appengine/docs/locations) cannot be changed after creation and only project Owners (`role/owner`) can enable Google App Engine.
-
-**Note 2:** On deployment a Security Command Center Source called "BQ Log Alerts" will be created. If this source already exist due to the submodule been deployed at least once before, you need to obtain the existing Source name to be informed in the terraform variable **source_name**.
+On deployment a Security Command Center Source called "BQ Log Alerts" will be created.
+If this source already exist due to the submodule been deployed at least once before,
+you need to obtain the existing Source name to be informed in the terraform variable **source_name**.
 Run:
 
 ```shell
@@ -36,13 +24,49 @@ gcloud scc sources describe <ORG_ID> \
 
 The source name format is `organizations/<ORG_ID>/sources/<SOURCE_ID>`.
 
-The [terraform-example-foundation](https://github.com/terraform-google-modules/terraform-example-foundation) can be used as a reference for the creation of the logging project, the service account and the log export.
+### Activate impersonation of the service account
 
-## Instructions
+To activate impersonation on the service account you can:
+
+Set the `gcloud` config auth impersonation:
+
+```shell
+gcloud config set auth/impersonate_service_account <TERRAFORM_SERVICE_ACCOUNT_EMAIL>
+```
+
+Or
+
+Change the [versions.tf](./versions.tf) file to set [impersonation on the provider](https://registry.terraform.io/providers/hashicorp/google/latest/docs/guides/provider_reference#impersonate_service_account):
+
+From
+
+```terraform
+provider "google" {
+  version = "~> 3.53.0"
+}
+
+```
+
+To
+
+```terraform
+provider "google" {
+  version = "~> 3.53.0"
+
+  impersonate_service_account = "<TERRAFORM_SERVICE_ACCOUNT_EMAIL>"
+}
+
+```
+
+### Run Terraform
 
 1. Run `terraform init`
 1. Run `terraform plan` provide the requested variables values and review the output.
 1. Run `terraform apply`
+
+### Deploy Use Cases
+
+Deploy the [Use Cases](../../modules/bq-log-alerting/use-cases) that will provide the data for the Security Command Center findings.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
