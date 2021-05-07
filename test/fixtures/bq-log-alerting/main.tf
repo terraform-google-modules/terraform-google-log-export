@@ -17,7 +17,8 @@
 module "bq-log-alerting" {
   source               = "../../../modules/bq-log-alerting"
   org_id               = var.parent_resource_organization
-  region               = var.region
+  function_region      = var.function_region
+  bigquery_location    = var.bigquery_location
   source_name          = var.source_name
   logging_project      = var.project_id
   job_schedule         = var.job_schedule
