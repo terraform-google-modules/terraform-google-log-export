@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+### [6.0.1](https://www.github.com/terraform-google-modules/terraform-google-log-export/compare/v6.0.0...v6.0.1) (2021-05-10)
+
+
+### Bug Fixes
+
+* BigQuery Log Alerting ([#90](https://www.github.com/terraform-google-modules/terraform-google-log-export/issues/90)) ([d0e1a15](https://www.github.com/terraform-google-modules/terraform-google-log-export/commit/d0e1a154e197de9099d00c0636be7b8c6a049b85))
+* Remove deprecated list() function. ([#92](https://www.github.com/terraform-google-modules/terraform-google-log-export/issues/92)) ([fcdfc9a](https://www.github.com/terraform-google-modules/terraform-google-log-export/commit/fcdfc9a9d3ef83b7a7999f5a6d1c4d440c281078))
+
 ## [6.0.0](https://www.github.com/terraform-google-modules/terraform-google-log-export/compare/v5.2.0...v6.0.0) (2021-03-25)
 
 
