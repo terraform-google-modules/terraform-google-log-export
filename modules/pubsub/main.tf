@@ -74,11 +74,11 @@ resource "google_service_account" "pubsub_subscriber" {
 }
 
 resource "google_pubsub_subscription_iam_member" "pubsub_subscriber_role" {
-  count   = var.create_subscriber ? 1 : 0
-  role    = "roles/pubsub.subscriber"
-  project = var.project_id
-  subscription  = local.pubsub_subscription  
-  member  = "serviceAccount:${google_service_account.pubsub_subscriber[0].email}"
+  count        = var.create_subscriber ? 1 : 0
+  role         = "roles/pubsub.subscriber"
+  project      = var.project_id
+  subscription = local.pubsub_subscription
+  member       = "serviceAccount:${google_service_account.pubsub_subscriber[0].email}"
 }
 
 resource "google_pubsub_topic_iam_member" "pubsub_viewer_role" {
