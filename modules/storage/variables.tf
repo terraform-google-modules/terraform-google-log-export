@@ -41,6 +41,12 @@ variable "storage_class" {
   default     = "STANDARD"
 }
 
+variable "storage_bucket_labels" {
+  description = "Labels to apply to the storage bucket."
+  type        = map(string)
+  default     = {}
+}
+
 variable "uniform_bucket_level_access" {
   description = "Enables Uniform bucket-level access to a bucket."
   type        = bool
