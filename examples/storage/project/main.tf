@@ -34,6 +34,15 @@ module "destination" {
   source                   = "../../..//modules/storage"
   project_id               = var.project_id
   storage_bucket_name      = "storage_project_${random_string.suffix.result}"
-  expiration_days          = 365
   log_sink_writer_identity = module.log_export.writer_identity
+
+  lifecycle_rules = [{
+    action = {
+      type = "Delete"
+    }
+    condition = {
+      age        = 365
+      with_state = "ANY"
+    }
+  }]
 }

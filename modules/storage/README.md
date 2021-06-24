@@ -24,6 +24,27 @@ module "destination" {
   project_id               = "sample-project"
   storage_bucket_name      = "sample_storage_bucket"
   log_sink_writer_identity = "${module.log_export.writer_identity}"
+  lifecycle_rules = [
+    {
+      action = {
+        type = "Delete"
+      }
+      condition = {
+        age        = 365
+        with_state = "ANY"
+      }
+    },
+    {
+      action = {
+        type = "SetStorageClass"
+        storage_class = "COLDLINE"
+      }
+      condition = {
+        age        = 180
+        with_state = "ANY"
+      }
+    }
+  ]
 }
 ```
 
@@ -36,8 +57,8 @@ so that all dependencies are met.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| expiration\_days | Object expiration time. If unset logs will never be deleted. | `number` | `null` | no |
 | force\_destroy | When deleting a bucket, this boolean option will delete all contained objects. | `bool` | `false` | no |
+| lifecycle\_rules | List of lifecycle rules to configure. Format is the same as described in provider documentation https://www.terraform.io/docs/providers/google/r/storage_bucket.html#lifecycle_rule except condition.matches\_storage\_class should be a comma delimited string. | <pre>set(object({<br>    # Object with keys:<br>    # - type - The type of the action of this Lifecycle Rule. Supported values: Delete and SetStorageClass.<br>    # - storage_class - (Required if action type is SetStorageClass) The target Storage Class of objects affected by this Lifecycle Rule.<br>    action = map(string)<br><br>    # Object with keys:<br>    # - age - (Optional) Minimum age of an object in days to satisfy this condition.<br>    # - created_before - (Optional) Creation date of an object in RFC 3339 (e.g. 2017-06-13) to satisfy this condition.<br>    # - with_state - (Optional) Match to live and/or archived objects. Supported values include: "LIVE", "ARCHIVED", "ANY".<br>    # - matches_storage_class - (Optional) Comma delimited string for storage class of objects to satisfy this condition. Supported values include: MULTI_REGIONAL, REGIONAL, NEARLINE, COLDLINE, STANDARD, DURABLE_REDUCED_AVAILABILITY.<br>    # - num_newer_versions - (Optional) Relevant only for versioned objects. The number of newer versions of an object to satisfy this condition.<br>    # - days_since_custom_time - (Optional) The number of days from the Custom-Time metadata attribute after which this condition becomes true.<br>    condition = map(string)<br>  }))</pre> | `[]` | no |
 | location | The location of the storage bucket. | `string` | `"US"` | no |
 | log\_sink\_writer\_identity | The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module). | `string` | n/a | yes |
 | project\_id | The ID of the project in which the storage bucket will be created. | `string` | n/a | yes |

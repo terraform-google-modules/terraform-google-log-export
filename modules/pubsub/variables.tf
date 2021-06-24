@@ -20,6 +20,12 @@ variable "create_subscriber" {
   default     = false
 }
 
+variable "create_subscriber_sa" {
+  description = "Whether to create a Service Account for the subscription. If 'true', a service account is created and granted roles/pubsub.subscriber and roles/pubsub.viewer to the topic."
+  type        = bool
+  default     = false
+}
+
 variable "subscriber_id" {
   description = "The ID to give the pubsub pull subscriber service account (optional)."
   type        = string
