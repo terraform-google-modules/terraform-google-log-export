@@ -35,6 +35,7 @@ The solution helps you set up a log-streaming pipeline from Stackdriver Logging 
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| filter | The filter to apply when exporting logs. Only log entries that match the filter are exported. Default is '' which exports all logs. | `string` | `""` | no |
 | key\_output\_path | The path to a directory where the JSON private key of the new Datadog service account will be created. | `string` | `"../datadog-sink/datadog-sa-key.json"` | no |
 | parent\_resource\_id | The ID of the project in which pubsub topic destination will be created. | `string` | n/a | yes |
 | project\_id | The ID of the project in which the log export will be created. | `string` | n/a | yes |

@@ -34,3 +34,9 @@ variable "key_output_path" {
   type        = string
   default     = "../datadog-sink/datadog-sa-key.json"
 }
+
+variable "filter" {
+  description = "The filter to apply when exporting logs. Only log entries that match the filter are exported. Default is '' which exports all logs."
+  type        = string
+  default     = ""
+}
