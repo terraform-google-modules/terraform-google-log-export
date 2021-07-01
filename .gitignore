@@ -48,3 +48,4 @@ credentials.json
 
 .idea
 
+**/.terraform
