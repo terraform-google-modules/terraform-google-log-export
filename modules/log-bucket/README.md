@@ -36,21 +36,21 @@ so that all dependencies are met.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_bucket_description"></a> [bucket\_description](#input\_bucket\_description) | Log bucket description. | `string` | `null` | no |
-| <a name="input_bucket_id"></a> [bucket\_id](#input\_bucket\_id) | The name of the log bucket to be created or used for log entries matching the filter. | `string` | n/a | yes |
-| <a name="input_location"></a> [location](#input\_location) | The location of the storage bucket. | `string` | `"global"` | no |
-| <a name="input_log_sink_writer_identity"></a> [log\_sink\_writer\_identity](#input\_log\_sink\_writer\_identity) | The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module). | `string` | n/a | yes |
-| <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The ID of the project in which the storage bucket will be created. | `string` | n/a | yes |
-| <a name="input_retention_days"></a> [retention\_days](#input\_retention\_days) | Log retention in days. | `number` | `30` | no |
+| bucket\_description | Log bucket description. | `string` | `null` | no |
+| bucket\_id | The name of the log bucket to be created or used for log entries matching the filter. | `string` | n/a | yes |
+| location | The location of the storage bucket. | `string` | `"global"` | no |
+| log\_sink\_writer\_identity | The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module). | `string` | n/a | yes |
+| project\_id | The ID of the project in which the storage bucket will be created. | `string` | n/a | yes |
+| retention\_days | Log retention in days. | `number` | `30` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_destination_uri"></a> [destination\_uri](#output\_destination\_uri) | The destination URI for the logging bucket. |
-| <a name="output_project"></a> [project](#output\_project) | The project in which the logging bucket was created. |
-| <a name="output_resource_id"></a> [resource\_id](#output\_resource\_id) | The resource id for the destination logging bucket |
-| <a name="output_resource_name"></a> [resource\_name](#output\_resource\_name) | The resource name for the destination logging bucket |
-| <a name="output_self_link"></a> [self\_link](#output\_self\_link) | The self\_link URI for the destination logging bucket |
+| destination\_uri | The destination URI for the logging bucket. |
+| project | The project in which the logging bucket was created. |
+| resource\_id | The resource id for the destination logging bucket |
+| resource\_name | The resource name for the destination logging bucket |
+| self\_link | The self\_link URI for the destination logging bucket |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

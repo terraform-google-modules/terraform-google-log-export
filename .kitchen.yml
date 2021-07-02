@@ -73,6 +73,41 @@ suites:
           backend: gcp
           controls:
             - gcp
+  - name: "log-bucket/project"
+    driver:
+      root_module_directory: test/fixtures/log-bucket/project/
+    verifier:
+      systems:
+        - name: inspec-gcp
+          backend: gcp
+          controls:
+            - gcp
+  - name: "log-bucket/folder"
+    driver:
+      root_module_directory: test/fixtures/log-bucket/folder/
+    verifier:
+      systems:
+        - name: local
+          backend: local
+          controls:
+            - gcloud
+        - name: inspec-gcp
+          backend: gcp
+          controls:
+            - gcp
+  - name: "log-bucket/organization"
+    driver:
+      root_module_directory: test/fixtures/log-bucket/organization/
+    verifier:
+      systems:
+        - name: local
+          backend: local
+          controls:
+            - gcloud
+        - name: inspec-gcp
+          backend: gcp
+          controls:
+            - gcp
   - name: "pubsub/project"
     driver:
       root_module_directory: test/fixtures/pubsub/project/
