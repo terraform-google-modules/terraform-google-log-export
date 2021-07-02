@@ -49,3 +49,4 @@ credentials.json
 .idea
 
 **/.terraform
+**/.terraform.lock.hcl

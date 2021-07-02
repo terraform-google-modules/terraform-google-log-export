@@ -34,6 +34,7 @@ resource "google_logging_project_bucket_config" "bucket" {
 # Service account IAM membership #
 #--------------------------------#
 resource "google_project_iam_member" "storage_sink_member" {
+  count = var.grant_log_sink_writer_iam ? 1 : 0
   project = var.project_id
   role    = "roles/logging.bucketWriter"
   member  = var.log_sink_writer_identity
