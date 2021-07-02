@@ -27,6 +27,7 @@ module "destination" {
   source                   = "../../..//modules/log-bucket"
   project_id               = var.project_id
   bucket_id                = "logging_example_bucket"
+  grant_log_sink_writer_iam = true
   log_sink_writer_identity = module.log_export.writer_identity
 }
 

@@ -23,6 +23,7 @@ variable "bucket_description" {
 variable "log_sink_writer_identity" {
   description = "The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module)."
   type        = string
+  default = null
 }
 
 variable "project_id" {
@@ -45,4 +46,10 @@ variable "retention_days" {
   description = "Log retention in days."
   type        = number
   default     = 30
+}
+
+variable "grant_log_sink_writer_iam" {
+  description = "Grant roles/logging.bucketWriter to the log sink identity in the log bucket project"
+  type = bool
+  default = false
 }
