@@ -38,8 +38,9 @@ so that all dependencies are met.
 |------|-------------|------|---------|:--------:|
 | bucket\_description | Log bucket description. | `string` | `null` | no |
 | bucket\_id | The name of the log bucket to be created or used for log entries matching the filter. | `string` | n/a | yes |
+| grant\_log\_sink\_writer\_iam | Grant roles/logging.bucketWriter to the log sink identity in the log bucket project | `bool` | `false` | no |
 | location | The location of the storage bucket. | `string` | `"global"` | no |
-| log\_sink\_writer\_identity | The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module). | `string` | n/a | yes |
+| log\_sink\_writer\_identity | The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module). | `string` | `null` | no |
 | project\_id | The ID of the project in which the storage bucket will be created. | `string` | n/a | yes |
 | retention\_days | Log retention in days. | `number` | `30` | no |
 
