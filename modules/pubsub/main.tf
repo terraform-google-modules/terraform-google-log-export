@@ -67,14 +67,14 @@ resource "google_pubsub_topic_iam_member" "pubsub_sink_member" {
 # Pub/Sub topic subscription (for integrations) #
 #-----------------------------------------------#
 resource "google_service_account" "pubsub_subscriber" {
-  count        = var.create_subscriber_sa ? 1 : 0
+  count        = var.create_subscriber ? 1 : 0
   account_id   = local.subscriber_id
   display_name = "${local.topic_name} Topic Subscriber"
   project      = var.project_id
 }
 
 resource "google_pubsub_subscription_iam_member" "pubsub_subscriber_role" {
-  count        = var.create_subscriber_sa ? 1 : 0
+  count        = var.create_subscriber ? 1 : 0
   role         = "roles/pubsub.subscriber"
   project      = var.project_id
   subscription = local.pubsub_subscription
@@ -82,7 +82,7 @@ resource "google_pubsub_subscription_iam_member" "pubsub_subscriber_role" {
 }
 
 resource "google_pubsub_topic_iam_member" "pubsub_viewer_role" {
-  count   = var.create_subscriber_sa ? 1 : 0
+  count   = var.create_subscriber ? 1 : 0
   role    = "roles/pubsub.viewer"
   project = var.project_id
   topic   = local.topic_name
