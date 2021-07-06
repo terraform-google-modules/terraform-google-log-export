@@ -24,4 +24,3 @@ variable "parent_resource_id" {
   type        = string
 }
 
-
