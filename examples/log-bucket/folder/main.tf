@@ -32,10 +32,10 @@ module "log_export" {
 }
 
 module "destination" {
-  source                   = "../../..//modules/log-bucket"
-  project_id               = var.project_id
-  bucket_id                = "log_bucket_project_${random_string.suffix.result}"
+  source                    = "../../..//modules/log-bucket"
+  project_id                = var.project_id
+  bucket_id                 = "log_bucket_project_${random_string.suffix.result}"
   grant_log_sink_writer_iam = true
-  log_sink_writer_identity = module.log_export.writer_identity
-  location                 = "us-central1"
+  log_sink_writer_identity  = module.log_export.writer_identity
+  location                  = "us-central1"
 }

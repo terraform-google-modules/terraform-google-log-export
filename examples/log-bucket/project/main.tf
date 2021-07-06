@@ -31,8 +31,8 @@ module "log_export" {
 }
 
 module "destination" {
-  source                   = "../../..//modules/log-bucket"
-  project_id               = var.project_id
-  bucket_id      = "log_bucket_project_${random_string.suffix.result}"
-  location = "us-central1"
+  source     = "../../..//modules/log-bucket"
+  project_id = var.project_id
+  bucket_id  = "log_bucket_project_${random_string.suffix.result}"
+  location   = "us-central1"
 }

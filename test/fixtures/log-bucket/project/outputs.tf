@@ -16,10 +16,10 @@
 
 output "log_export_map" {
   description = "Outputs from the log export module"
-  value       = "${module.log_export.log_export_map}"
+  value       = module.log_export.log_export_map
 }
 
 output "destination_map" {
   description = "Outputs from the destination module"
-  value       = "${module.log_export.destination_map}"
+  value       = module.log_export.destination_map
 }
