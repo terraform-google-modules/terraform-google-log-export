@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.0.0](https://www.github.com/terraform-google-modules/terraform-google-log-export/compare/v6.0.2...v7.0.0) (2021-07-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* Support lifecycle rules and labels for GCS submodule (#96)
+
+### Features
+
+* Support lifecycle rules and labels for GCS submodule ([#96](https://www.github.com/terraform-google-modules/terraform-google-log-export/issues/96)) ([1636eed](https://www.github.com/terraform-google-modules/terraform-google-log-export/commit/1636eed7d3ac6cb54d79d7849034a11613399dca))
+
+
+### Bug Fixes
+
+* correct version in upgrade guide ([#100](https://www.github.com/terraform-google-modules/terraform-google-log-export/issues/100)) ([fbc231a](https://www.github.com/terraform-google-modules/terraform-google-log-export/commit/fbc231a8f4025e30b442de30d7a7f9be0dbd34b7))
+
 ### [6.0.2](https://www.github.com/terraform-google-modules/terraform-google-log-export/compare/v6.0.1...v6.0.2) (2021-06-03)
 
 
