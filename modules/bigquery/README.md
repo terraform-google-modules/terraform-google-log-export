@@ -66,7 +66,7 @@ Your project's BigQuery service account `bq-{{PROJECT_NUMBER}}@bigquery-encrypti
 ```hcl
 
 data "google_bigquery_default_service_account" "bq_sa" {
-  project = "gcp_bucket_project_id"
+  project = "gcp_dataset_project_id"
 }
 
 resource "google_kms_crypto_key_iam_member" "bq_key_iam" {
