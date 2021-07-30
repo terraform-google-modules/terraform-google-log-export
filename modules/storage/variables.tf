@@ -93,3 +93,9 @@ variable "versioning" {
   type        = bool
   default     = false
 }
+
+variable "kms_key_name" {
+  description = "ID of a Cloud KMS key that will be used to encrypt objects inserted into this bucket. Automatic Google Cloud Storage service account for the bucket's project requires access to this encryption key."
+  type        = string
+  default     = null
+}

@@ -65,3 +65,8 @@ variable "topic_labels" {
   description = "A set of key/value label pairs to assign to the pubsub topic."
 }
 
+variable "kms_key_name" {
+  description = "ID of a Cloud KMS CryptoKey to be used to protect access to messages published on this topic. Your project's PubSub service account requires access to this encryption key."
+  type        = string
+  default     = null
+}

@@ -58,3 +58,9 @@ variable "labels" {
   type        = map(string)
   default     = {}
 }
+
+variable "kms_key_name" {
+  description = "ID of a Cloud KMS key that will be used to encrypt destination BigQuery table. The BigQuery Service Account associated with your project requires access to this encryption key."
+  type        = string
+  default     = null
+}

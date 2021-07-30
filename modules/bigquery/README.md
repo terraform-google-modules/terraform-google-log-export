@@ -40,6 +40,7 @@ so that all dependencies are met.
 | delete\_contents\_on\_destroy | (Optional) If set to true, delete all the tables in the dataset when destroying the resource; otherwise, destroying the resource will fail if tables are present. | `bool` | `false` | no |
 | description | A use-friendly description of the dataset | `string` | `"Log export dataset"` | no |
 | expiration\_days | Table expiration time. If unset logs will never be deleted. | `number` | `null` | no |
+| kms\_key\_name | ID of a Cloud KMS key that will be used to encrypt destination BigQuery table. The BigQuery Service Account associated with your project requires access to this encryption key. | `string` | `null` | no |
 | labels | Dataset labels | `map(string)` | `{}` | no |
 | location | The location of the storage bucket. | `string` | `"US"` | no |
 | log\_sink\_writer\_identity | The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module). | `string` | n/a | yes |
@@ -57,3 +58,21 @@ so that all dependencies are met.
 | self\_link | The self\_link URI for the destination bigquery dataset |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+
+## Customer Managed Encryption Key permission
+
+Your project's BigQuery service account `bq-{{PROJECT_NUMBER}}@bigquery-encryption.iam.gserviceaccount.com` must have `roles/cloudkms.cryptoKeyEncrypterDecrypter` to use this feature.
+
+```hcl
+
+data "google_bigquery_default_service_account" "bq_sa" {
+  project = "gcp_bucket_project_id"
+}
+
+resource "google_kms_crypto_key_iam_member" "bq_key_iam" {
+  crypto_key_id = "kms_key_id"
+  role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
+  member        = "serviceAccount:${data.google_bigquery_default_service_account.bq_sa.email_address}"
+}
+
+```
