@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.1.0](https://www.github.com/terraform-google-modules/terraform-google-log-export/compare/v7.0.0...v7.1.0) (2021-08-02)
+
+
+### Features
+
+* Added CMEK support for log sink destinations ([#101](https://www.github.com/terraform-google-modules/terraform-google-log-export/issues/101)) ([af0940c](https://www.github.com/terraform-google-modules/terraform-google-log-export/commit/af0940c8a27c93207712060222f1ad9177f81fd1))
+
 ## [7.0.0](https://www.github.com/terraform-google-modules/terraform-google-log-export/compare/v6.0.2...v7.0.0) (2021-07-03)
 
 
