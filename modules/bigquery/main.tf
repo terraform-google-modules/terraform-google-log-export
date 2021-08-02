@@ -46,6 +46,13 @@ resource "google_bigquery_dataset" "dataset" {
   delete_contents_on_destroy  = var.delete_contents_on_destroy
   default_table_expiration_ms = var.expiration_days == null ? null : var.expiration_days * 8.64 * pow(10, 7)
   labels                      = var.labels
+
+  dynamic "default_encryption_configuration" {
+    for_each = var.kms_key_name == null ? [] : [var.kms_key_name]
+    content {
+      kms_key_name = var.kms_key_name
+    }
+  }
 }
 
 #--------------------------------#
