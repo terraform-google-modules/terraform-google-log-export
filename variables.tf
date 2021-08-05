@@ -60,3 +60,14 @@ variable "bigquery_options" {
     use_partitioned_tables = bool
   })
 }
+
+variable "exclusions" {
+  default     = []
+  description = "(Optional) A list of sink exclusion filters."
+  type = list(object({
+    name        = string,
+    description = string,
+    filter      = string,
+    disabled    = bool
+  }))
+}

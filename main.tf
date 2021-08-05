@@ -51,6 +51,16 @@ resource "google_logging_project_sink" "sink" {
       use_partitioned_tables = bigquery_options.value.use_partitioned_tables
     }
   }
+
+  dynamic "exclusions" {
+    for_each = var.exclusions
+    content {
+      name        = exclusions.value.name
+      description = exclusions.value.description
+      filter      = exclusions.value.filter
+      disabled    = exclusions.value.disabled
+    }
+  }
 }
 
 # Folder-level
@@ -65,6 +75,16 @@ resource "google_logging_folder_sink" "sink" {
     for_each = local.bigquery_options
     content {
       use_partitioned_tables = bigquery_options.value.use_partitioned_tables
+    }
+  }
+
+  dynamic "exclusions" {
+    for_each = var.exclusions
+    content {
+      name        = exclusions.value.name
+      description = exclusions.value.description
+      filter      = exclusions.value.filter
+      disabled    = exclusions.value.disabled
     }
   }
 }
@@ -83,6 +103,16 @@ resource "google_logging_organization_sink" "sink" {
       use_partitioned_tables = bigquery_options.value.use_partitioned_tables
     }
   }
+
+  dynamic "exclusions" {
+    for_each = var.exclusions
+    content {
+      name        = exclusions.value.name
+      description = exclusions.value.description
+      filter      = exclusions.value.filter
+      disabled    = exclusions.value.disabled
+    }
+  }
 }
 
 # Billing Account-level
@@ -96,6 +126,16 @@ resource "google_logging_billing_account_sink" "sink" {
     for_each = local.bigquery_options
     content {
       use_partitioned_tables = bigquery_options.value.use_partitioned_tables
+    }
+  }
+
+  dynamic "exclusions" {
+    for_each = var.exclusions
+    content {
+      name        = exclusions.value.name
+      description = exclusions.value.description
+      filter      = exclusions.value.filter
+      disabled    = exclusions.value.disabled
     }
   }
 }
