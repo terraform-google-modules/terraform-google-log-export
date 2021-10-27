@@ -44,7 +44,7 @@ resource "google_bigquery_dataset" "dataset" {
   location                    = var.location
   description                 = var.description
   delete_contents_on_destroy  = var.delete_contents_on_destroy
-  default_table_expiration_ms = var.expiration_days == null ? null : var.expiration_days * 8.64 * pow(10, 7)
+  default_table_expiration_ms = var.expiration_days == null ? null : var.expiration_days * 864 * pow(10, 5)
   labels                      = var.labels
 
   dynamic "default_encryption_configuration" {
