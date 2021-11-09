@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.2.0](https://www.github.com/terraform-google-modules/terraform-google-log-export/compare/v7.1.0...v7.2.0) (2021-10-27)
+
+
+### Features
+
+* Support sink `exclusions` configuration ([#103](https://www.github.com/terraform-google-modules/terraform-google-log-export/issues/103)) ([1e07f65](https://www.github.com/terraform-google-modules/terraform-google-log-export/commit/1e07f65832efc2b0105d743b815bc8ed64828ab5))
+
+
+### Bug Fixes
+
+* Fix for day to ms conversion ([#107](https://www.github.com/terraform-google-modules/terraform-google-log-export/issues/107)) ([47f5148](https://www.github.com/terraform-google-modules/terraform-google-log-export/commit/47f51488639b3b885b80e8c6495bc8c66f610ea3))
+
 ## [7.1.0](https://www.github.com/terraform-google-modules/terraform-google-log-export/compare/v7.0.0...v7.1.0) (2021-08-02)
 
 
