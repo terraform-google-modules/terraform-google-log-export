@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.3.0](https://www.github.com/terraform-google-modules/terraform-google-log-export/compare/v7.2.0...v7.3.0) (2021-12-20)
+
+
+### Features
+
+* update TPG version constraints to allow 4.0 ([#108](https://www.github.com/terraform-google-modules/terraform-google-log-export/issues/108)) ([14320e9](https://www.github.com/terraform-google-modules/terraform-google-log-export/commit/14320e995ab4e91cb64bddbca06b66294056ab67))
+
 ## [7.2.0](https://www.github.com/terraform-google-modules/terraform-google-log-export/compare/v7.1.0...v7.2.0) (2021-10-27)
 
 
