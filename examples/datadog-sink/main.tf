@@ -14,10 +14,6 @@
  * limitations under the License.
  */
 
-provider "google" {
-  version = "~> 3.53.0"
-}
-
 locals {
   datadog_svc = element(google_service_account.datadog-viewer.*.email, 0)
   log_writ    = module.log_export.writer_identity
