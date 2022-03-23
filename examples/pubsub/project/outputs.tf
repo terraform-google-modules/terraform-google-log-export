@@ -30,13 +30,13 @@ output "destination_map" {
   description = "Outputs from the destination module"
 
   value = {
-    console_link        = module.destination.console_link
-    project             = module.destination.project
-    resource_name       = module.destination.resource_name
-    resource_id         = module.destination.resource_id
-    destination_uri     = module.destination.destination_uri
-    pubsub_subscriber   = module.destination.pubsub_subscriber
-    pubsub_subscription = module.destination.pubsub_subscription
+    console_link                                   = module.destination.console_link
+    project                                        = module.destination.project
+    resource_name                                  = module.destination.resource_name
+    resource_id                                    = module.destination.resource_id
+    destination_uri                                = module.destination.destination_uri
+    pubsub_subscriber                              = module.destination.pubsub_subscriber
+    pubsub_subscription                            = module.destination.pubsub_subscription
+    pubsub_subscription_message_retention_duration = module.destination.google_pubsub_subscription.pubsub_subscription.0.message_retention_duration
   }
 }
-
