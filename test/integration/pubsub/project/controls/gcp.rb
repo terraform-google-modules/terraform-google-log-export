@@ -40,6 +40,6 @@ control "gcp" do
     name: "#{destination_map[:resource_name]}-subscription"
   ) do
     it { should exist }
-    its('message_retention_duration') { should eq destination_map[:subscription_message_retention_duration] }
+    its('message_retention_duration') { should eq "600s" }
   end
 end
