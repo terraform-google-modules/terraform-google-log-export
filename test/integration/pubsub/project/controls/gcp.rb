@@ -34,4 +34,12 @@ control "gcp" do
     its('filter') { should eq log_export_map[:filter] }
     its('writer_identity') { should eq log_export_map[:writer_identity] }
   end
+
+  describe google_pubsub_subscription(
+    project: destination_map[:project],
+    name: "#{destination_map[:resource_name]}-subscription"
+  ) do
+    it { should exist }
+    its('message_retention_duration') { should eq destination_map[:subscription_message_retention_duration] }
+  end
 end
