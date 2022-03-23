@@ -91,18 +91,20 @@ resource "google_pubsub_topic_iam_member" "pubsub_viewer_role" {
 }
 
 resource "google_pubsub_subscription" "pubsub_subscription" {
-  count   = var.create_subscriber ? 1 : 0
-  name    = "${local.topic_name}-subscription"
-  project = var.project_id
-  topic   = local.topic_name
-  labels  = var.subscription_labels
+  count                      = var.create_subscriber ? 1 : 0
+  name                       = "${local.topic_name}-subscription"
+  project                    = var.project_id
+  topic                      = local.topic_name
+  labels                     = var.subscription_labels
+  message_retention_duration = var.subscription_message_retention_duration
 }
 
 resource "google_pubsub_subscription" "pubsub_push_subscription" {
-  count   = var.create_push_subscriber ? 1 : 0
-  name    = "${local.topic_name}-push-subscription"
-  project = var.project_id
-  topic   = local.topic_name
+  count                      = var.create_push_subscriber ? 1 : 0
+  name                       = "${local.topic_name}-push-subscription"
+  project                    = var.project_id
+  topic                      = local.topic_name
+  message_retention_duration = var.subscription_message_retention_duration
 
   push_config {
     push_endpoint = var.push_endpoint

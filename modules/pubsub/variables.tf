@@ -32,6 +32,12 @@ variable "subscription_labels" {
   description = "A set of key/value label pairs to assign to the pubsub subscription."
 }
 
+variable "subscription_message_retention_duration" {
+  type        = string
+  default     = "604800s" # Defaults to 7 days.
+  description = "How long to retain unacknowledged messages in the subscription's backlog, from the moment a message is published."
+}
+
 variable "create_push_subscriber" {
   description = "Whether to add a push configuration to the subcription. If 'true', a push subscription is created along with a service account that is granted roles/pubsub.subscriber and roles/pubsub.viewer to the topic."
   type        = bool

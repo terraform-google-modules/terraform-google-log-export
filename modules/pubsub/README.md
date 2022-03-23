@@ -45,6 +45,7 @@ so that all dependencies are met.
 | push\_endpoint | The URL locating the endpoint to which messages should be pushed. | `string` | `""` | no |
 | subscriber\_id | The ID to give the pubsub pull subscriber service account (optional). | `string` | `""` | no |
 | subscription\_labels | A set of key/value label pairs to assign to the pubsub subscription. | `map(string)` | `{}` | no |
+| subscription\_message\_retention\_duration | How long to retain unacknowledged messages in the subscription's backlog, from the moment a message is published. | `string` | `"604800s"` | no |
 | topic\_labels | A set of key/value label pairs to assign to the pubsub topic. | `map(string)` | `{}` | no |
 | topic\_name | The name of the pubsub topic to be created and used for log entries matching the filter. | `string` | n/a | yes |
 
