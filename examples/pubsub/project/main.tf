@@ -31,7 +31,7 @@ module "log_export" {
 }
 
 module "destination" {
-  source                                  = "../../..//modules/pubsub"
+  source                                  = "../../../modules/pubsub"
   project_id                              = var.project_id
   topic_labels                            = { topic_key : "topic_label" }
   topic_name                              = "pubsub-project-${random_string.suffix.result}"
