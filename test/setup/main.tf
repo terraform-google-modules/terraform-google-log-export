@@ -16,7 +16,7 @@
 
 module "project" {
   source  = "terraform-google-modules/project-factory/google"
-  version = "~> 10.0"
+  version = "~> 12.0"
 
   name              = "ci-log-export"
   random_project_id = true
@@ -52,4 +52,3 @@ resource "null_resource" "wait_apis" {
   }
   depends_on = [module.project.project_id]
 }
-
