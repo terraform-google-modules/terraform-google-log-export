@@ -17,12 +17,10 @@
 variable "project_id" {
   description = "The ID of the project in which the log export will be created."
   type        = string
-  default     = "gscrp-acm-sbx-001"
 }
 
 variable "parent_resource_folder" {
   description = "The ID of the parent resource folder in which the destination will be created."
   type        = string
-  default     = "677188894110"
 }
 

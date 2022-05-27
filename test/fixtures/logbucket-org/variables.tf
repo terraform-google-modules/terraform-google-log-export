@@ -19,7 +19,7 @@ variable "project_id" {
   type        = string
 }
 
-variable "parent_resource_folder" {
+variable "parent_resource_organization" {
   description = "The ID of the parent resource i.e. organization in which the destination will be created."
   type        = string
 }

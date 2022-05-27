@@ -27,6 +27,7 @@ module "project" {
   activate_apis = [
     "appengine.googleapis.com",
     "cloudbuild.googleapis.com",
+    "cloudfunctions.googleapis.com",
     "cloudscheduler.googleapis.com",
     "securitycenter.googleapis.com",
     "cloudresourcemanager.googleapis.com",

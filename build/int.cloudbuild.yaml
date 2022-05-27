@@ -33,46 +33,46 @@ steps:
 - id: destroy
   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
   args: ['/bin/bash', '-c', 'source /usr/local/bin/task_helper_functions.sh && kitchen_do destroy']
-# - id: go-init-logbucket-folder
-#   waitFor:
-#     - prepare
-#   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-#   args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=init go test -v -run TestLogBucketFolderModule ./... -p 1']
-# - id: go-apply-logbucket-folder
-#   waitFor:
-#     - go-init-logbucket-folder
-#   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-#   args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=apply go test -v -run TestLogBucketFolderModule ./... -p 1']
-# - id: go-verify-logbucket-folder
-#   waitFor:
-#     - go-apply-logbucket-folder
-#   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-#   args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=verify go test -v -run TestLogBucketFolderModule ./... -p 1']
-# - id: go-teardown-logbucket-folder
-#   waitFor:
-#     - go-verify-logbucket-folder
-#   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-#   args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=teardown go test -v -run TestLogBucketFolderModule ./... -p 1']
-# - id: go-init-logbucket-org
-#   waitFor:
-#     - prepare
-#   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-#   args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=init go test -v -run TestLogBucketOrgModule ./... -p 1']
-# - id: go-apply-logbucket-org
-#   waitFor:
-#     - go-init-logbucket-org
-#   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-#   args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=apply go test -v -run TestLogBucketOrgModule ./... -p 1']
-# - id: go-verify-logbucket-org
-#   waitFor:
-#     - go-apply-logbucket-org
-#   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-#   args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=verify go test -v -run TestLogBucketOrgModule ./... -p 1']
-# - id: go-teardown-logbucket-org
-#   waitFor:
-#     - go-verify-logbucket-org
-#   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-#   args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=teardown go test -v -run TestLogBucketOrgModule ./... -p 1']
+- id: go-init-logbucket-folder
+  waitFor:
+    - prepare
+  name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+  args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=init go test -v -run TestLogBucketFolderModule ./... -p 1']
+- id: go-apply-logbucket-folder
+  waitFor:
+    - go-init-logbucket-folder
+  name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+  args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=apply go test -v -run TestLogBucketFolderModule ./... -p 1']
+- id: go-verify-logbucket-folder
+  waitFor:
+    - go-apply-logbucket-folder
+  name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+  args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=verify go test -v -run TestLogBucketFolderModule ./... -p 1']
+- id: go-teardown-logbucket-folder
+  waitFor:
+    - go-verify-logbucket-folder
+  name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+  args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=teardown go test -v -run TestLogBucketFolderModule ./... -p 1']
+- id: go-init-logbucket-org
+  waitFor:
+    - prepare
+  name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+  args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=init go test -v -run TestLogBucketOrgModule ./... -p 1']
+- id: go-apply-logbucket-org
+  waitFor:
+    - go-init-logbucket-org
+  name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+  args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=apply go test -v -run TestLogBucketOrgModule ./... -p 1']
+- id: go-verify-logbucket-org
+  waitFor:
+    - go-apply-logbucket-org
+  name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+  args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=verify go test -v -run TestLogBucketOrgModule ./... -p 1']
+- id: go-teardown-logbucket-org
+  waitFor:
+    - go-verify-logbucket-org
+  name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+  args: ['/bin/bash', '-c', 'cd test/integration && RUN_STAGE=teardown go test -v -run TestLogBucketOrgModule ./... -p 1']
 tags:
 - 'ci'
 - 'integration'

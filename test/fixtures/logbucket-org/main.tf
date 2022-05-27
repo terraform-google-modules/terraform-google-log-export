@@ -16,7 +16,7 @@
 
 module "log_export" {
   source             = "../../../examples/logbucket/organization"
-  parent_resource_id = var.parent_resource_folder
+  parent_resource_id = var.parent_resource_organization
   project_id         = var.project_id
 }
 
