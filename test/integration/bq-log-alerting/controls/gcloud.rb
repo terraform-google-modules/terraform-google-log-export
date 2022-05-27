@@ -28,7 +28,7 @@ topic_name = "projects/#{logging_project}/topics/#{pubsub_topic_name}"
 control 'gcloud' do
   title 'Big Query Log Alerting - gcloud commands'
 
-  describe command("gcloud alpha scc sources describe #{org_id} --source=#{source_name} --format json") do
+  describe command("gcloud scc sources describe #{org_id} --source=#{source_name} --format json") do
     its('exit_status') { should eq 0 }
     its('stderr') { should eq '' }
     let(:data) do
@@ -52,7 +52,7 @@ control 'gcloud' do
     end
   end
 
-  describe command("gcloud scheduler jobs describe #{job_name} --project=#{logging_project} --format json") do
+  describe command("gcloud scheduler jobs describe #{job_name} --project=#{logging_project} --location=#{function_region} --format json") do
     its('exit_status') { should eq 0 }
     its('stderr') { should eq '' }
     let(:data) do

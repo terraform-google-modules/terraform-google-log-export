@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-resource "google_app_engine_application" "app" {
-  project     = module.project.project_id
-  location_id = "us-central"
-}
+# resource "google_app_engine_application" "app" {
+#   project     = module.project.project_id
+#   location_id = "us-central"
+# }
