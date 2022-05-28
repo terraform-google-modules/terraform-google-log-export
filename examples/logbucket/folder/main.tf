@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 resource "random_string" "suffix" {
   length  = 4
   upper   = false
@@ -31,9 +30,8 @@ module "log_export" {
 }
 
 module "destination" {
-  source          = "../../..//modules/logbucket"
-  project_id      = var.project_id
-  log_bucket_name = "logbucket_folder_${random_string.suffix.result}"
-  location        = "global"
+  source     = "../../..//modules/logbucket"
+  project_id = var.project_id
+  name       = "logbucket_folder_${random_string.suffix.result}"
+  location   = "global"
 }
-

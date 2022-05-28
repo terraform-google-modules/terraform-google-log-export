@@ -19,7 +19,7 @@ variable "project_id" {
   type        = string
 }
 
-variable "log_bucket_name" {
+variable "name" {
   description = "The name of the log bucket to be created and used for log entries matching the filter."
   type        = string
 }

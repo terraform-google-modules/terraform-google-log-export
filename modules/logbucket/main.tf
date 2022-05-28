@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,5 +36,5 @@ resource "google_logging_project_bucket_config" "bucket" {
   project        = google_project_service.enable_destination_api.project
   location       = var.location
   retention_days = var.retention_days
-  bucket_id      = var.log_bucket_name
+  bucket_id      = var.name
 }

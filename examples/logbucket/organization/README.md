@@ -1,6 +1,6 @@
-# Log Export: Storage destination at Organization level
+# Log Export: Log Bucket destination at Organization level
 
-This example configures a organization-level log sink that feeds a storage bucket destination. Storage bucket versioning is turned on to mitigate possible modify or delete log events.
+This example configures a organization-level log sink that feeds a Cloud Log Bucket destination.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs

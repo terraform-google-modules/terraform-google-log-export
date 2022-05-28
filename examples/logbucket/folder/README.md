@@ -1,6 +1,6 @@
-# Log Export: Storage destination at Folder level
+# Log Export: Log Bucket destination at Folder level
 
-This example configures a folder-level log sink that feeds a storage bucket destination
+This example configures a folder-level log sink that feeds a logging log bucket destination
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
