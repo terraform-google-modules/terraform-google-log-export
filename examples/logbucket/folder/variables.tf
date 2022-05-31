@@ -19,8 +19,7 @@ variable "project_id" {
   type        = string
 }
 
-variable "parent_resource_id" {
+variable "parent_resource_folder" {
   description = "The ID of the folder in which the log export will be created."
   type        = string
 }
-
