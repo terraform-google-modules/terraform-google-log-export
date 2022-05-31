@@ -1,4 +1,4 @@
-module github.com/terraform-google-modules/terraform-google-sql-db/test/integration
+module github.com/terraform-google-modules/terraform-google-log-export/test/integration
 
 go 1.16
 

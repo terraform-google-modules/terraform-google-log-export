@@ -26,9 +26,10 @@ import (
 func TestLogBucketFolderModule(t *testing.T) {
 
 	const logApiFdqm = "logging.googleapis.com"
-	const logBucketLocation = "global"
 
-	insSimpleT := tft.NewTFBlueprintTest(t)
+	insSimpleT := tft.NewTFBlueprintTest(t,
+		tft.WithTFDir("../../../examples/logbucket/folder"),
+	)
 	insSimpleT.DefineVerify(func(assert *assert.Assertions) {
 		insSimpleT.DefaultVerify(assert)
 
@@ -37,7 +38,7 @@ func TestLogBucketFolderModule(t *testing.T) {
 		logSinkFolderId := insSimpleT.GetStringOutput("log_sink_folder_id")
 		logSinkDestination := insSimpleT.GetStringOutput("log_sink_destination_uri")
 
-		logBucketDetails := gcloud.Runf(t, fmt.Sprintf("logging buckets describe %s --location=%s --project=%s", logBucketName, logBucketLocation, projectId))
+		logBucketDetails := gcloud.Runf(t, fmt.Sprintf("logging buckets describe %s --location=%s --project=%s", logBucketName, "global", projectId))
 
 		// assert log bucket name, retention days & location
 		assert.Equal(logSinkDestination[len(logApiFdqm)+1:], logBucketDetails.Get("name").String(), "log bucket name should match")
