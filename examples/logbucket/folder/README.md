@@ -7,7 +7,7 @@ This example configures a folder-level log sink that feeds a logging log bucket 
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| parent\_resource\_id | The ID of the folder in which the log export will be created. | `string` | n/a | yes |
+| parent\_resource\_folder | The ID of the folder in which the log export will be created. | `string` | n/a | yes |
 | project\_id | The ID of the project in which log bucket destination will be created. | `string` | n/a | yes |
 
 ## Outputs
