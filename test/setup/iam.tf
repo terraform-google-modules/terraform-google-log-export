@@ -46,7 +46,11 @@ locals {
     "roles/iam.serviceAccountUser",
 
     # Needed for the bq-log-alerting submodule to create/delete a cloud scheduler job
-    "roles/cloudscheduler.admin"
+    "roles/cloudscheduler.admin",
+
+    # Needed for creating app engine resources for the project
+    "roles/appengine.appCreator",
+    "roles/appengine.appAdmin"
   ]
 
   log_export_billing_account_roles = [
