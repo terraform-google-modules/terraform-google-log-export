@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.4.0](https://github.com/terraform-google-modules/terraform-google-log-export/compare/v7.3.0...v7.4.0) (2022-06-01)
+
+
+### Features
+
+* adds log export blueprints for folder and organization ([3b4c8be](https://github.com/terraform-google-modules/terraform-google-log-export/commit/3b4c8be1a704d32f3aece1d5360e98a5884eb287))
+
 ## [7.3.0](https://www.github.com/terraform-google-modules/terraform-google-log-export/compare/v7.2.0...v7.3.0) (2021-12-20)
 
 
