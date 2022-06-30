@@ -19,6 +19,11 @@ variable "project_id" {
   type        = string
 }
 
+variable "log_sink_writer_identity" {
+  description = "The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module)."
+  type        = string
+}
+
 variable "name" {
   description = "The name of the log bucket to be created and used for log entries matching the filter."
   type        = string

@@ -38,6 +38,7 @@ module "destination" {
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | location | The location of the log bucket. | `string` | `"global"` | no |
+| log\_sink\_writer\_identity | The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module). | `string` | n/a | yes |
 | name | The name of the log bucket to be created and used for log entries matching the filter. | `string` | n/a | yes |
 | project\_id | The ID of the project in which the log bucket will be created. | `string` | n/a | yes |
 | retention\_days | The number of days data should be retained for the log bucket. | `number` | `30` | no |

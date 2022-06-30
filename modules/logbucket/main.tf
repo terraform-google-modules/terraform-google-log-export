@@ -38,3 +38,12 @@ resource "google_logging_project_bucket_config" "bucket" {
   retention_days = var.retention_days
   bucket_id      = var.name
 }
+
+#--------------------------------#
+# Service account IAM membership #
+#--------------------------------#
+resource "google_project_iam_member" "logbucket_sink_member" {
+  project = google_logging_project_bucket_config.bucket.project
+  role    = "roles/logging.bucketWriter"
+  member  = var.log_sink_writer_identity
+}
