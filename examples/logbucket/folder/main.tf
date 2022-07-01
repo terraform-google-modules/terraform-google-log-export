@@ -21,17 +21,19 @@ resource "random_string" "suffix" {
 }
 
 module "log_export" {
-  source               = "../../../"
-  destination_uri      = module.destination.destination_uri
-  filter               = "resource.type = gce_instance"
-  log_sink_name        = "logbucket_folder_${random_string.suffix.result}"
-  parent_resource_id   = var.parent_resource_folder
-  parent_resource_type = "folder"
+  source                 = "../../../"
+  destination_uri        = module.destination.destination_uri
+  filter                 = "resource.type = gce_instance"
+  log_sink_name          = "logbucket_folder_${random_string.suffix.result}"
+  parent_resource_id     = var.parent_resource_folder
+  parent_resource_type   = "folder"
+  unique_writer_identity = true
 }
 
 module "destination" {
-  source     = "../../..//modules/logbucket"
-  project_id = var.project_id
-  name       = "logbucket_folder_${random_string.suffix.result}"
-  location   = "global"
+  source                   = "../../..//modules/logbucket"
+  project_id               = var.project_id
+  name                     = "logbucket_folder_${random_string.suffix.result}"
+  location                 = "global"
+  log_sink_writer_identity = module.log_export.writer_identity
 }
