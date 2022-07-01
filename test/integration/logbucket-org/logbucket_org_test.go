@@ -38,6 +38,7 @@ func TestLogBucketOrgModule(t *testing.T) {
 		logBucketName := insSimpleT.GetStringOutput("log_bucket_name")
 		logSinkOrgId := insSimpleT.GetStringOutput("log_sink_organization_id")
 		logSinkDestination := insSimpleT.GetStringOutput("log_sink_destination_uri")
+		logSinkWriterId := insSimpleT.GetStringOutput("log_sink_writer_identity")
 
 		logBucketDetails := gcloud.Runf(t, fmt.Sprintf("logging buckets describe %s --location=%s --project=%s", logBucketName, "global", project_id))
 
@@ -50,6 +51,7 @@ func TestLogBucketOrgModule(t *testing.T) {
 		// assert log sink name, destination & filter
 		assert.Equal(logSinkDestination, logSinkDetails.Get("destination").String(), "log sink destination should match")
 		assert.Equal("resource.type = gce_instance", logSinkDetails.Get("filter").String(), "log sink filter should match")
+		assert.Contains(logSinkDetails.Get("writerIdentity").String(), logSinkWriterId, "log sink service identity should have the bucketWriter role")
 
 	})
 	insSimpleT.Test()
