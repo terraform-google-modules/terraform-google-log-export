@@ -51,7 +51,7 @@ func TestLogBucketOrgModule(t *testing.T) {
 		// assert log sink name, destination & filter
 		assert.Equal(logSinkDestination, logSinkDetails.Get("destination").String(), "log sink destination should match")
 		assert.Equal("resource.type = gce_instance", logSinkDetails.Get("filter").String(), "log sink filter should match")
-		assert.Contains(logSinkDetails.Get("writerIdentity").String(), logSinkWriterId, "log sink service identity should have the bucketWriter role")
+		assert.Contains(logSinkDetails.Get("writerIdentity").String(), logSinkWriterId, "log sink has expected identity")
 
 	})
 	insSimpleT.Test()
