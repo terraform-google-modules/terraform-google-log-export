@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,4 +39,10 @@ variable "retention_days" {
   description = "The number of days data should be retained for the log bucket."
   type        = number
   default     = 30
+}
+
+variable "sink_and_bucket_in_same_project" {
+  description = "(Optional) Indicates if the sink and logging bucket are in the same project. When the sink route logs between Logging buckets in the same Cloud project, no new service account need to be created."
+  type        = bool
+  default     = false
 }

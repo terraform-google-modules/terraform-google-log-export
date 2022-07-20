@@ -42,6 +42,7 @@ module "destination" {
 | name | The name of the log bucket to be created and used for log entries matching the filter. | `string` | n/a | yes |
 | project\_id | The ID of the project in which the log bucket will be created. | `string` | n/a | yes |
 | retention\_days | The number of days data should be retained for the log bucket. | `number` | `30` | no |
+| sink\_and\_bucket\_in\_same\_project | (Optional) Indicates if the sink and logging bucket are in the same project. When the sink route logs between Logging buckets in the same Cloud project, no new service account need to be created. | `bool` | `false` | no |
 
 ## Outputs
 
