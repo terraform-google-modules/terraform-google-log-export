@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-variable "project_id" {
+variable "project_destination_logbkt_id" {
   description = "The ID of the project in which log bucket destination will be created."
   type        = string
 }

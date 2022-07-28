@@ -34,6 +34,17 @@ output "log_sink_destination_uri" {
   value       = module.destination.destination_uri
 }
 
+output "log_sink_resource_name" {
+  description = "The resource name of the log sink that was created."
+  value       = module.log_export.log_sink_resource_name
+}
+
+output "log_sink_writer_identity" {
+  description = "The service account that logging uses to write log entries to the destination."
+  value       = module.log_export.writer_identity
+}
+
+
 #-------------------------------------#
 # Log Bucket and Sink in same project #
 #-------------------------------------#
@@ -47,12 +58,22 @@ output "log_bucket_name_same_project_example" {
   value       = module.destination_same_project_example.resource_name
 }
 
-output "log_sink_folder_id_same_project_example" {
-  description = "The folder id where the log sink is created for sink and logbucket in same project example."
+output "log_sink_project_id_same_project_example" {
+  description = "The project id where the log sink is created for sink and logbucket in same project example."
   value       = module.log_export_same_project_example.parent_resource_id
 }
 
 output "log_sink_destination_uri_same_project_example" {
   description = "A fully qualified URI for the log sink for sink and logbucket in same project example."
   value       = module.destination_same_project_example.destination_uri
+}
+
+output "log_sink_resource_name_same_project_example" {
+  description = "The resource name of the log sink that was created in same project example."
+  value       = module.log_export_same_project_example.log_sink_resource_name
+}
+
+output "log_sink_writer_identity_same_project_example" {
+  description = "The service account in same project example that logging uses to write log entries to the destination."
+  value       = module.log_export_same_project_example.writer_identity
 }

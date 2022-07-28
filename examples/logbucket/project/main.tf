@@ -14,23 +14,11 @@
  * limitations under the License.
  */
 
-resource "random_string" "suffix" {
-  length  = 4
-  upper   = false
-  special = false
-}
-
-resource "random_string" "suffix_same_project_example" {
-  length  = 4
-  upper   = false
-  special = false
-}
-
 module "log_export" {
   source                 = "../../../"
   destination_uri        = module.destination.destination_uri
   filter                 = "resource.type = gce_instance"
-  log_sink_name          = "logbucket_project_${random_string.suffix.result}"
+  log_sink_name          = "logbucket_other_project"
   parent_resource_id     = var.parent_resource_project
   parent_resource_type   = "project"
   unique_writer_identity = true
@@ -38,8 +26,8 @@ module "log_export" {
 
 module "destination" {
   source                   = "../../..//modules/logbucket"
-  project_id               = var.project_id
-  name                     = "logbucket_project_${random_string.suffix.result}"
+  project_id               = var.project_destination_logbkt_id
+  name                     = "logbucket_project_from_${var.parent_resource_project}"
   location                 = "global"
   log_sink_writer_identity = module.log_export.writer_identity
 }
@@ -51,17 +39,18 @@ module "log_export_same_project_example" {
   source                 = "../../../"
   destination_uri        = module.destination_same_project_example.destination_uri
   filter                 = "resource.type = gce_instance"
-  log_sink_name          = "logbucket_folder_${random_string.suffix_same_project_example.result}"
-  parent_resource_id     = var.project_id
+  log_sink_name          = "logbucket_same_project"
+  parent_resource_id     = var.project_destination_logbkt_id
   parent_resource_type   = "project"
   unique_writer_identity = true
 }
 
 module "destination_same_project_example" {
-  source                          = "../../..//modules/logbucket"
-  project_id                      = var.project_id
-  name                            = "logbucket_project_${random_string.suffix.result}"
-  location                        = "global"
-  log_sink_writer_identity        = module.log_export_same_project_example.writer_identity
-  sink_and_bucket_in_same_project = true
+  source                        = "../../..//modules/logbucket"
+  project_id                    = var.project_destination_logbkt_id
+  name                          = "logbucket_project_from_${var.project_destination_logbkt_id}"
+  location                      = "global"
+  log_sink_writer_identity      = module.log_export_same_project_example.writer_identity
+  grant_write_permission_on_bkt = false
+  retention_days                = 20
 }
