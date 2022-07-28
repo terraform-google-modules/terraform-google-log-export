@@ -43,7 +43,7 @@ resource "google_logging_project_bucket_config" "bucket" {
 # Service account IAM membership #
 #--------------------------------#
 resource "google_project_iam_member" "logbucket_sink_member" {
-  count = !var.sink_and_bucket_in_same_project ? 1 : 0
+  count = var.grant_write_permission_on_bkt ? 1 : 0
 
   project = google_logging_project_bucket_config.bucket.project
   role    = "roles/logging.bucketWriter"

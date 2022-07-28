@@ -41,8 +41,8 @@ variable "retention_days" {
   default     = 30
 }
 
-variable "sink_and_bucket_in_same_project" {
-  description = "(Optional) Indicates if the sink and logging bucket are in the same project. When the sink route logs between Logging buckets in the same Cloud project, no new service account need to be created."
+variable "grant_write_permission_on_bkt" {
+  description = "(Optional) Indicates whether the module is responsible for granting write permission on the logbucket. This permission will be given by default, but if the user wants, this module can skip this step. This is the case when the sink route logs to a log bucket in the same Cloud project, no new service account will be created and this module will need to bypass granting permissions."
   type        = bool
-  default     = false
+  default     = true
 }
