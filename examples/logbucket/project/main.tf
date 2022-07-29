@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
+resource "random_string" "suffix" {
+  length  = 4
+  upper   = false
+  special = false
+}
+
 module "log_export" {
   source                 = "../../../"
   destination_uri        = module.destination.destination_uri
@@ -27,7 +33,7 @@ module "log_export" {
 module "destination" {
   source                   = "../../..//modules/logbucket"
   project_id               = var.project_destination_logbkt_id
-  name                     = "logbucket_project_from_${var.parent_resource_project}"
+  name                     = "logbucket_from_other_project_${random_string.suffix.result}"
   location                 = "global"
   log_sink_writer_identity = module.log_export.writer_identity
 }
@@ -48,7 +54,7 @@ module "log_export_same_project_example" {
 module "destination_same_project_example" {
   source                        = "../../..//modules/logbucket"
   project_id                    = var.project_destination_logbkt_id
-  name                          = "logbucket_project_from_${var.project_destination_logbkt_id}"
+  name                          = "logbucket_from_same_project_${random_string.suffix.result}"
   location                      = "global"
   log_sink_writer_identity      = module.log_export_same_project_example.writer_identity
   grant_write_permission_on_bkt = false
