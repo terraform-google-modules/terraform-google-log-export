@@ -87,10 +87,24 @@ resource "google_service_account" "int_test" {
   display_name = "ci-account"
 }
 
+resource "google_service_account" "int_test_logbkt" {
+  project      = module.project_destination_logbkt.project_id
+  account_id   = "ci-account"
+  display_name = "ci-account"
+}
+
 resource "google_project_iam_member" "int_test" {
   for_each = toset(local.log_export_required_roles)
 
   project = module.project.project_id
+  role    = each.value
+  member  = "serviceAccount:${google_service_account.int_test.email}"
+}
+
+resource "google_project_iam_member" "int_test_logbkt" {
+  for_each = toset(local.log_export_required_roles)
+
+  project = module.project_destination_logbkt.project_id
   role    = each.value
   member  = "serviceAccount:${google_service_account.int_test.email}"
 }
@@ -139,6 +153,7 @@ resource "null_resource" "wait_permissions" {
     google_billing_account_iam_member.int_test,
     google_folder_iam_member.int_test,
     google_organization_iam_member.int_test,
-    google_project_iam_member.int_test
+    google_project_iam_member.int_test,
+    google_project_iam_member.int_test_logbkt
   ]
 }

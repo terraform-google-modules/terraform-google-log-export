@@ -38,3 +38,7 @@ output "parent_resource_billing_account" {
 output "parent_resource_organization" {
   value = var.org_id
 }
+
+output "project_destination_logbkt_id" {
+  value = module.project_destination_logbkt.project_id
+}
