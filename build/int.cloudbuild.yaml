@@ -69,6 +69,21 @@ steps:
     - go-verify-logbucket-org
   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
   args: ['/bin/bash', '-c', 'cft test run TestLogBucketOrgModule --stage teardown --verbose']
+- id: go-apply-logbucket-project
+  waitFor:
+    - init-all
+  name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+  args: ['/bin/bash', '-c', 'cft test run TestLogBucketProjectModule --stage apply --verbose']
+- id: go-verify-logbucket-project
+  waitFor:
+    - go-apply-logbucket-org
+  name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+  args: ['/bin/bash', '-c', 'cft test run TestLogBucketProjectModule --stage verify --verbose']
+- id: go-teardown-logbucket-project
+  waitFor:
+    - go-verify-logbucket-project
+  name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
+  args: ['/bin/bash', '-c', 'cft test run TestLogBucketProjectModule --stage teardown --verbose']
 tags:
 - 'ci'
 - 'integration'
