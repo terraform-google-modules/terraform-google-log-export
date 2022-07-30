@@ -48,32 +48,32 @@ output "log_sink_writer_identity" {
 #-------------------------------------#
 # Log Bucket and Sink in same project #
 #-------------------------------------#
-output "log_bucket_project_same_project_example" {
+output "log_bkt_same_proj" {
   description = "The project where the log bucket is created for sink and logbucket in same project example."
-  value       = module.destination_same_project_example.project
+  value       = module.dest_same_proj.project
 }
 
-output "log_bucket_name_same_project_example" {
+output "log_bkt_name_same_proj" {
   description = "The name for the log bucket for sink and logbucket in same project example."
-  value       = module.destination_same_project_example.resource_name
+  value       = module.dest_same_proj.resource_name
 }
 
-output "log_sink_project_id_same_project_example" {
+output "log_sink_id_same_proj" {
   description = "The project id where the log sink is created for sink and logbucket in same project example."
-  value       = module.log_export_same_project_example.parent_resource_id
+  value       = module.log_export_same_proj.parent_resource_id
 }
 
-output "log_sink_destination_uri_same_project_example" {
+output "log_sink_dest_uri_same_proj" {
   description = "A fully qualified URI for the log sink for sink and logbucket in same project example."
-  value       = module.destination_same_project_example.destination_uri
+  value       = module.dest_same_proj.destination_uri
 }
 
-output "log_sink_resource_name_same_project_example" {
+output "log_sink_resource_name_same_proj" {
   description = "The resource name of the log sink that was created in same project example."
-  value       = module.log_export_same_project_example.log_sink_resource_name
+  value       = module.log_export_same_proj.log_sink_resource_name
 }
 
-output "log_sink_writer_identity_same_project_example" {
+output "log_sink_writer_identity_same_proj" {
   description = "The service account in same project example that logging uses to write log entries to the destination."
-  value       = module.log_export_same_project_example.writer_identity
+  value       = module.log_export_same_proj.writer_identity
 }

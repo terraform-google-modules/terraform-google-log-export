@@ -41,9 +41,9 @@ module "destination" {
 #-------------------------------------#
 # Log Bucket and Sink in same project #
 #-------------------------------------#
-module "log_export_same_project_example" {
+module "log_export_same_proj" {
   source                 = "../../../"
-  destination_uri        = module.destination_same_project_example.destination_uri
+  destination_uri        = module.dest_same_proj.destination_uri
   filter                 = "resource.type = gce_instance"
   log_sink_name          = "logbucket_same_project"
   parent_resource_id     = var.project_destination_logbkt_id
@@ -51,12 +51,12 @@ module "log_export_same_project_example" {
   unique_writer_identity = true
 }
 
-module "destination_same_project_example" {
+module "dest_same_proj" {
   source                        = "../../..//modules/logbucket"
   project_id                    = var.project_destination_logbkt_id
   name                          = "logbucket_from_same_project_${random_string.suffix.result}"
   location                      = "global"
-  log_sink_writer_identity      = module.log_export_same_project_example.writer_identity
+  log_sink_writer_identity      = module.log_export_same_proj.writer_identity
   grant_write_permission_on_bkt = false
   retention_days                = 20
 }

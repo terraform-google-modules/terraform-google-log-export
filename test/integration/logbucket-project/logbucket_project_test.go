@@ -28,77 +28,69 @@ func TestLogBucketProjectModule(t *testing.T) {
 
 	const logApiFdqm = "logging.googleapis.com"
 	const RETENTION_DAYS = 20
-	const SAMEPROJ_LOGSINK_WRITER_IDENTITY string = ""
 	const ROLE_BUCKET_WRITER string = "roles/logging.bucketWriter"
 
-	insSimpleT := tft.NewTFBlueprintTest(t,
+	bpt := tft.NewTFBlueprintTest(t,
 		tft.WithTFDir("../../../examples/logbucket/project"),
 	)
-	insSimpleT.DefineVerify(func(assert *assert.Assertions) {
-		insSimpleT.DefaultVerify(assert)
+	bpt.DefineVerify(func(assert *assert.Assertions) {
+		bpt.DefaultVerify(assert)
 
 		//*******************************
 		// Bucket on other project test *
 		//*******************************
-		projectId := insSimpleT.GetStringOutput("log_bucket_project")
-		logBucketName := insSimpleT.GetStringOutput("log_bucket_name")
-		logBucketDestinationProjId := insSimpleT.GetStringOutput("log_bucket_project_same_project_example")
-		logSinkProjectId := insSimpleT.GetStringOutput("log_sink_project_id")
-		logSinkDestination := insSimpleT.GetStringOutput("log_sink_destination_uri")
-		logSinkName := insSimpleT.GetStringOutput("log_sink_resource_name")
-		logSinkWriterIdentity := insSimpleT.GetStringOutput("log_sink_writer_identity")
+		projId := bpt.GetStringOutput("log_bucket_project")
+		bktName := bpt.GetStringOutput("log_bucket_name")
+		bktDestProjId := bpt.GetStringOutput("log_bkt_same_proj")
+		sinkProjId := bpt.GetStringOutput("log_sink_project_id")
+		sinkDest := bpt.GetStringOutput("log_sink_destination_uri")
+		sinkName := bpt.GetStringOutput("log_sink_resource_name")
+		sinkWriterIdentity := bpt.GetStringOutput("log_sink_writer_identity")
 
-		logBucketDetails := gcloud.Runf(t, fmt.Sprintf("logging buckets describe %s --location=%s --project=%s", logBucketName, "global", projectId))
+		logBucketDetails := gcloud.Runf(t, fmt.Sprintf("logging buckets describe %s --location=%s --project=%s", bktName, "global", projId))
 
 		// assert log bucket name, retention days & location
-		assert.Equal(logSinkDestination[len(logApiFdqm)+1:], logBucketDetails.Get("name").String(), "log bucket name should match")
+		assert.Equal(sinkDest[len(logApiFdqm)+1:], logBucketDetails.Get("name").String(), "log bucket name should match")
 		assert.Equal(int64(30), logBucketDetails.Get("retentionDays").Int(), "retention days should match")
 
-		logSinkDetails := gcloud.Runf(t, fmt.Sprintf("logging sinks describe %s --project=%s", logSinkName, logSinkProjectId))
+		logSinkDetails := gcloud.Runf(t, fmt.Sprintf("logging sinks describe %s --project=%s", sinkName, sinkProjId))
 
 		// assert log sink name, destination & filter
-		assert.Equal(logSinkDestination, logSinkDetails.Get("destination").String(), "log sink destination should match")
+		assert.Equal(sinkDest, logSinkDetails.Get("destination").String(), "log sink destination should match")
 		assert.Equal("resource.type = gce_instance", logSinkDetails.Get("filter").String(), "log sink filter should match")
-		assert.Equal(logSinkWriterIdentity, logSinkDetails.Get("writerIdentity").String(), "log sink writerIdentity should not be empty")
-
+		assert.Equal(sinkWriterIdentity, logSinkDetails.Get("writerIdentity").String(), "log sink writerIdentity should not be empty")
 
 		//**********************************
 		// Bucket on the same project test *
 		//**********************************
-		sameProjId := insSimpleT.GetStringOutput("log_bucket_project_same_project_example")
-		sameProjLogBucketName := insSimpleT.GetStringOutput("log_bucket_name_same_project_example")
-		sameProjLogSinkProjectId := insSimpleT.GetStringOutput("log_sink_project_id_same_project_example")
-		sameProjLogSinkDestination := insSimpleT.GetStringOutput("log_sink_destination_uri_same_project_example")
-		sameProjLogSinkName := insSimpleT.GetStringOutput("log_sink_resource_name_same_project_example")
+		sameProjId := bpt.GetStringOutput("log_bkt_same_proj")
+		sameProjBktName := bpt.GetStringOutput("log_bkt_name_same_proj")
+		sameProjSinkProjId := bpt.GetStringOutput("log_sink_id_same_proj")
+		sameProjSinkDest := bpt.GetStringOutput("log_sink_dest_uri_same_proj")
+		sameProjSinkName := bpt.GetStringOutput("log_sink_resource_name_same_proj")
 
-		assert.NotEqual(sameProjId, "a", "log sink destination should match")
-		assert.NotEqual(sameProjLogBucketName, "", "log sink destination should match")
-		assert.NotEqual(sameProjLogSinkProjectId, "", "log sink destination should match")
-		assert.NotEqual(sameProjLogSinkDestination, "", "log sink destination should match")
-
-		sameProjLogBucketDetails := gcloud.Runf(t, fmt.Sprintf("logging buckets describe %s --location=%s --project=%s", sameProjLogBucketName, "global", sameProjId))
+		sameProjBktDetails := gcloud.Runf(t, fmt.Sprintf("logging buckets describe %s --location=%s --project=%s", sameProjBktName, "global", sameProjId))
 
 		// assert log bucket name, retention days & location
-		assert.Equal(sameProjLogSinkDestination[len(logApiFdqm)+1:], sameProjLogBucketDetails.Get("name").String(), "log bucket name should match")
-		assert.Equal(int64(RETENTION_DAYS), sameProjLogBucketDetails.Get("retentionDays").Int(), "retention days should match")
+		assert.Equal(sameProjSinkDest[len(logApiFdqm)+1:], sameProjBktDetails.Get("name").String(), "log bucket name should match")
+		assert.Equal(int64(RETENTION_DAYS), sameProjBktDetails.Get("retentionDays").Int(), "retention days should match")
 
-		sameProjLogSinkDetails := gcloud.Runf(t, fmt.Sprintf("logging sinks describe %s --project=%s", sameProjLogSinkName, sameProjLogSinkProjectId))
+		sameProjSinkDetails := gcloud.Runf(t, fmt.Sprintf("logging sinks describe %s --project=%s", sameProjSinkName, sameProjSinkProjId))
 
 		// assert log sink name, destination & filter
-		assert.Equal(sameProjLogSinkDestination, sameProjLogSinkDetails.Get("destination").String(), "log sink destination should match")
-		assert.Equal("resource.type = gce_instance", sameProjLogSinkDetails.Get("filter").String(), "log sink filter should match")
-		assert.Equal(SAMEPROJ_LOGSINK_WRITER_IDENTITY, sameProjLogSinkDetails.Get("writerIdentity").String(), "log sink writerIdentity should not be empty")
-
+		assert.Equal(sameProjSinkDest, sameProjSinkDetails.Get("destination").String(), "log sink destination should match")
+		assert.Equal("resource.type = gce_instance", sameProjSinkDetails.Get("filter").String(), "log sink filter should match")
+		assert.Empty(sameProjSinkDetails.Get("writerIdentity").String(), "log sink writerIdentity same project should be empty")
 
 		//***************************
 		// Test SAs and Permissions *
 		//***************************
-		projPermissionsDetails := gcloud.Runf(t, fmt.Sprintf("projects get-iam-policy %s", logBucketDestinationProjId))
-		listMembers := utils.GetResultStrSlice(projPermissionsDetails.Get("bindings.#(role==\""+ ROLE_BUCKET_WRITER +"\").members").Array())
+		projPermissionsDetails := gcloud.Runf(t, fmt.Sprintf("projects get-iam-policy %s", bktDestProjId))
+		listMembers := utils.GetResultStrSlice(projPermissionsDetails.Get("bindings.#(role==\"" + ROLE_BUCKET_WRITER + "\").members").Array())
 
 		// assert sink writer identity service account permission
-		assert.Contains(listMembers, logSinkWriterIdentity, "log sink writer identity permission should match")
-		assert.Equal(int(1), len(listMembers), "only one writer identity should have logbucket write permission")
+		assert.Contains(listMembers, sinkWriterIdentity, "log sink writer identity permission should match")
+		assert.Len(listMembers, 1, "only one writer identity should have logbucket write permission")
 	})
-	insSimpleT.Test()
+	bpt.Test()
 }
