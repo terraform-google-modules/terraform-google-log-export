@@ -37,27 +37,28 @@ func TestLogBucketProjectModule(t *testing.T) {
 		bpt.DefaultVerify(assert)
 
 		for _, tc := range []struct {
-			projId             string
-			bktName            string
-			sinkDest           string
-			sinkProjId         string
-			sinkName           string
+			projId         string
+			bktName        string
+			sinkDest       string
+			sinkProjId     string
+			sinkName       string
 			writerIdentity string
 		}{
 			{
-				projId:             bpt.GetStringOutput("log_bucket_project"),
-				bktName:            bpt.GetStringOutput("log_bucket_name"),
-				sinkDest:           bpt.GetStringOutput("log_sink_destination_uri"),
-				sinkProjId:         bpt.GetStringOutput("log_sink_project_id"),
-				sinkName:           bpt.GetStringOutput("log_sink_resource_name"),
-				sinkWriterIdentity: bpt.GetStringOutput("log_sink_writer_identity"),
+				projId:         bpt.GetStringOutput("log_bucket_project"),
+				bktName:        bpt.GetStringOutput("log_bucket_name"),
+				sinkDest:       bpt.GetStringOutput("log_sink_destination_uri"),
+				sinkProjId:     bpt.GetStringOutput("log_sink_project_id"),
+				sinkName:       bpt.GetStringOutput("log_sink_resource_name"),
+				writerIdentity: bpt.GetStringOutput("log_sink_writer_identity"),
 			},
 			{
-				projId:             bpt.GetStringOutput("log_bkt_same_proj"),
-				bktName:            bpt.GetStringOutput("log_bkt_name_same_proj"),
-				sinkDest:           bpt.GetStringOutput("log_sink_dest_uri_same_proj"),
-				sinkProjId:         bpt.GetStringOutput("log_sink_id_same_proj"),
-				sinkName:           bpt.GetStringOutput("log_sink_resource_name_same_proj"),
+				projId:     bpt.GetStringOutput("log_bkt_same_proj"),
+				bktName:    bpt.GetStringOutput("log_bkt_name_same_proj"),
+				sinkDest:   bpt.GetStringOutput("log_sink_dest_uri_same_proj"),
+				sinkProjId: bpt.GetStringOutput("log_sink_id_same_proj"),
+				sinkName:   bpt.GetStringOutput("log_sink_resource_name_same_proj"),
+				// writerIdentity: As sink and bucket are in same project no service account is needed and writerIdentity is empty
 			},
 		} {
 			//************************
@@ -75,7 +76,7 @@ func TestLogBucketProjectModule(t *testing.T) {
 			// assert log sink name, destination & filter
 			assert.Equal(tc.sinkDest, logSinkDetails.Get("destination").String(), "log sink destination should match")
 			assert.Equal("resource.type = gce_instance", logSinkDetails.Get("filter").String(), "log sink filter should match")
-			assert.Equal(tc.sinkWriterIdentity, logSinkDetails.Get("writerIdentity").String(), "log sink writerIdentity should not be empty")
+			assert.Equal(tc.writerIdentity, logSinkDetails.Get("writerIdentity").String(), "log sink writerIdentity should match")
 		}
 
 		//*****************************
