@@ -40,17 +40,17 @@ func TestLogBucketProjectModule(t *testing.T) {
 		//*******************************
 		projId := bpt.GetStringOutput("log_bucket_project")
 		bktName := bpt.GetStringOutput("log_bucket_name")
-		bktDestProjId := bpt.GetStringOutput("log_bkt_same_proj")
-		sinkProjId := bpt.GetStringOutput("log_sink_project_id")
 		sinkDest := bpt.GetStringOutput("log_sink_destination_uri")
-		sinkName := bpt.GetStringOutput("log_sink_resource_name")
-		sinkWriterIdentity := bpt.GetStringOutput("log_sink_writer_identity")
 
 		logBucketDetails := gcloud.Runf(t, fmt.Sprintf("logging buckets describe %s --location=%s --project=%s", bktName, "global", projId))
 
 		// assert log bucket name, retention days & location
 		assert.Equal(sinkDest[len(logApiFdqm)+1:], logBucketDetails.Get("name").String(), "log bucket name should match")
 		assert.Equal(int64(30), logBucketDetails.Get("retentionDays").Int(), "retention days should match")
+
+		sinkProjId := bpt.GetStringOutput("log_sink_project_id")
+		sinkName := bpt.GetStringOutput("log_sink_resource_name")
+		sinkWriterIdentity := bpt.GetStringOutput("log_sink_writer_identity")
 
 		logSinkDetails := gcloud.Runf(t, fmt.Sprintf("logging sinks describe %s --project=%s", sinkName, sinkProjId))
 
@@ -64,15 +64,16 @@ func TestLogBucketProjectModule(t *testing.T) {
 		//**********************************
 		sameProjId := bpt.GetStringOutput("log_bkt_same_proj")
 		sameProjBktName := bpt.GetStringOutput("log_bkt_name_same_proj")
-		sameProjSinkProjId := bpt.GetStringOutput("log_sink_id_same_proj")
 		sameProjSinkDest := bpt.GetStringOutput("log_sink_dest_uri_same_proj")
-		sameProjSinkName := bpt.GetStringOutput("log_sink_resource_name_same_proj")
 
 		sameProjBktDetails := gcloud.Runf(t, fmt.Sprintf("logging buckets describe %s --location=%s --project=%s", sameProjBktName, "global", sameProjId))
 
 		// assert log bucket name, retention days & location
 		assert.Equal(sameProjSinkDest[len(logApiFdqm)+1:], sameProjBktDetails.Get("name").String(), "log bucket name should match")
-		assert.Equal(int64(retentionDays), sameProjBktDetails.Get("retentionDays").Int(), "retention days should match")
+		assert.Equal(retentionDays, sameProjBktDetails.Get("retentionDays").Int(), "retention days should match")
+
+		sameProjSinkProjId := bpt.GetStringOutput("log_sink_id_same_proj")
+		sameProjSinkName := bpt.GetStringOutput("log_sink_resource_name_same_proj")
 
 		sameProjSinkDetails := gcloud.Runf(t, fmt.Sprintf("logging sinks describe %s --project=%s", sameProjSinkName, sameProjSinkProjId))
 
@@ -84,6 +85,8 @@ func TestLogBucketProjectModule(t *testing.T) {
 		//***************************
 		// Test SAs and Permissions *
 		//***************************
+		bktDestProjId := bpt.GetStringOutput("log_bkt_same_proj")
+
 		projPermissionsDetails := gcloud.Runf(t, fmt.Sprintf("projects get-iam-policy %s", bktDestProjId))
 		listMembers := utils.GetResultStrSlice(projPermissionsDetails.Get("bindings.#(role==\"" + roleBucketWriter + "\").members").Array())
 
