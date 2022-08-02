@@ -1,6 +1,6 @@
 # Log Export: Log Bucket destination at Project level
 
-These examples configures a project-level log sink that feeds a logging log bucket destination with log bucket and log sink in the same project and in separated projects.
+These examples configures a project-level log sink that feeds a logging log bucket destination with log bucket and log sink in the same project or in separated projects.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
