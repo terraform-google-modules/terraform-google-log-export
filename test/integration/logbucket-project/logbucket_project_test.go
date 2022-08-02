@@ -58,7 +58,6 @@ func TestLogBucketProjectModule(t *testing.T) {
 				sinkDest:           bpt.GetStringOutput("log_sink_dest_uri_same_proj"),
 				sinkProjId:         bpt.GetStringOutput("log_sink_id_same_proj"),
 				sinkName:           bpt.GetStringOutput("log_sink_resource_name_same_proj"),
-				sinkWriterIdentity: "",
 			},
 		} {
 			//************************
