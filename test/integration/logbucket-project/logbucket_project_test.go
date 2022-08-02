@@ -42,7 +42,7 @@ func TestLogBucketProjectModule(t *testing.T) {
 			sinkDest           string
 			sinkProjId         string
 			sinkName           string
-			sinkWriterIdentity string
+			writerIdentity string
 		}{
 			{
 				projId:             bpt.GetStringOutput("log_bucket_project"),
