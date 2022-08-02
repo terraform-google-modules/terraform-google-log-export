@@ -58,5 +58,4 @@ module "dest_same_proj" {
   location                      = "global"
   log_sink_writer_identity      = module.log_export_same_proj.writer_identity
   grant_write_permission_on_bkt = false
-  retention_days                = 20
 }
