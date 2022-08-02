@@ -26,9 +26,8 @@ import (
 
 func TestLogBucketProjectModule(t *testing.T) {
 
-	const logApiFdqm = "logging.googleapis.com"
-	const RETENTION_DAYS = 20
-	const ROLE_BUCKET_WRITER string = "roles/logging.bucketWriter"
+	const logApiFdqm, roleBucketWriter string = "logging.googleapis.com", "roles/logging.bucketWriter"
+	const retentionDays int64 = 20
 
 	bpt := tft.NewTFBlueprintTest(t,
 		tft.WithTFDir("../../../examples/logbucket/project"),
@@ -73,7 +72,7 @@ func TestLogBucketProjectModule(t *testing.T) {
 
 		// assert log bucket name, retention days & location
 		assert.Equal(sameProjSinkDest[len(logApiFdqm)+1:], sameProjBktDetails.Get("name").String(), "log bucket name should match")
-		assert.Equal(int64(RETENTION_DAYS), sameProjBktDetails.Get("retentionDays").Int(), "retention days should match")
+		assert.Equal(int64(retentionDays), sameProjBktDetails.Get("retentionDays").Int(), "retention days should match")
 
 		sameProjSinkDetails := gcloud.Runf(t, fmt.Sprintf("logging sinks describe %s --project=%s", sameProjSinkName, sameProjSinkProjId))
 
@@ -86,7 +85,7 @@ func TestLogBucketProjectModule(t *testing.T) {
 		// Test SAs and Permissions *
 		//***************************
 		projPermissionsDetails := gcloud.Runf(t, fmt.Sprintf("projects get-iam-policy %s", bktDestProjId))
-		listMembers := utils.GetResultStrSlice(projPermissionsDetails.Get("bindings.#(role==\"" + ROLE_BUCKET_WRITER + "\").members").Array())
+		listMembers := utils.GetResultStrSlice(projPermissionsDetails.Get("bindings.#(role==\"" + roleBucketWriter + "\").members").Array())
 
 		// assert sink writer identity service account permission
 		assert.Contains(listMembers, sinkWriterIdentity, "log sink writer identity permission should match")
