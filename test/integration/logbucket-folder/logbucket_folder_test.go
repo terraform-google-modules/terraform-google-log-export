@@ -37,6 +37,7 @@ func TestLogBucketFolderModule(t *testing.T) {
 		logBucketName := insSimpleT.GetStringOutput("log_bucket_name")
 		logSinkFolderId := insSimpleT.GetStringOutput("log_sink_folder_id")
 		logSinkDestination := insSimpleT.GetStringOutput("log_sink_destination_uri")
+		logSinkWriterId := insSimpleT.GetStringOutput("log_sink_writer_identity")
 
 		logBucketDetails := gcloud.Runf(t, fmt.Sprintf("logging buckets describe %s --location=%s --project=%s", logBucketName, "global", projectId))
 
@@ -50,6 +51,9 @@ func TestLogBucketFolderModule(t *testing.T) {
 		assert.Equal(logSinkDestination, logSinkDetails.Get("destination").String(), "log sink destination should match")
 		assert.Equal("resource.type = gce_instance", logSinkDetails.Get("filter").String(), "log sink filter should match")
 
+		//assert writer id has the bucketWriter role
+		logSinkServiceAccount := gcloud.Runf(t, fmt.Sprintf("projects get-iam-policy %s --flatten bindings --filter bindings.role:roles/logging.bucketWriter", projectId))
+		assert.Contains(logSinkServiceAccount.Array()[0].Get("bindings.members").String(), logSinkWriterId, "log sink has expected identity")
 	})
 	insSimpleT.Test()
 }

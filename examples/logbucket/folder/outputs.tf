@@ -33,3 +33,8 @@ output "log_sink_destination_uri" {
   description = "A fully qualified URI for the log sink."
   value       = module.destination.destination_uri
 }
+
+output "log_sink_writer_identity" {
+  description = "Writer identity for the log sink that writes to the log bucket."
+  value       = module.log_export.writer_identity
+}

@@ -34,12 +34,13 @@ func TestLogBucketOrgModule(t *testing.T) {
 	insSimpleT.DefineVerify(func(assert *assert.Assertions) {
 		insSimpleT.DefaultVerify(assert)
 
-		project_id := insSimpleT.GetStringOutput("log_bucket_project")
+		projectId := insSimpleT.GetStringOutput("log_bucket_project")
 		logBucketName := insSimpleT.GetStringOutput("log_bucket_name")
 		logSinkOrgId := insSimpleT.GetStringOutput("log_sink_organization_id")
 		logSinkDestination := insSimpleT.GetStringOutput("log_sink_destination_uri")
+		logSinkWriterId := insSimpleT.GetStringOutput("log_sink_writer_identity")
 
-		logBucketDetails := gcloud.Runf(t, fmt.Sprintf("logging buckets describe %s --location=%s --project=%s", logBucketName, "global", project_id))
+		logBucketDetails := gcloud.Runf(t, fmt.Sprintf("logging buckets describe %s --location=%s --project=%s", logBucketName, "global", projectId))
 
 		// assert log bucket name, retention days & location
 		assert.Equal(logSinkDestination[len(logApiFdqm)+1:], logBucketDetails.Get("name").String(), "log bucket name should match")
@@ -51,6 +52,9 @@ func TestLogBucketOrgModule(t *testing.T) {
 		assert.Equal(logSinkDestination, logSinkDetails.Get("destination").String(), "log sink destination should match")
 		assert.Equal("resource.type = gce_instance", logSinkDetails.Get("filter").String(), "log sink filter should match")
 
+		//assert writer id has the bucketWriter role
+		logSinkServiceAccount := gcloud.Runf(t, "projects get-iam-policy %s --flatten bindings --filter bindings.role:roles/logging.bucketWriter", projectId)
+		assert.Contains(logSinkServiceAccount.Array()[0].Get("bindings.members").String(), logSinkWriterId, "log sink SA has expected role")
 	})
 	insSimpleT.Test()
 }
