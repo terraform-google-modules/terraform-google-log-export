@@ -54,7 +54,7 @@ func TestLogBucketOrgModule(t *testing.T) {
 
 		//assert writer id has the bucketWriter role
 		logSinkServiceAccount := gcloud.Runf(t, "projects get-iam-policy %s --flatten bindings --filter bindings.role:roles/logging.bucketWriter", projectId)
-		assert.Contains(logSinkServiceAccount.Array()[0].Get("bindings.members").String(), logSinkWriterId, "log sink has expected identity")
+		assert.Contains(logSinkServiceAccount.Array()[0].Get("bindings.members").String(), logSinkWriterId, "log sink SA has expected role")
 	})
 	insSimpleT.Test()
 }
