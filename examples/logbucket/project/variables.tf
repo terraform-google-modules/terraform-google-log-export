@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,31 +14,12 @@
  * limitations under the License.
  */
 
-output "project_id" {
-  value = module.project.project_id
+variable "project_destination_logbkt_id" {
+  description = "The ID of the project in which log bucket destination will be created."
+  type        = string
 }
 
-output "sa_key" {
-  value     = google_service_account_key.int_test.private_key
-  sensitive = true
-}
-
-output "parent_resource_project" {
-  value = module.project.project_id
-}
-
-output "parent_resource_folder" {
-  value = var.folder_id
-}
-
-output "parent_resource_billing_account" {
-  value = var.billing_account
-}
-
-output "parent_resource_organization" {
-  value = var.org_id
-}
-
-output "project_destination_logbkt_id" {
-  value = module.project_destination_logbkt.project_id
+variable "parent_resource_project" {
+  description = "The ID of the project in which the log export will be created."
+  type        = string
 }

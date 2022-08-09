@@ -40,3 +40,9 @@ variable "retention_days" {
   type        = number
   default     = 30
 }
+
+variable "grant_write_permission_on_bkt" {
+  description = "(Optional) Indicates whether the module is responsible for granting write permission on the logbucket. This permission will be given by default, but if the user wants, this module can skip this step. This is the case when the sink route logs to a log bucket in the same Cloud project, no new service account will be created and this module will need to bypass granting permissions."
+  type        = bool
+  default     = true
+}

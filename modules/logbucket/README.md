@@ -37,6 +37,7 @@ module "destination" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| grant\_write\_permission\_on\_bkt | (Optional) Indicates whether the module is responsible for granting write permission on the logbucket. This permission will be given by default, but if the user wants, this module can skip this step. This is the case when the sink route logs to a log bucket in the same Cloud project, no new service account will be created and this module will need to bypass granting permissions. | `bool` | `true` | no |
 | location | The location of the log bucket. | `string` | `"global"` | no |
 | log\_sink\_writer\_identity | The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module). | `string` | n/a | yes |
 | name | The name of the log bucket to be created and used for log entries matching the filter. | `string` | n/a | yes |

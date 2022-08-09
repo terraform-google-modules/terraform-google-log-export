@@ -41,12 +41,41 @@ module "project" {
   ]
 }
 
+module "project_destination_logbkt" {
+  source  = "terraform-google-modules/project-factory/google"
+  version = "~> 10.0"
+
+  name              = "ci-destination-logbkt"
+  random_project_id = true
+  org_id            = var.org_id
+  folder_id         = var.folder_id
+  billing_account   = var.billing_account
+
+  activate_apis = [
+    "cloudapis.googleapis.com",
+    "cloudbuild.googleapis.com",
+    "cloudfunctions.googleapis.com",
+    "cloudscheduler.googleapis.com",
+    "securitycenter.googleapis.com",
+    "cloudresourcemanager.googleapis.com",
+    "oslogin.googleapis.com",
+    "compute.googleapis.com",
+    "pubsub.googleapis.com",
+    "storage-component.googleapis.com",
+    "storage-api.googleapis.com",
+    "iam.googleapis.com",
+    "cloudbilling.googleapis.com"
+  ]
+}
+
 resource "null_resource" "wait_apis" {
   # Adding a pause as a workaround for of the provider issue
   # https://github.com/terraform-providers/terraform-provider-google/issues/1131
   provisioner "local-exec" {
     command = "echo sleep 120s for APIs to get enabled; sleep 120"
   }
-  depends_on = [module.project.project_id]
+  depends_on = [
+    module.project.project_id,
+    module.project_destination_logbkt.project_id
+  ]
 }
-
