@@ -18,5 +18,6 @@ This example configures a folder-level log sink that feeds a logging log bucket 
 | log\_bucket\_project | The project where the log bucket is created. |
 | log\_sink\_destination\_uri | A fully qualified URI for the log sink. |
 | log\_sink\_folder\_id | The folder id where the log sink is created. |
+| log\_sink\_writer\_identity | Writer identity for the log sink that writes to the log bucket. |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
