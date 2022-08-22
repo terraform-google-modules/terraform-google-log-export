@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.4.2](https://github.com/terraform-google-modules/terraform-google-log-export/compare/v7.4.1...v7.4.2) (2022-08-09)
+
+
+### Bug Fixes
+
+* adds test assertion for log sink writer identity ([ef43513](https://github.com/terraform-google-modules/terraform-google-log-export/commit/ef4351399dffae3df6c2e46f61cc2acec1b30b7b))
+* support logbucket sink in same project ([#118](https://github.com/terraform-google-modules/terraform-google-log-export/issues/118)) ([44758c2](https://github.com/terraform-google-modules/terraform-google-log-export/commit/44758c29c820d4c299e4c53e2ff08081d19e7f75))
+
 ## [7.4.1](https://github.com/terraform-google-modules/terraform-google-log-export/compare/v7.4.0...v7.4.1) (2022-07-01)
 
 
