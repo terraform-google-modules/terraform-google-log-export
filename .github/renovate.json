@@ -22,7 +22,7 @@
       "groupName": "TF modules",
       "separateMajorMinor":false,
       "major": {
-        "semanticCommitType": "feat!"
+        "extends": [":semanticCommitTypeAll(feat!)"]
       }
     },
     {
@@ -30,7 +30,6 @@
       "groupName": "GO modules",
       "postUpdateOptions": ["gomodTidy"],
       "separateMajorMinor":false
-
     },
     {
       "matchPackageNames": ["go"],
