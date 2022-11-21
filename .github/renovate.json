@@ -3,7 +3,8 @@
   "extends": [
     "config:base",
     ":semanticCommits",
-    ":preserveSemverRanges"
+    ":preserveSemverRanges",
+    ":rebaseStalePrs"
   ],
   "stabilityDays":7,
   "ignorePaths": [],
@@ -13,6 +14,9 @@
        "type:security"
      ],
      "stabilityDays":0
+  },
+  "major": {
+    "semanticCommitType": "feat!"
   },
   "packageRules": [
     {
@@ -35,6 +39,10 @@
       "matchPackageNames": ["google", "google-beta"],
       "groupName": "terraform googles",
       "separateMajorMinor": false
+    },
+    {
+      "matchPaths": ["examples/**", "test/**", ".github/**"],
+      "extends": [":semanticCommitTypeAll(chore)"]
     }
   ]
 }
