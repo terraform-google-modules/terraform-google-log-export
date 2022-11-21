@@ -15,20 +15,22 @@
      ],
      "stabilityDays":0
   },
-  "major": {
-    "semanticCommitType": "feat!"
-  },
+
   "packageRules": [
     {
       "matchDepTypes": ["module"],
       "groupName": "TF modules",
-      "separateMajorMinor":false
+      "separateMajorMinor":false,
+      "major": {
+        "semanticCommitType": "feat!"
+      }
     },
     {
       "matchDepTypes": ["require"],
       "groupName": "GO modules",
       "postUpdateOptions": ["gomodTidy"],
       "separateMajorMinor":false
+
     },
     {
       "matchPackageNames": ["go"],
