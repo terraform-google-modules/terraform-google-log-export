@@ -18,11 +18,15 @@
 
   "packageRules": [
     {
+      "matchPaths": ["examples/**", "test/**", ".github/**"],
+      "extends": [":semanticCommitTypeAll(chore)"]
+    },
+    {
       "matchDepTypes": ["module"],
       "groupName": "TF modules",
       "separateMajorMinor":false,
       "major": {
-        "extends": [":semanticCommitTypeAll(feat!)"]
+        "semanticCommitType": "feat!"
       }
     },
     {
@@ -40,10 +44,6 @@
       "matchPackageNames": ["google", "google-beta"],
       "groupName": "terraform googles",
       "separateMajorMinor": false
-    },
-    {
-      "matchPaths": ["examples/**", "test/**", ".github/**"],
-      "extends": [":semanticCommitTypeAll(chore)"]
     }
   ]
 }
