@@ -16,7 +16,7 @@
 
 module "project" {
   source  = "terraform-google-modules/project-factory/google"
-  version = "~> 10.0"
+  version = "~> 14.0"
 
   name              = "ci-log-export"
   random_project_id = true
@@ -43,7 +43,7 @@ module "project" {
 
 module "project_destination_logbkt" {
   source  = "terraform-google-modules/project-factory/google"
-  version = "~> 10.0"
+  version = "~> 14.0"
 
   name              = "ci-destination-logbkt"
   random_project_id = true
