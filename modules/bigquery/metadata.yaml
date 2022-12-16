@@ -1,0 +1,162 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: blueprints.cloud.google.com/v1alpha1
+kind: BlueprintMetadata
+metadata:
+  name: terraform-google-log-export
+  annotations:
+    config.kubernetes.io/local-config: "true"
+spec:
+  title: 'Log Export: BigQuery destination submodule'
+  source:
+    repo: https://github.com/terraform-google-modules/terraform-google-log-export.git
+    sourceType: git
+  version: 7.4.2
+  actuationTool:
+    type: Terraform
+    version: '>= 0.13'
+  examples:
+  - name: billing_account
+    location: examples/bigquery/billing_account
+  - name: billing_account
+    location: examples/pubsub/billing_account
+  - name: billing_account
+    location: examples/storage/billing_account
+  - name: bq-log-alerting
+    location: examples/bq-log-alerting
+  - name: datadog-sink
+    location: examples/datadog-sink
+  - name: folder
+    location: examples/bigquery/folder
+  - name: folder
+    location: examples/logbucket/folder
+  - name: folder
+    location: examples/pubsub/folder
+  - name: folder
+    location: examples/storage/folder
+  - name: organization
+    location: examples/bigquery/organization
+  - name: organization
+    location: examples/logbucket/organization
+  - name: organization
+    location: examples/pubsub/organization
+  - name: organization
+    location: examples/storage/organization
+  - name: project
+    location: examples/bigquery/project
+  - name: project
+    location: examples/logbucket/project
+  - name: project
+    location: examples/pubsub/project
+  - name: project
+    location: examples/storage/project
+  - name: splunk-sink
+    location: examples/splunk-sink
+  variables:
+  - name: dataset_name
+    description: The name of the bigquery dataset to be created and used for log entries matching the filter.
+    type: string
+    required: true
+  - name: delete_contents_on_destroy
+    description: (Optional) If set to true, delete all the tables in the dataset when destroying the resource; otherwise, destroying the resource will fail if tables are present.
+    type: bool
+    default: false
+    required: false
+  - name: description
+    description: A use-friendly description of the dataset
+    type: string
+    default: Log export dataset
+    required: false
+  - name: expiration_days
+    description: Table expiration time. If unset logs will never be deleted.
+    type: number
+    required: false
+  - name: kms_key_name
+    description: ID of a Cloud KMS key that will be used to encrypt destination BigQuery table. The BigQuery Service Account associated with your project requires access to this encryption key.
+    type: string
+    required: false
+  - name: labels
+    description: Dataset labels
+    type: map(string)
+    default: {}
+    required: false
+  - name: location
+    description: The location of the storage bucket.
+    type: string
+    default: US
+    required: false
+  - name: log_sink_writer_identity
+    description: The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module).
+    type: string
+    required: true
+  - name: project_id
+    description: The ID of the project in which the bigquery dataset will be created.
+    type: string
+    required: true
+  outputs:
+  - name: console_link
+    description: The console link to the destination bigquery dataset
+  - name: destination_uri
+    description: The destination URI for the bigquery dataset.
+  - name: project
+    description: The project in which the bigquery dataset was created.
+  - name: resource_id
+    description: The resource id for the destination bigquery dataset
+  - name: resource_name
+    description: The resource name for the destination bigquery dataset
+  - name: self_link
+    description: The self_link URI for the destination bigquery dataset
+  roles:
+  - level: Project
+    roles:
+    - roles/iam.serviceAccountAdmin
+    - roles/storage.admin
+    - roles/pubsub.admin
+    - roles/bigquery.dataOwner
+    - roles/serviceusage.serviceUsageAdmin
+    - roles/resourcemanager.projectIamAdmin
+    - roles/logging.configWriter
+    - roles/cloudfunctions.developer
+    - roles/iam.serviceAccountUser
+    - roles/cloudscheduler.admin
+    - roles/appengine.appCreator
+    - roles/appengine.appAdmin
+  - level: Project
+    roles:
+    - roles/billing.user
+  - level: Project
+    roles:
+    - roles/logging.configWriter
+    - roles/billing.projectManager
+    - roles/securitycenter.sourcesEditor
+    - roles/resourcemanager.organizationAdmin
+  - level: Project
+    roles:
+    - roles/resourcemanager.projectCreator
+    - roles/logging.configWriter
+  services:
+  - cloudapis.googleapis.com
+  - cloudbuild.googleapis.com
+  - cloudfunctions.googleapis.com
+  - cloudscheduler.googleapis.com
+  - securitycenter.googleapis.com
+  - cloudresourcemanager.googleapis.com
+  - oslogin.googleapis.com
+  - compute.googleapis.com
+  - pubsub.googleapis.com
+  - storage-component.googleapis.com
+  - storage-api.googleapis.com
+  - iam.googleapis.com
+  - cloudbilling.googleapis.com

@@ -1,0 +1,196 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: blueprints.cloud.google.com/v1alpha1
+kind: BlueprintMetadata
+metadata:
+  name: terraform-google-log-export
+  annotations:
+    config.kubernetes.io/local-config: "true"
+spec:
+  title: 'Log Export: Storage destination submodule'
+  source:
+    repo: https://github.com/terraform-google-modules/terraform-google-log-export.git
+    sourceType: git
+  version: 7.4.2
+  actuationTool:
+    type: Terraform
+    version: '>= 0.13'
+  examples:
+  - name: billing_account
+    location: examples/bigquery/billing_account
+  - name: billing_account
+    location: examples/pubsub/billing_account
+  - name: billing_account
+    location: examples/storage/billing_account
+  - name: bq-log-alerting
+    location: examples/bq-log-alerting
+  - name: datadog-sink
+    location: examples/datadog-sink
+  - name: folder
+    location: examples/bigquery/folder
+  - name: folder
+    location: examples/logbucket/folder
+  - name: folder
+    location: examples/pubsub/folder
+  - name: folder
+    location: examples/storage/folder
+  - name: organization
+    location: examples/bigquery/organization
+  - name: organization
+    location: examples/logbucket/organization
+  - name: organization
+    location: examples/pubsub/organization
+  - name: organization
+    location: examples/storage/organization
+  - name: project
+    location: examples/bigquery/project
+  - name: project
+    location: examples/logbucket/project
+  - name: project
+    location: examples/pubsub/project
+  - name: project
+    location: examples/storage/project
+  - name: splunk-sink
+    location: examples/splunk-sink
+  variables:
+  - name: force_destroy
+    description: When deleting a bucket, this boolean option will delete all contained objects.
+    type: bool
+    default: false
+    required: false
+  - name: kms_key_name
+    description: ID of a Cloud KMS key that will be used to encrypt objects inserted into this bucket. Automatic Google Cloud Storage service account for the bucket's project requires access to this encryption key.
+    type: string
+    required: false
+  - name: lifecycle_rules
+    description: List of lifecycle rules to configure. Format is the same as described in provider documentation https://www.terraform.io/docs/providers/google/r/storage_bucket.html#lifecycle_rule except condition.matches_storage_class should be a comma delimited string.
+    type: |-
+      set(object({
+          # Object with keys:
+          # - type - The type of the action of this Lifecycle Rule. Supported values: Delete and SetStorageClass.
+          # - storage_class - (Required if action type is SetStorageClass) The target Storage Class of objects affected by this Lifecycle Rule.
+          action = map(string)
+
+          # Object with keys:
+          # - age - (Optional) Minimum age of an object in days to satisfy this condition.
+          # - created_before - (Optional) Creation date of an object in RFC 3339 (e.g. 2017-06-13) to satisfy this condition.
+          # - with_state - (Optional) Match to live and/or archived objects. Supported values include: "LIVE", "ARCHIVED", "ANY".
+          # - matches_storage_class - (Optional) Comma delimited string for storage class of objects to satisfy this condition. Supported values include: MULTI_REGIONAL, REGIONAL, NEARLINE, COLDLINE, STANDARD, DURABLE_REDUCED_AVAILABILITY.
+          # - num_newer_versions - (Optional) Relevant only for versioned objects. The number of newer versions of an object to satisfy this condition.
+          # - days_since_custom_time - (Optional) The number of days from the Custom-Time metadata attribute after which this condition becomes true.
+          condition = map(string)
+        }))
+    default: []
+    required: false
+  - name: location
+    description: The location of the storage bucket.
+    type: string
+    default: US
+    required: false
+  - name: log_sink_writer_identity
+    description: The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module).
+    type: string
+    required: true
+  - name: project_id
+    description: The ID of the project in which the storage bucket will be created.
+    type: string
+    required: true
+  - name: retention_policy
+    description: Configuration of the bucket's data retention policy for how long objects in the bucket should be retained.
+    type: |-
+      object({
+          is_locked             = bool
+          retention_period_days = number
+        })
+    required: false
+  - name: storage_bucket_labels
+    description: Labels to apply to the storage bucket.
+    type: map(string)
+    default: {}
+    required: false
+  - name: storage_bucket_name
+    description: The name of the storage bucket to be created and used for log entries matching the filter.
+    type: string
+    required: true
+  - name: storage_class
+    description: The storage class of the storage bucket.
+    type: string
+    default: STANDARD
+    required: false
+  - name: uniform_bucket_level_access
+    description: Enables Uniform bucket-level access to a bucket.
+    type: bool
+    default: true
+    required: false
+  - name: versioning
+    description: Toggles bucket versioning, ability to retain a non-current object version when the live object version gets replaced or deleted.
+    type: bool
+    default: false
+    required: false
+  outputs:
+  - name: console_link
+    description: The console link to the destination storage bucket
+  - name: destination_uri
+    description: The destination URI for the storage bucket.
+  - name: project
+    description: The project in which the storage bucket was created.
+  - name: resource_id
+    description: The resource id for the destination storage bucket
+  - name: resource_name
+    description: The resource name for the destination storage bucket
+  - name: self_link
+    description: The self_link URI for the destination storage bucket
+  roles:
+  - level: Project
+    roles:
+    - roles/resourcemanager.projectCreator
+    - roles/logging.configWriter
+  - level: Project
+    roles:
+    - roles/iam.serviceAccountAdmin
+    - roles/storage.admin
+    - roles/pubsub.admin
+    - roles/bigquery.dataOwner
+    - roles/serviceusage.serviceUsageAdmin
+    - roles/resourcemanager.projectIamAdmin
+    - roles/logging.configWriter
+    - roles/cloudfunctions.developer
+    - roles/iam.serviceAccountUser
+    - roles/cloudscheduler.admin
+    - roles/appengine.appCreator
+    - roles/appengine.appAdmin
+  - level: Project
+    roles:
+    - roles/billing.user
+  - level: Project
+    roles:
+    - roles/logging.configWriter
+    - roles/billing.projectManager
+    - roles/securitycenter.sourcesEditor
+    - roles/resourcemanager.organizationAdmin
+  services:
+  - cloudapis.googleapis.com
+  - cloudbuild.googleapis.com
+  - cloudfunctions.googleapis.com
+  - cloudscheduler.googleapis.com
+  - securitycenter.googleapis.com
+  - cloudresourcemanager.googleapis.com
+  - oslogin.googleapis.com
+  - compute.googleapis.com
+  - pubsub.googleapis.com
+  - storage-component.googleapis.com
+  - storage-api.googleapis.com
+  - iam.googleapis.com
+  - cloudbilling.googleapis.com
