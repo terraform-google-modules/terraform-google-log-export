@@ -1,0 +1,181 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: blueprints.cloud.google.com/v1alpha1
+kind: BlueprintMetadata
+metadata:
+  name: terraform-google-log-export
+  annotations:
+    config.kubernetes.io/local-config: "true"
+spec:
+  title: Terraform Log Export Module
+  source:
+    repo: https://github.com/terraform-google-modules/terraform-google-log-export.git
+    sourceType: git
+  version: 7.4.2
+  actuationTool:
+    type: Terraform
+    version: '>= 0.13'
+  subBlueprints:
+  - name: bigquery
+    location: modules/bigquery
+  - name: bq-log-alerting
+    location: modules/bq-log-alerting
+  - name: logbucket
+    location: modules/logbucket
+  - name: pubsub
+    location: modules/pubsub
+  - name: storage
+    location: modules/storage
+  examples:
+  - name: billing_account
+    location: examples/bigquery/billing_account
+  - name: billing_account
+    location: examples/pubsub/billing_account
+  - name: billing_account
+    location: examples/storage/billing_account
+  - name: bq-log-alerting
+    location: examples/bq-log-alerting
+  - name: datadog-sink
+    location: examples/datadog-sink
+  - name: folder
+    location: examples/bigquery/folder
+  - name: folder
+    location: examples/logbucket/folder
+  - name: folder
+    location: examples/pubsub/folder
+  - name: folder
+    location: examples/storage/folder
+  - name: organization
+    location: examples/bigquery/organization
+  - name: organization
+    location: examples/logbucket/organization
+  - name: organization
+    location: examples/pubsub/organization
+  - name: organization
+    location: examples/storage/organization
+  - name: project
+    location: examples/bigquery/project
+  - name: project
+    location: examples/logbucket/project
+  - name: project
+    location: examples/pubsub/project
+  - name: project
+    location: examples/storage/project
+  - name: splunk-sink
+    location: examples/splunk-sink
+  variables:
+  - name: bigquery_options
+    description: (Optional) Options that affect sinks exporting data to BigQuery. use_partitioned_tables - (Required) Whether to use BigQuery's partition tables.
+    type: |-
+      object({
+          use_partitioned_tables = bool
+        })
+    required: false
+  - name: destination_uri
+    description: The self_link URI of the destination resource (This is available as an output coming from one of the destination submodules)
+    type: string
+    required: true
+  - name: exclusions
+    description: (Optional) A list of sink exclusion filters.
+    type: |-
+      list(object({
+          name        = string,
+          description = string,
+          filter      = string,
+          disabled    = bool
+        }))
+    default: []
+    required: false
+  - name: filter
+    description: The filter to apply when exporting logs. Only log entries that match the filter are exported. Default is '' which exports all logs.
+    type: string
+    default: ""
+    required: false
+  - name: include_children
+    description: Only valid if 'organization' or 'folder' is chosen as var.parent_resource.type. Determines whether or not to include children organizations/folders in the sink export. If true, logs associated with child projects are also exported; otherwise only logs relating to the provided organization/folder are included.
+    type: bool
+    default: false
+    required: false
+  - name: log_sink_name
+    description: The name of the log sink to be created.
+    type: string
+    required: true
+  - name: parent_resource_id
+    description: The ID of the GCP resource in which you create the log sink. If var.parent_resource_type is set to 'project', then this is the Project ID (and etc).
+    type: string
+    required: true
+  - name: parent_resource_type
+    description: 'The GCP resource in which you create the log sink. The value must not be computed, and must be one of the following: ''project'', ''folder'', ''billing_account'', or ''organization''.'
+    type: string
+    default: project
+    required: false
+  - name: unique_writer_identity
+    description: Whether or not to create a unique identity associated with this sink. If false (the default), then the writer_identity used is serviceAccount:cloud-logs@system.gserviceaccount.com. If true, then a unique service account is created and used for the logging sink.
+    type: bool
+    default: false
+    required: false
+  outputs:
+  - name: filter
+    description: The filter to be applied when exporting logs.
+  - name: log_sink_resource_id
+    description: The resource ID of the log sink that was created.
+  - name: log_sink_resource_name
+    description: The resource name of the log sink that was created.
+  - name: parent_resource_id
+    description: The ID of the GCP resource in which you create the log sink.
+  - name: writer_identity
+    description: The service account that logging uses to write log entries to the destination.
+  roles:
+  - level: Project
+    roles:
+    - roles/resourcemanager.projectCreator
+    - roles/logging.configWriter
+  - level: Project
+    roles:
+    - roles/iam.serviceAccountAdmin
+    - roles/storage.admin
+    - roles/pubsub.admin
+    - roles/bigquery.dataOwner
+    - roles/serviceusage.serviceUsageAdmin
+    - roles/resourcemanager.projectIamAdmin
+    - roles/logging.configWriter
+    - roles/cloudfunctions.developer
+    - roles/iam.serviceAccountUser
+    - roles/cloudscheduler.admin
+    - roles/appengine.appCreator
+    - roles/appengine.appAdmin
+  - level: Project
+    roles:
+    - roles/billing.user
+  - level: Project
+    roles:
+    - roles/logging.configWriter
+    - roles/billing.projectManager
+    - roles/securitycenter.sourcesEditor
+    - roles/resourcemanager.organizationAdmin
+  services:
+  - cloudapis.googleapis.com
+  - cloudbuild.googleapis.com
+  - cloudfunctions.googleapis.com
+  - cloudscheduler.googleapis.com
+  - securitycenter.googleapis.com
+  - cloudresourcemanager.googleapis.com
+  - oslogin.googleapis.com
+  - compute.googleapis.com
+  - pubsub.googleapis.com
+  - storage-component.googleapis.com
+  - storage-api.googleapis.com
+  - iam.googleapis.com
+  - cloudbilling.googleapis.com
