@@ -22,5 +22,9 @@ terraform {
       source  = "hashicorp/google"
       version = ">= 3.53, < 5.0"
     }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.2"
+    }
   }
 }
