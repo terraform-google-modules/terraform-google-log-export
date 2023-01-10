@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.4.3](https://github.com/terraform-google-modules/terraform-google-log-export/compare/v7.4.2...v7.4.3) (2023-01-10)
+
+
+### Bug Fixes
+
+* **deps:** update tf modules ([#128](https://github.com/terraform-google-modules/terraform-google-log-export/issues/128)) ([c6375ef](https://github.com/terraform-google-modules/terraform-google-log-export/commit/c6375efd1c50427afa6bdc9d2bb9c2a733e471ea))
+* fixes lint issues and generates metadata ([#136](https://github.com/terraform-google-modules/terraform-google-log-export/issues/136)) ([939d971](https://github.com/terraform-google-modules/terraform-google-log-export/commit/939d971ff98a28bbc9a6e82bdee2b6f0a7e49d2c))
+* relax random provider version requirement ([#139](https://github.com/terraform-google-modules/terraform-google-log-export/issues/139)) ([3f7e6bb](https://github.com/terraform-google-modules/terraform-google-log-export/commit/3f7e6bba2bb63590df68d55245d16b7fd0970c69))
+
 ## [7.4.2](https://github.com/terraform-google-modules/terraform-google-log-export/compare/v7.4.1...v7.4.2) (2022-08-09)
 
 
