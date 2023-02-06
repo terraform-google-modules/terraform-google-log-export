@@ -41,11 +41,12 @@ variable "delete_contents_on_destroy" {
   default     = false
 }
 
-variable "expiration_days" {
-  description = "Table expiration time. If unset logs will never be deleted."
+variable "table_expiration_days" {
+  description = "Table expiration period in days. If both table_expiration_days and partition_expiration_days are not set, logs will never be deleted."
   type        = number
   default     = null
 }
+
 
 variable "description" {
   description = "A use-friendly description of the dataset"
@@ -62,5 +63,11 @@ variable "labels" {
 variable "kms_key_name" {
   description = "ID of a Cloud KMS key that will be used to encrypt destination BigQuery table. The BigQuery Service Account associated with your project requires access to this encryption key."
   type        = string
+  default     = null
+}
+
+variable "partition_expiration_days" {
+  description = "Partition expiration period in days. If both partition_expiration_days and table_expiration_days are not set, logs will never be deleted."
+  type        = number
   default     = null
 }

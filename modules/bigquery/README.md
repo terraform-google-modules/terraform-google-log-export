@@ -39,12 +39,13 @@ so that all dependencies are met.
 | dataset\_name | The name of the bigquery dataset to be created and used for log entries matching the filter. | `string` | n/a | yes |
 | delete\_contents\_on\_destroy | (Optional) If set to true, delete all the tables in the dataset when destroying the resource; otherwise, destroying the resource will fail if tables are present. | `bool` | `false` | no |
 | description | A use-friendly description of the dataset | `string` | `"Log export dataset"` | no |
-| expiration\_days | Table expiration time. If unset logs will never be deleted. | `number` | `null` | no |
 | kms\_key\_name | ID of a Cloud KMS key that will be used to encrypt destination BigQuery table. The BigQuery Service Account associated with your project requires access to this encryption key. | `string` | `null` | no |
 | labels | Dataset labels | `map(string)` | `{}` | no |
 | location | The location of the storage bucket. | `string` | `"US"` | no |
 | log\_sink\_writer\_identity | The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module). | `string` | n/a | yes |
+| partition\_expiration\_days | Partition expiration period in days. If both partition\_expiration\_days and table\_expiration\_days are not set, logs will never be deleted. | `number` | `null` | no |
 | project\_id | The ID of the project in which the bigquery dataset will be created. | `string` | n/a | yes |
+| table\_expiration\_days | Table expiration period in days. If both table\_expiration\_days and partition\_expiration\_days are not set, logs will never be deleted. | `number` | `null` | no |
 
 ## Outputs
 

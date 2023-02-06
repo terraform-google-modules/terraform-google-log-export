@@ -39,13 +39,14 @@ resource "google_project_service" "enable_destination_api" {
 # Bigquery dataset #
 #------------------#
 resource "google_bigquery_dataset" "dataset" {
-  dataset_id                  = var.dataset_name
-  project                     = google_project_service.enable_destination_api.project
-  location                    = var.location
-  description                 = var.description
-  delete_contents_on_destroy  = var.delete_contents_on_destroy
-  default_table_expiration_ms = var.expiration_days == null ? null : var.expiration_days * 864 * pow(10, 5)
-  labels                      = var.labels
+  dataset_id                      = var.dataset_name
+  project                         = google_project_service.enable_destination_api.project
+  location                        = var.location
+  description                     = var.description
+  delete_contents_on_destroy      = var.delete_contents_on_destroy
+  default_table_expiration_ms     = var.table_expiration_days == null ? null : var.table_expiration_days * 864 * pow(10, 5)
+  default_partition_expiration_ms = var.partition_expiration_days == null ? null : var.partition_expiration_days * 864 * pow(10, 5)
+  labels                          = var.labels
 
   dynamic "default_encryption_configuration" {
     for_each = var.kms_key_name == null ? [] : [var.kms_key_name]
