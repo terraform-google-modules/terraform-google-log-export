@@ -64,3 +64,9 @@ variable "kms_key_name" {
   type        = string
   default     = null
 }
+
+variable "partition_expiration_days" {
+  description = "Partition expiration period in days. If both partition_expiration_days and expiration_days are not set, logs will never be deleted."
+  type        = number
+  default     = null
+}

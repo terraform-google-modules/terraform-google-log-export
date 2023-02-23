@@ -44,6 +44,7 @@ so that all dependencies are met.
 | labels | Dataset labels | `map(string)` | `{}` | no |
 | location | The location of the storage bucket. | `string` | `"US"` | no |
 | log\_sink\_writer\_identity | The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module). | `string` | n/a | yes |
+| partition\_expiration\_days | Partition expiration period in days. If both partition\_expiration\_days and expiration\_days are not set, logs will never be deleted. | `number` | `null` | no |
 | project\_id | The ID of the project in which the bigquery dataset will be created. | `string` | n/a | yes |
 
 ## Outputs
