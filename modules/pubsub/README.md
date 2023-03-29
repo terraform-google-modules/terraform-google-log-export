@@ -1,6 +1,6 @@
 # Log Export: PubSub destination submodule
 
-This submodule allows you to configure a PubSub topic destination that
+This submodule allows you to configure a [PubSub topic destination](https://cloud.google.com/logging/docs/routing/overview#destinations) that
 can be used by the log export created in the root module.
 
 ## Usage
@@ -37,7 +37,7 @@ so that all dependencies are met.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| create\_push\_subscriber | Whether to add a push configuration to the subcription. If 'true', a push subscription is created along with a service account that is granted roles/pubsub.subscriber and roles/pubsub.viewer to the topic. | `bool` | `false` | no |
+| create\_push\_subscriber | Whether to add a push configuration to the subcription. If 'true', a push subscription is created for push\_endpoint | `bool` | `false` | no |
 | create\_subscriber | Whether to create a subscription to the topic that was created and used for log entries matching the filter. If 'true', a pull subscription is created along with a service account that is granted roles/pubsub.subscriber and roles/pubsub.viewer to the topic. | `bool` | `false` | no |
 | kms\_key\_name | ID of a Cloud KMS CryptoKey to be used to protect access to messages published on this topic. Your project's PubSub service account requires access to this encryption key. | `string` | `null` | no |
 | log\_sink\_writer\_identity | The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module). | `string` | n/a | yes |

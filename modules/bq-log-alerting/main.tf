@@ -27,7 +27,7 @@ locals {
 resource "random_string" "service_account" {
   length  = 6
   upper   = "false"
-  number  = "false"
+  numeric = "false"
   special = "false"
 }
 

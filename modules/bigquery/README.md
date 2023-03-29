@@ -1,6 +1,6 @@
 # Log Export: BigQuery destination submodule
 
-This submodule allows you to configure a BigQuery dataset destination that
+This submodule allows you to configure a [BigQuery dataset destination](https://cloud.google.com/logging/docs/routing/overview#destinations) that
 can be used by the log export created in the root module.
 
 ## Usage
