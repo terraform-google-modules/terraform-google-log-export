@@ -1,6 +1,6 @@
 # Log Export: Log Bucket destination submodule
 
-This submodule allows you to configure a Logging Log bucket destination that
+This submodule allows you to configure a [Logging Log bucket destination](https://cloud.google.com/logging/docs/routing/overview#destinations) that
 can be used by the log export created in the root module.
 
 ## Usage
