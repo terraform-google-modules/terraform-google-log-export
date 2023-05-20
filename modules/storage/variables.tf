@@ -99,3 +99,11 @@ variable "kms_key_name" {
   type        = string
   default     = null
 }
+
+variable "custom_placement_config" {
+  description = "Configuration of the bucket's custom location in a dual-region bucket setup. If the bucket is designated a single or multi-region, then the variable will be null."
+  type = object({
+    data_locations = list(string)
+  })
+  default = null
+}
