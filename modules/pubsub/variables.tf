@@ -38,6 +38,12 @@ variable "create_push_subscriber" {
   default     = false
 }
 
+variable "push_subscription_labels" {
+  type        = map(string)
+  default     = {}
+  description = "A set of key/value label pairs to assign to the pubsub push subscription."
+}
+
 variable "push_endpoint" {
   description = "The URL locating the endpoint to which messages should be pushed."
   type        = string
