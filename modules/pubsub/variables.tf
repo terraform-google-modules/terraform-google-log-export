@@ -29,19 +29,13 @@ variable "subscriber_id" {
 variable "subscription_labels" {
   type        = map(string)
   default     = {}
-  description = "A set of key/value label pairs to assign to the pubsub subscription."
+  description = "A set of key/value label pairs to assign to the pubsub subscription or pubsub push subscription."
 }
 
 variable "create_push_subscriber" {
   description = "Whether to add a push configuration to the subcription. If 'true', a push subscription is created for push_endpoint"
   type        = bool
   default     = false
-}
-
-variable "push_subscription_labels" {
-  type        = map(string)
-  default     = {}
-  description = "A set of key/value label pairs to assign to the pubsub push subscription."
 }
 
 variable "push_endpoint" {
