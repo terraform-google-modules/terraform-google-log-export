@@ -104,7 +104,7 @@ resource "google_pubsub_subscription" "pubsub_push_subscription" {
   project = var.project_id
   topic   = local.topic_name
   labels  = var.subscription_labels
-  
+
   push_config {
     push_endpoint = var.push_endpoint
   }
