@@ -38,5 +38,7 @@ module "destination" {
   log_sink_writer_identity = module.log_export.writer_identity
   create_subscriber        = true
   subscription_labels      = { subscription_key : "subscription_label" }
+  create_push_subscriber   = true
+  push_subscription_labels = { subscription_key : "push_subscription_label" }
 }
 
