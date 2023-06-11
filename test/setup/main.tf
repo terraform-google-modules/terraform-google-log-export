@@ -65,7 +65,8 @@ module "project_destination_logbkt" {
     "storage-component.googleapis.com",
     "storage-api.googleapis.com",
     "iam.googleapis.com",
-    "cloudbilling.googleapis.com"
+    "cloudbilling.googleapis.com",
+    "logging.googleapis.com",
   ]
 }
 
