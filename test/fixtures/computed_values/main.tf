@@ -32,7 +32,7 @@ resource "google_project_service" "project" {
   service = "logging.googleapis.com"
 
   disable_dependent_services = false
-  disable_on_destroy = false
+  disable_on_destroy         = false
 }  
 
 module "log_export" {
