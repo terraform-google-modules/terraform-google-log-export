@@ -40,4 +40,3 @@ module "log_export" {
   parent_resource_id = google_project.computed.project_id
   project_id         = google_project.computed.project_id
 }
-  
