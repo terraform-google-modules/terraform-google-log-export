@@ -33,7 +33,7 @@ resource "google_project_service" "project" {
 
   disable_dependent_services = false
   disable_on_destroy         = false
-}  
+}
 
 module "log_export" {
   source             = "../../../examples/storage/project"
