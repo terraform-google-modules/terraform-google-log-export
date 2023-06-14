@@ -27,6 +27,14 @@ resource "google_project" "computed" {
   billing_account = var.parent_resource_billing_account
 }
 
+resource "google_project_service" "project" {
+  project = google_project.computed.id
+  service = "logging.googleapis.com"
+
+  disable_dependent_services = false
+  disable_on_destroy         = false
+}
+
 module "log_export" {
   source             = "../../../examples/storage/project"
   parent_resource_id = google_project.computed.project_id

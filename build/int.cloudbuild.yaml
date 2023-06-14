@@ -36,7 +36,7 @@ steps:
 
 - id: init-all
   waitFor:
-    - prepare
+    - destroy
   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
   args: ['/bin/bash', '-c', 'cft test run all --stage init --verbose']
 - id: go-apply-logbucket-folder

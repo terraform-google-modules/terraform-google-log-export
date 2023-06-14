@@ -29,7 +29,7 @@ variable "subscriber_id" {
 variable "subscription_labels" {
   type        = map(string)
   default     = {}
-  description = "A set of key/value label pairs to assign to the pubsub subscription."
+  description = "A set of key/value label pairs to assign to the pubsub subscription or pubsub push subscription."
 }
 
 variable "create_push_subscriber" {
