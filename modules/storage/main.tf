@@ -78,9 +78,9 @@ resource "google_storage_bucket" "bucket" {
   }
 
   dynamic "custom_placement_config" {
-    for_each = var.custom_placement_config == null ? [] : [var.custom_placement_config]
+    for_each = var.data_locations == null ? [] : [var.data_locations]
     content {
-      data_locations = var.custom_placement_config.data_locations
+      data_locations = var.data_locations
     }
   }
 }
