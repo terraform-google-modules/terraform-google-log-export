@@ -101,7 +101,7 @@ variable "kms_key_name" {
 }
 
 variable "data_locations" {
-  description = "Configuration of the bucket's custom location in a dual-region bucket setup. If the bucket is designated a single or multi-region, then the variable will be null."
+  description = "Configuration of the bucket's custom location in a dual-region bucket setup. If the bucket is designated a single or multi-region, then the variable will be null. Note: If any of the data_locations changes, it will recreate the bucket."
   type = list(string)
   default = null
 }
