@@ -76,6 +76,13 @@ resource "google_storage_bucket" "bucket" {
       default_kms_key_name = var.kms_key_name
     }
   }
+
+  dynamic "custom_placement_config" {
+    for_each = var.data_locations == null ? [] : [var.data_locations]
+    content {
+      data_locations = var.data_locations
+    }
+  }
 }
 
 #--------------------------------#
