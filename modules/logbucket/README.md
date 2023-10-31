@@ -37,7 +37,10 @@ module "destination" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| enable\_analytics | (Optional) Whether or not Log Analytics is enabled. A Log bucket with Log Analytics enabled can be queried in the Log Analytics page using SQL queries. Cannot be disabled once enabled. | `bool` | `false` | no |
 | grant\_write\_permission\_on\_bkt | (Optional) Indicates whether the module is responsible for granting write permission on the logbucket. This permission will be given by default, but if the user wants, this module can skip this step. This is the case when the sink route logs to a log bucket in the same Cloud project, no new service account will be created and this module will need to bypass granting permissions. | `bool` | `true` | no |
+| link\_analytics\_dataset | (Optional) Whether or not to link a BigQuery dataset to the Log Analytics | `bool` | `false` | no |
+| linked\_dataset\_id | The ID of the linked BigQuery dataset. | `string` | `"log_analytics_dataset"` | no |
 | location | The location of the log bucket. | `string` | `"global"` | no |
 | log\_sink\_writer\_identity | The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module). | `string` | n/a | yes |
 | name | The name of the log bucket to be created and used for log entries matching the filter. | `string` | n/a | yes |

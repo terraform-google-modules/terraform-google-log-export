@@ -46,3 +46,21 @@ variable "grant_write_permission_on_bkt" {
   type        = bool
   default     = true
 }
+
+variable "enable_analytics" {
+  description = "(Optional) Whether or not Log Analytics is enabled. A Log bucket with Log Analytics enabled can be queried in the Log Analytics page using SQL queries. Cannot be disabled once enabled."
+  type        = bool
+  default     = false
+}
+
+variable "link_analytics_dataset" {
+  description = "(Optional) Whether or not to link a BigQuery dataset to the Log Analytics"
+  type        = bool
+  default     = false
+}
+
+variable "linked_dataset_id" {
+  description = "The ID of the linked BigQuery dataset."
+  type        = string
+  default     = "log_analytics_dataset"
+}
