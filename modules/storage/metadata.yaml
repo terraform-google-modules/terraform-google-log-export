@@ -139,6 +139,11 @@ spec:
     type: bool
     default: false
     required: false
+  - name: public_access_prevention
+    description: Prevents public access to a bucket.
+    type: string
+    default: inherited
+    required: false
   outputs:
   - name: console_link
     description: The console link to the destination storage bucket
