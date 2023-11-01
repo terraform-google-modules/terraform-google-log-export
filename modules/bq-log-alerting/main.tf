@@ -81,10 +81,8 @@ resource "google_bigquery_dataset" "views_dataset" {
 # Scheduled function creation #
 #-----------------------------#
 module "bq-log-alerting" {
-  source = "github.com/terraform-google-modules/terraform-google-scheduled-function?ref=a09c449994d714b782ec0c9a7b5c1ea042986714"
-  # source                         = "terraform-google-modules/scheduled-function/google"
-  # version                        = "~> 2.5"
-
+  source                         = "terraform-google-modules/scheduled-function/google"
+  version                        = "~> 3.0"
   project_id                     = var.logging_project
   job_name                       = "bq-alerts-event-trigger"
   job_description                = "publish to pubsub to trigger cloud function"
