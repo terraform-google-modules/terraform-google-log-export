@@ -82,7 +82,7 @@ resource "google_bigquery_dataset" "views_dataset" {
 #-----------------------------#
 module "bq-log-alerting" {
   source                         = "terraform-google-modules/scheduled-function/google"
-  version                        = "~> 2.5"
+  version                        = "~> 3.0"
   project_id                     = var.logging_project
   job_name                       = "bq-alerts-event-trigger"
   job_description                = "publish to pubsub to trigger cloud function"
