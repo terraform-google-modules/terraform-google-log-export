@@ -60,7 +60,7 @@ variable "linked_dataset_id" {
 }
 
 variable "linked_dataset_description" {
-  description = "A use-friendly description of the linked BigQuery dataset."
+  description = "A use-friendly description of the linked BigQuery dataset. The maximum length of the description is 8000 characters."
   type        = string
-  default     = "Log bucket linked BigQuery dataset"
+  default     = null
 }
