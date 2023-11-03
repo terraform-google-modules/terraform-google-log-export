@@ -45,11 +45,13 @@ resource "google_logging_project_bucket_config" "bucket" {
 #-------------------------#
 
 resource "google_logging_linked_dataset" "linked_dataset" {
-  count = var.enable_analytics && var.link_analytics_dataset ? 1 : 0
+  count = var.linked_dataset_id != null ? 1 : 0
 
-  link_id  = var.linked_dataset_id
-  bucket   = google_logging_project_bucket_config.bucket.id
-  location = var.location
+  link_id     = var.linked_dataset_id
+  description = var.linked_dataset_description
+  parent      = "projects/${google_project_service.enable_destination_api.project}"
+  bucket      = google_logging_project_bucket_config.bucket.id
+  location    = var.location
 }
 
 #--------------------------------#

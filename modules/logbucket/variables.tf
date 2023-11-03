@@ -53,14 +53,14 @@ variable "enable_analytics" {
   default     = false
 }
 
-variable "link_analytics_dataset" {
-  description = "(Optional) Whether or not to link a BigQuery dataset to the Log Analytics"
-  type        = bool
-  default     = false
+variable "linked_dataset_id" {
+  description = "The ID of the linked BigQuery dataset. A valid link dataset ID must only have alphanumeric characters and underscores within it and have up to 100 characters."
+  type        = string
+  default     = null
 }
 
-variable "linked_dataset_id" {
-  description = "The ID of the linked BigQuery dataset."
+variable "linked_dataset_description" {
+  description = "A use-friendly description of the linked BigQuery dataset."
   type        = string
-  default     = "log_analytics_dataset"
+  default     = "Log bucket linked BigQuery dataset"
 }
