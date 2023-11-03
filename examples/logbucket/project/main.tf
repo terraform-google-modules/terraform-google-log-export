@@ -31,11 +31,14 @@ module "log_export" {
 }
 
 module "destination" {
-  source                   = "../../..//modules/logbucket"
-  project_id               = var.project_destination_logbkt_id
-  name                     = "logbucket_from_other_project_${random_string.suffix.result}"
-  location                 = "global"
-  log_sink_writer_identity = module.log_export.writer_identity
+  source                     = "../../..//modules/logbucket"
+  project_id                 = var.project_destination_logbkt_id
+  name                       = "logbucket_from_other_project_${random_string.suffix.result}"
+  location                   = "global"
+  enable_analytics           = true
+  linked_dataset_id          = "log_analytics_dataset"
+  linked_dataset_description = "dataset for log bucket"
+  log_sink_writer_identity   = module.log_export.writer_identity
 }
 
 #-------------------------------------#
@@ -56,6 +59,9 @@ module "dest_same_proj" {
   project_id                    = var.project_destination_logbkt_id
   name                          = "logbucket_from_same_project_${random_string.suffix.result}"
   location                      = "global"
+  enable_analytics              = true
+  linked_dataset_id             = "log_analytics_dataset_same"
+  linked_dataset_description    = "dataset for log bucket in the same project"
   log_sink_writer_identity      = module.log_export_same_proj.writer_identity
   grant_write_permission_on_bkt = false
 }

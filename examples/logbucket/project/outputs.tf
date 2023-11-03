@@ -24,6 +24,11 @@ output "log_bucket_name" {
   value       = module.destination.resource_name
 }
 
+output "log_bucket_linked_ds_name" {
+  description = "The name for the log bucket linked BigQuery dataset name."
+  value       = module.destination.linked_dataset_name
+}
+
 output "log_sink_project_id" {
   description = "The project id where the log sink is created."
   value       = module.log_export.parent_resource_id
@@ -56,6 +61,11 @@ output "log_bkt_same_proj" {
 output "log_bkt_name_same_proj" {
   description = "The name for the log bucket for sink and logbucket in same project example."
   value       = module.dest_same_proj.resource_name
+}
+
+output "log_bkt_linked_ds_name_same_proj" {
+  description = "The name for the log bucket linked BigQuery dataset name in same project example."
+  value       = module.dest_same_proj.linked_dataset_name
 }
 
 output "log_sink_id_same_proj" {

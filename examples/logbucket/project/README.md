@@ -1,6 +1,6 @@
 # Log Export: Log Bucket destination at Project level
 
-These examples configures a project-level log sink that feeds a logging log bucket destination with log bucket and log sink in the same project or in separated projects.
+These examples configures a project-level log sink that feeds a logging log bucket destination with log bucket and log sink in the same project or in separated projects. This example also configures [Log Analytics](https://cloud.google.com/logging/docs/log-analytics) in the log bucket with a linked BigQuery dataset.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Inputs
@@ -14,8 +14,10 @@ These examples configures a project-level log sink that feeds a logging log buck
 
 | Name | Description |
 |------|-------------|
+| log\_bkt\_linked\_ds\_name\_same\_proj | The name for the log bucket linked BigQuery dataset name in same project example. |
 | log\_bkt\_name\_same\_proj | The name for the log bucket for sink and logbucket in same project example. |
 | log\_bkt\_same\_proj | The project where the log bucket is created for sink and logbucket in same project example. |
+| log\_bucket\_linked\_ds\_name | The name for the log bucket linked BigQuery dataset name. |
 | log\_bucket\_name | The name for the log bucket. |
 | log\_bucket\_project | The project where the log bucket is created. |
 | log\_sink\_dest\_uri\_same\_proj | A fully qualified URI for the log sink for sink and logbucket in same project example. |

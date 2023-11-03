@@ -53,6 +53,7 @@ module "destination" {
 |------|-------------|
 | console\_link | The console link to the destination log buckets |
 | destination\_uri | The destination URI for the log bucket. |
+| linked\_dataset\_name | The resource name of the linked BigQuery dataset. |
 | project | The project in which the log bucket was created. |
 | resource\_name | The resource name for the destination log bucket |
 

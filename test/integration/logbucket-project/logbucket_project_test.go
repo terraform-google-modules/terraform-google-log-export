@@ -39,6 +39,8 @@ func TestLogBucketProjectModule(t *testing.T) {
 		for _, tc := range []struct {
 			projId         string
 			bktName        string
+			linkedDsName   string
+			linkedDsID     string
 			sinkDest       string
 			sinkProjId     string
 			sinkName       string
@@ -47,17 +49,21 @@ func TestLogBucketProjectModule(t *testing.T) {
 			{
 				projId:         bpt.GetStringOutput("log_bucket_project"),
 				bktName:        bpt.GetStringOutput("log_bucket_name"),
+				linkedDsName:   bpt.GetStringOutput("log_bucket_linked_ds_name"),
+				linkedDsID:     "log_analytics_dataset",
 				sinkDest:       bpt.GetStringOutput("log_sink_destination_uri"),
 				sinkProjId:     bpt.GetStringOutput("log_sink_project_id"),
 				sinkName:       bpt.GetStringOutput("log_sink_resource_name"),
 				writerIdentity: bpt.GetStringOutput("log_sink_writer_identity"),
 			},
 			{
-				projId:     bpt.GetStringOutput("log_bkt_same_proj"),
-				bktName:    bpt.GetStringOutput("log_bkt_name_same_proj"),
-				sinkDest:   bpt.GetStringOutput("log_sink_dest_uri_same_proj"),
-				sinkProjId: bpt.GetStringOutput("log_sink_id_same_proj"),
-				sinkName:   bpt.GetStringOutput("log_sink_resource_name_same_proj"),
+				projId:       bpt.GetStringOutput("log_bkt_same_proj"),
+				bktName:      bpt.GetStringOutput("log_bkt_name_same_proj"),
+				linkedDsName: bpt.GetStringOutput("log_bkt_linked_ds_name_same_proj"),
+				linkedDsID:   "log_analytics_dataset_same",
+				sinkDest:     bpt.GetStringOutput("log_sink_dest_uri_same_proj"),
+				sinkProjId:   bpt.GetStringOutput("log_sink_id_same_proj"),
+				sinkName:     bpt.GetStringOutput("log_sink_resource_name_same_proj"),
 				// writerIdentity: As sink and bucket are in same project no service account is needed and writerIdentity is empty
 			},
 		} {
@@ -77,6 +83,13 @@ func TestLogBucketProjectModule(t *testing.T) {
 			assert.Equal(tc.sinkDest, logSinkDetails.Get("destination").String(), "log sink destination should match")
 			assert.Equal("resource.type = gce_instance", logSinkDetails.Get("filter").String(), "log sink filter should match")
 			assert.Equal(tc.writerIdentity, logSinkDetails.Get("writerIdentity").String(), "log sink writerIdentity should match")
+
+			// assert linked dataset name & BigQuery Dataset ID
+			projectNumber := gcloud.Runf(t, "projects describe %s", tc.projId).Get("projectNumber").String()
+			bigqueryDatasetID := fmt.Sprintf("bigquery.googleapis.com/projects/%s/datasets/%s", projectNumber, tc.linkedDsID)
+			linkedDs := gcloud.Runf(t, "logging links describe %s --bucket=%s --location=%s --project=%s", tc.linkedDsID, tc.bktName, "global", tc.projId)
+			assert.Equal(tc.linkedDsName, linkedDs.Get("name").String(), "log bucket linked dataset name should match")
+			assert.Equal(bigqueryDatasetID, linkedDs.Get("bigqueryDataset.datasetId").String(), "log bucket BigQuery dataset ID should match")
 		}
 
 		//*****************************
