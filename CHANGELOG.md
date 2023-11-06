@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.7.0](https://github.com/terraform-google-modules/terraform-google-log-export/compare/v7.6.0...v7.7.0) (2023-11-06)
+
+
+### Features
+
+* add support for Log Analytics in log bucket destination ([#179](https://github.com/terraform-google-modules/terraform-google-log-export/issues/179)) ([511585e](https://github.com/terraform-google-modules/terraform-google-log-export/commit/511585e81b5c3960c09415f266c9cb828a9e663d))
+* enabling the storage submodule to allow public access prevention ([#181](https://github.com/terraform-google-modules/terraform-google-log-export/issues/181)) ([196eb71](https://github.com/terraform-google-modules/terraform-google-log-export/commit/196eb7174768aec2908650ff18bd672b423508bc))
+
+
+### Bug Fixes
+
+* update version constraints for TPG v5 ([#187](https://github.com/terraform-google-modules/terraform-google-log-export/issues/187)) ([63d105b](https://github.com/terraform-google-modules/terraform-google-log-export/commit/63d105b13903b5ea5b64d8e6bc955ecce01dc2d2))
+* upgraded versions.tf to include minor bumps from tpg v5 ([#173](https://github.com/terraform-google-modules/terraform-google-log-export/issues/173)) ([659baba](https://github.com/terraform-google-modules/terraform-google-log-export/commit/659babaaac364512c2efbf33441ae339cd623451))
+
 ## [7.6.0](https://github.com/terraform-google-modules/terraform-google-log-export/compare/v7.5.0...v7.6.0) (2023-06-22)
 
 
