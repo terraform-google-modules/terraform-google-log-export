@@ -65,10 +65,25 @@ spec:
   - name: splunk-sink
     location: examples/splunk-sink
   variables:
+  - name: enable_analytics
+    description: (Optional) Whether or not Log Analytics is enabled. A Log bucket with Log Analytics enabled can be queried in the Log Analytics page using SQL queries. Cannot be disabled once enabled.
+    type: bool
+    default: false
+    required: false
   - name: grant_write_permission_on_bkt
     description: (Optional) Indicates whether the module is responsible for granting write permission on the logbucket. This permission will be given by default, but if the user wants, this module can skip this step. This is the case when the sink route logs to a log bucket in the same Cloud project, no new service account will be created and this module will need to bypass granting permissions.
     type: bool
     default: true
+    required: false
+  - name: linked_dataset_description
+    description: A use-friendly description of the linked BigQuery dataset. The maximum length of the description is 8000 characters.
+    type: string
+    default: Logbucket linked BigQuery dataset
+    required: false
+  - name: linked_dataset_id
+    description: The ID of the linked BigQuery dataset. A valid link dataset ID must only have alphanumeric characters and underscores within it and have up to 100 characters.
+    type: string
+    default: null
     required: false
   - name: location
     description: The location of the log bucket.
@@ -97,6 +112,8 @@ spec:
     description: The console link to the destination log buckets
   - name: destination_uri
     description: The destination URI for the log bucket.
+  - name: linked_dataset_name
+    description: The resource name of the linked BigQuery dataset.
   - name: project
     description: The project in which the log bucket was created.
   - name: resource_name

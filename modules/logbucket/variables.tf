@@ -46,3 +46,21 @@ variable "grant_write_permission_on_bkt" {
   type        = bool
   default     = true
 }
+
+variable "enable_analytics" {
+  description = "(Optional) Whether or not Log Analytics is enabled. A Log bucket with Log Analytics enabled can be queried in the Log Analytics page using SQL queries. Cannot be disabled once enabled."
+  type        = bool
+  default     = false
+}
+
+variable "linked_dataset_id" {
+  description = "The ID of the linked BigQuery dataset. A valid link dataset ID must only have alphanumeric characters and underscores within it and have up to 100 characters."
+  type        = string
+  default     = null
+}
+
+variable "linked_dataset_description" {
+  description = "A use-friendly description of the linked BigQuery dataset. The maximum length of the description is 8000 characters."
+  type        = string
+  default     = null
+}

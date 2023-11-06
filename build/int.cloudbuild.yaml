@@ -76,7 +76,7 @@ steps:
   args: ['/bin/bash', '-c', 'cft test run TestLogBucketProjectModule --stage apply --verbose']
 - id: go-verify-logbucket-project
   waitFor:
-    - go-apply-logbucket-org
+    - go-apply-logbucket-project
   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
   args: ['/bin/bash', '-c', 'cft test run TestLogBucketProjectModule --stage verify --verbose']
 - id: go-teardown-logbucket-project
