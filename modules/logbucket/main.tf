@@ -38,6 +38,7 @@ resource "google_logging_project_bucket_config" "bucket" {
   retention_days   = var.retention_days
   enable_analytics = var.enable_analytics
   bucket_id        = var.name
+  locked           = var.locked
 }
 
 #-------------------------#
