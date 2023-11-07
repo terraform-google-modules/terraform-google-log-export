@@ -15,7 +15,7 @@
  */
 
 resource "random_string" "suffix" {
-  length  = 4
+  length  = 6
   upper   = false
   special = false
 }
@@ -33,7 +33,7 @@ module "log_export" {
 module "destination" {
   source                     = "../../..//modules/logbucket"
   project_id                 = var.project_destination_logbkt_id
-  name                       = "logbucket_from_other_project_${random_string.suffix.result}"
+  name                       = "logbucket_from_other_prj_${random_string.suffix.result}"
   location                   = "global"
   enable_analytics           = true
   linked_dataset_id          = "log_analytics_dataset"
