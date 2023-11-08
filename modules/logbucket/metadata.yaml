@@ -107,6 +107,9 @@ spec:
     type: number
     default: 30
     required: false
+  - name: kms_key_name
+    type: string
+    required: false
   outputs:
   - name: console_link
     description: The console link to the destination log buckets
