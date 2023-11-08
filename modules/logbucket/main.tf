@@ -23,9 +23,10 @@ locals {
 # API activation #
 #----------------#
 resource "google_project_service" "enable_destination_api" {
-  project            = var.project_id
-  service            = "logging.googleapis.com"
-  disable_on_destroy = false
+  project                    = var.project_id
+  service                    = "logging.googleapis.com"
+  disable_on_destroy         = false
+  disable_dependent_services = false
 }
 
 #------------#
@@ -38,6 +39,7 @@ resource "google_logging_project_bucket_config" "bucket" {
   retention_days   = var.retention_days
   enable_analytics = var.enable_analytics
   bucket_id        = var.name
+  locked           = var.locked
 }
 
 #-------------------------#

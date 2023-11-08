@@ -42,6 +42,7 @@ module "destination" {
 | linked\_dataset\_description | A use-friendly description of the linked BigQuery dataset. The maximum length of the description is 8000 characters. | `string` | `null` | no |
 | linked\_dataset\_id | The ID of the linked BigQuery dataset. A valid link dataset ID must only have alphanumeric characters and underscores within it and have up to 100 characters. | `string` | `null` | no |
 | location | The location of the log bucket. | `string` | `"global"` | no |
+| locked | (Optional) Whether the bucket is locked. The retention period on a locked bucket cannot be changed. Locked buckets may only be deleted if they are empty | `bool` | `null` | no |
 | log\_sink\_writer\_identity | The service account that logging uses to write log entries to the destination. (This is available as an output coming from the root module). | `string` | n/a | yes |
 | name | The name of the log bucket to be created and used for log entries matching the filter. | `string` | n/a | yes |
 | project\_id | The ID of the project in which the log bucket will be created. | `string` | n/a | yes |

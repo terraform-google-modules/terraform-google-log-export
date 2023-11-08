@@ -64,3 +64,9 @@ variable "linked_dataset_description" {
   type        = string
   default     = null
 }
+
+variable "locked" {
+  description = "(Optional) Whether the bucket is locked. The retention period on a locked bucket cannot be changed. Locked buckets may only be deleted if they are empty"
+  default     = null
+  type        = bool
+}
