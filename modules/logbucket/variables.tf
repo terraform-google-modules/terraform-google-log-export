@@ -74,7 +74,7 @@ variable "locked" {
 variable "kms_key_name" {
   description = "To enable CMEK for a project logging bucket, set this field to a valid name. The associated service account requires cloudkms.cryptoKeyEncrypterDecrypter roles assigned for the key.The kms_key_name should be of the format projects/{project ID}/locations/{region}/keyRings/{keyring name}/cryptoKeys/{key name} "
   type        = string
-  default = null
+  default     = null
 }
 
 
