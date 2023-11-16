@@ -57,7 +57,7 @@ module "log_export_same_proj" {
 module "dest_same_proj" {
   source                        = "../../..//modules/logbucket"
   project_id                    = var.project_destination_logbkt_id
-  name                          = "logbucket_from_same_project_${random_string.suffix.result}"
+  name                          = "logbucket_from_same_prj_${random_string.suffix.result}"
   location                      = "global"
   enable_analytics              = true
   linked_dataset_id             = "log_analytics_dataset_same"
