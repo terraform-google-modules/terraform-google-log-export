@@ -107,6 +107,10 @@ spec:
     type: number
     default: 30
     required: false
+  - name: kms_key_name
+    description: To enable CMEK for a project logging bucket, set this field to a valid name. The associated service account requires cloudkms.cryptoKeyEncrypterDecrypter roles assigned for the key.
+    type: string
+    required: false
   outputs:
   - name: console_link
     description: The console link to the destination log buckets
