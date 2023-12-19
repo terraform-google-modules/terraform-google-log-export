@@ -21,7 +21,9 @@ resource "random_string" "suffix" {
 }
 
 module "log_export" {
-  source                 = "../../../"
+  source  = "terraform-google-modules/log-export/google"
+  version = "~> 7.0"
+
   destination_uri        = module.destination.destination_uri
   filter                 = "resource.type = gce_instance"
   log_sink_name          = "project_${random_string.suffix.result}"
@@ -31,7 +33,9 @@ module "log_export" {
 }
 
 module "destination" {
-  source                   = "../../..//modules/project"
+  source  = "terraform-google-modules/log-export/google//modules/project"
+  version = "~> 7.0"
+
   project_id               = var.project_id
   log_sink_writer_identity = module.log_export.writer_identity
 }
