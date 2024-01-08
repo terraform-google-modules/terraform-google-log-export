@@ -19,17 +19,17 @@
 #-----------------#
 locals {
   destination_uri = "pubsub.googleapis.com/projects/${var.project_id}/topics/${local.topic_name}"
-  topic_name      = element(concat(google_pubsub_topic.topic.*.name, [""]), 0)
+  topic_name      = element(concat(google_pubsub_topic.topic[*].name, [""]), 0)
   pubsub_subscriber = element(
-    concat(google_service_account.pubsub_subscriber.*.email, [""]),
+    concat(google_service_account.pubsub_subscriber[*].email, [""]),
     0,
   )
   pubsub_subscription = element(
-    concat(google_pubsub_subscription.pubsub_subscription.*.id, [""]),
+    concat(google_pubsub_subscription.pubsub_subscription[*].id, [""]),
     0,
   )
   pubsub_push_subscription = element(
-    concat(google_pubsub_subscription.pubsub_push_subscription.*.id, [""]),
+    concat(google_pubsub_subscription.pubsub_push_subscription[*].id, [""]),
     0,
   )
   subscriber_id = var.subscriber_id == "" ? "${local.topic_name}-subscriber" : var.subscriber_id
