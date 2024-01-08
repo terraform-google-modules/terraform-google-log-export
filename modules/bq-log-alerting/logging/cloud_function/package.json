@@ -2,6 +2,6 @@
   "dependencies": {
     "@google-cloud/bigquery": "^6.0.0",
     "@google-cloud/security-center": ">=3.0.1",
-    "crypto-js": "^3.0.0"
+    "crypto-js": "^4.2.0"
   }
 }
