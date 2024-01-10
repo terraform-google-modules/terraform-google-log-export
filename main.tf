@@ -45,6 +45,7 @@ resource "google_logging_project_sink" "sink" {
   filter                 = var.filter
   destination            = var.destination_uri
   unique_writer_identity = var.unique_writer_identity
+  disabled               = var.disabled
   dynamic "bigquery_options" {
     for_each = local.bigquery_options
     content {
@@ -71,6 +72,7 @@ resource "google_logging_folder_sink" "sink" {
   filter           = var.filter
   include_children = var.include_children
   destination      = var.destination_uri
+  disabled         = var.disabled
   dynamic "bigquery_options" {
     for_each = local.bigquery_options
     content {
@@ -97,6 +99,7 @@ resource "google_logging_organization_sink" "sink" {
   filter           = var.filter
   include_children = var.include_children
   destination      = var.destination_uri
+  disabled         = var.disabled
   dynamic "bigquery_options" {
     for_each = local.bigquery_options
     content {
@@ -122,6 +125,7 @@ resource "google_logging_billing_account_sink" "sink" {
   billing_account = var.parent_resource_id
   filter          = var.filter
   destination     = var.destination_uri
+  disabled        = var.disabled
   dynamic "bigquery_options" {
     for_each = local.bigquery_options
     content {

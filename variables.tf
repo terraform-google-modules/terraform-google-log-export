@@ -71,3 +71,9 @@ variable "exclusions" {
     disabled    = bool
   }))
 }
+
+variable "disabled" {
+  description = "(Optional) If set to true, then the sink is disabled and it does not export any log entries."
+  type        = bool
+  default     = false
+}
