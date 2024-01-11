@@ -23,7 +23,7 @@ spec:
   source:
     repo: https://github.com/terraform-google-modules/terraform-google-log-export.git
     sourceType: git
-  version: 7.8.1
+  version: 7.8.2
   actuationTool:
     type: Terraform
     version: '>= 0.13'
