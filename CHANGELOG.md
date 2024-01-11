@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.8.1](https://github.com/terraform-google-modules/terraform-google-log-export/compare/v7.8.0...v7.8.1) (2024-01-11)
+
+
+### Bug Fixes
+
+* **CI:** increase provider timeout for bucket creation ([#195](https://github.com/terraform-google-modules/terraform-google-log-export/issues/195)) ([81f37d1](https://github.com/terraform-google-modules/terraform-google-log-export/commit/81f37d11aa512cf3b7838baf18b90688561f0964))
+* **deps:** lints fixes for tflint ([#192](https://github.com/terraform-google-modules/terraform-google-log-export/issues/192)) ([6a0af59](https://github.com/terraform-google-modules/terraform-google-log-export/commit/6a0af599debc53871d53bccbc6b7b914950088f7))
+* **deps:** Update dependency @google-cloud/bigquery to v7 ([#183](https://github.com/terraform-google-modules/terraform-google-log-export/issues/183)) ([0261a13](https://github.com/terraform-google-modules/terraform-google-log-export/commit/0261a1360538f6bbad4c57c6d425d943ef4ed6b2))
+* **deps:** Update dependency crypto-js to v4 [SECURITY] ([#177](https://github.com/terraform-google-modules/terraform-google-log-export/issues/177)) ([c4fdd6d](https://github.com/terraform-google-modules/terraform-google-log-export/commit/c4fdd6d9ff801c0a5469bc89eb9c8fe7ac920d23))
+
 ## [7.8.0](https://github.com/terraform-google-modules/terraform-google-log-export/compare/v7.7.0...v7.8.0) (2023-11-20)
 
 
