@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.8.2](https://github.com/terraform-google-modules/terraform-google-log-export/compare/v7.8.1...v7.8.2) (2024-01-11)
+
+
+### Bug Fixes
+
+* **CI:** move provider timeout to example ([#198](https://github.com/terraform-google-modules/terraform-google-log-export/issues/198)) ([d6fd7c8](https://github.com/terraform-google-modules/terraform-google-log-export/commit/d6fd7c827eeec8419ccd7cb7254b76cdb2fdde5d))
+
 ## [7.8.1](https://github.com/terraform-google-modules/terraform-google-log-export/compare/v7.8.0...v7.8.1) (2024-01-11)
 
 
