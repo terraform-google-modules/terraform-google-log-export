@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.0.0](https://github.com/terraform-google-modules/terraform-google-log-export/compare/v7.8.2...v8.0.0) (2024-02-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* **deps:** Update Terraform terraform-google-modules/scheduled-function/google to v4 ([#205](https://github.com/terraform-google-modules/terraform-google-log-export/issues/205))
+
+### Features
+
+* adding `disabled` argument to log sinks ([#197](https://github.com/terraform-google-modules/terraform-google-log-export/issues/197)) ([aa797bc](https://github.com/terraform-google-modules/terraform-google-log-export/commit/aa797bcc6fdd6f2fa41500966eda459fdcb39db7))
+
+
+### Bug Fixes
+
+* **deps:** Update Terraform terraform-google-modules/scheduled-function/google to v4 ([#205](https://github.com/terraform-google-modules/terraform-google-log-export/issues/205)) ([48d9c58](https://github.com/terraform-google-modules/terraform-google-log-export/commit/48d9c58bd7885a4c017404506850481a3f19b687))
+
 ## [7.8.2](https://github.com/terraform-google-modules/terraform-google-log-export/compare/v7.8.1...v7.8.2) (2024-01-11)
 
 
