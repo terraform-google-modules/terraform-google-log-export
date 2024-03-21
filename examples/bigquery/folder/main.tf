@@ -22,7 +22,7 @@ resource "random_string" "suffix" {
 
 module "log_export" {
   source  = "terraform-google-modules/log-export/google"
-  version = "~> 7.0"
+  version = "~> 8.0"
 
   destination_uri        = module.destination.destination_uri
   filter                 = "resource.type = gce_instance"
@@ -34,7 +34,7 @@ module "log_export" {
 
 module "destination" {
   source  = "terraform-google-modules/log-export/google//modules/bigquery"
-  version = "~> 7.0"
+  version = "~> 8.0"
 
   project_id               = var.project_id
   dataset_name             = "bq_folder_${random_string.suffix.result}"
