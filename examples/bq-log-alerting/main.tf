@@ -16,7 +16,7 @@
 
 module "bq-log-alerting" {
   source  = "terraform-google-modules/log-export/google//modules/bq-log-alerting"
-  version = "~> 7.0"
+  version = "~> 8.0"
 
   logging_project   = var.logging_project
   bigquery_location = var.bigquery_location
