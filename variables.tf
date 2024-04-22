@@ -36,6 +36,12 @@ variable "log_sink_name" {
   type        = string
 }
 
+variable "description" {
+  description = "A description of this sink. The maximum length of the description is 8000 characters."
+  type        = string
+  default     = ""
+}
+
 variable "parent_resource_id" {
   description = "The ID of the GCP resource in which you create the log sink. If var.parent_resource_type is set to 'project', then this is the Project ID (and etc)."
   type        = string
