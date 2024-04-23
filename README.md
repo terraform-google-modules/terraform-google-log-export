@@ -53,7 +53,7 @@ so that all dependencies are met.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | bigquery\_options | (Optional) Options that affect sinks exporting data to BigQuery. use\_partitioned\_tables - (Required) Whether to use BigQuery's partition tables. | <pre>object({<br>    use_partitioned_tables = bool<br>  })</pre> | `null` | no |
-| description | A description of this sink. The maximum length of the description is 8000 characters. | `string` | `""` | no |
+| description | A description of this sink. The maximum length of the description is 8000 characters. | `string` | `null` | no |
 | destination\_uri | The self\_link URI of the destination resource (This is available as an output coming from one of the destination submodules) | `string` | n/a | yes |
 | disabled | (Optional) If set to true, then the sink is disabled and it does not export any log entries. | `bool` | `false` | no |
 | exclusions | (Optional) A list of sink exclusion filters. | <pre>list(object({<br>    name        = string,<br>    description = string,<br>    filter      = string,<br>    disabled    = bool<br>  }))</pre> | `[]` | no |

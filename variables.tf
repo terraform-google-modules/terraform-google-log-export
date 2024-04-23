@@ -39,7 +39,7 @@ variable "log_sink_name" {
 variable "description" {
   description = "A description of this sink. The maximum length of the description is 8000 characters."
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "parent_resource_id" {
