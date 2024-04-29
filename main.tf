@@ -41,6 +41,7 @@ locals {
 resource "google_logging_project_sink" "sink" {
   count                  = local.is_project_level ? 1 : 0
   name                   = var.log_sink_name
+  description            = var.description
   project                = var.parent_resource_id
   filter                 = var.filter
   destination            = var.destination_uri
@@ -68,6 +69,7 @@ resource "google_logging_project_sink" "sink" {
 resource "google_logging_folder_sink" "sink" {
   count            = local.is_folder_level ? 1 : 0
   name             = var.log_sink_name
+  description      = var.description
   folder           = var.parent_resource_id
   filter           = var.filter
   include_children = var.include_children
@@ -95,6 +97,7 @@ resource "google_logging_folder_sink" "sink" {
 resource "google_logging_organization_sink" "sink" {
   count            = local.is_org_level ? 1 : 0
   name             = var.log_sink_name
+  description      = var.description
   org_id           = var.parent_resource_id
   filter           = var.filter
   include_children = var.include_children
@@ -122,6 +125,7 @@ resource "google_logging_organization_sink" "sink" {
 resource "google_logging_billing_account_sink" "sink" {
   count           = local.is_billing_level ? 1 : 0
   name            = var.log_sink_name
+  description     = var.description
   billing_account = var.parent_resource_id
   filter          = var.filter
   destination     = var.destination_uri
