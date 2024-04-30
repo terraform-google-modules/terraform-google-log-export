@@ -22,7 +22,7 @@ resource "random_string" "suffix" {
 
 module "log_export" {
   source  = "terraform-google-modules/log-export/google"
-  version = "~> 7.0"
+  version = "~> 8.0"
 
   destination_uri        = module.destination.destination_uri
   filter                 = "resource.type = gce_instance"
@@ -34,7 +34,7 @@ module "log_export" {
 
 module "destination" {
   source  = "terraform-google-modules/log-export/google//modules/logbucket"
-  version = "~> 7.0"
+  version = "~> 8.0"
 
   project_id                 = var.project_destination_logbkt_id
   name                       = "logbucket_from_other_prj_${random_string.suffix.result}"
@@ -50,7 +50,7 @@ module "destination" {
 #-------------------------------------#
 module "log_export_same_proj" {
   source  = "terraform-google-modules/log-export/google"
-  version = "~> 7.0"
+  version = "~> 8.0"
 
   destination_uri        = module.dest_same_proj.destination_uri
   filter                 = "resource.type = gce_instance"
@@ -62,7 +62,7 @@ module "log_export_same_proj" {
 
 module "dest_same_proj" {
   source  = "terraform-google-modules/log-export/google//modules/logbucket"
-  version = "~> 7.0"
+  version = "~> 8.0"
 
   project_id                    = var.project_destination_logbkt_id
   name                          = "logbucket_from_same_projct_${random_string.suffix.result}"
