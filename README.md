@@ -12,10 +12,14 @@ are:
 
 ## Compatibility
 This module is meant for use with Terraform 1.3+ and tested using Terraform 1.0+. If you find incompatibilities using Terraform >=1.3, please open an issue.
- If you haven't
-[upgraded](https://www.terraform.io/upgrade-guides/0-13.html) and need a Terraform
-0.12.x-compatible version of this module, the last released version
-intended for Terraform 0.12.x is [v5.1.0](https://registry.terraform.io/modules/terraform-google-modules/-log-export/google/v5.1.0).
+
+## Version
+
+Current version is 9.X. Upgrade guides:
+
+- [4.X -> 5.0](/docs/upgrading_to_v5.0.md)
+- [6.X -> 7.0](/docs/upgrading_to_v7.0.md)
+- [8.X -> 9.0](/docs/upgrading_to_v9.0.md)
 
 ## Usage
 
