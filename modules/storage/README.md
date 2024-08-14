@@ -11,6 +11,7 @@ example that will configure a storage bucket destination and a log export at the
 ```hcl
 module "log_export" {
   source                 = "terraform-google-modules/log-export/google"
+  version                = "~> 9.0"
   destination_uri        = "${module.destination.destination_uri}"
   filter                 = "severity >= ERROR"
   log_sink_name          = "storage_example_logsink"
@@ -21,6 +22,7 @@ module "log_export" {
 
 module "destination" {
   source                   = "terraform-google-modules/log-export/google//modules/storage"
+  version                  = "~> 9.0"
   project_id               = "sample-project"
   storage_bucket_name      = "sample_storage_bucket"
   log_sink_writer_identity = "${module.log_export.writer_identity}"
@@ -66,6 +68,7 @@ so that all dependencies are met.
 | project\_id | The ID of the project in which the storage bucket will be created. | `string` | n/a | yes |
 | public\_access\_prevention | Prevents public access to a bucket. Acceptable values are "inherited" or "enforced". If "inherited", the bucket uses public access prevention. only if the bucket is subject to the public access prevention organization policy constraint. | `string` | `"inherited"` | no |
 | retention\_policy | Configuration of the bucket's data retention policy for how long objects in the bucket should be retained. | <pre>object({<br>    is_locked             = bool<br>    retention_period_days = number<br>  })</pre> | `null` | no |
+| soft\_delete\_policy\_retention\_days | The duration in days that soft-deleted objects in the bucket will be retained and cannot be permanently deleted. Default value is 7 days. The value must be in between 7 days and 90 days. Note: To disable the soft delete policy on a bucket, This field must be set to 0. | `number` | `null` | no |
 | storage\_bucket\_labels | Labels to apply to the storage bucket. | `map(string)` | `{}` | no |
 | storage\_bucket\_name | The name of the storage bucket to be created and used for log entries matching the filter. | `string` | n/a | yes |
 | storage\_class | The storage class of the storage bucket. | `string` | `"STANDARD"` | no |

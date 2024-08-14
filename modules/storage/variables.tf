@@ -111,3 +111,9 @@ variable "public_access_prevention" {
   type        = string
   default     = "inherited"
 }
+
+variable "soft_delete_policy_retention_days" {
+  description = "The duration in days that soft-deleted objects in the bucket will be retained and cannot be permanently deleted. Default value is 7 days. The value must be in between 7 days and 90 days. Note: To disable the soft delete policy on a bucket, This field must be set to 0."
+  type        = number
+  default     = null
+}
