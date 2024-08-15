@@ -84,6 +84,13 @@ resource "google_storage_bucket" "bucket" {
       data_locations = var.data_locations
     }
   }
+
+  dynamic "soft_delete_policy" {
+    for_each = var.soft_delete_policy_retention_days == null ? [] : ["soft_delete_policy"]
+    content {
+      retention_duration_seconds = var.soft_delete_policy_retention_days * 24 * 60 * 60 // days to seconds
+    }
+  }
 }
 
 #--------------------------------#

@@ -22,7 +22,7 @@ resource "random_string" "suffix" {
 
 module "log_export" {
   source  = "terraform-google-modules/log-export/google"
-  version = "~> 8.0"
+  version = "~> 9.0"
 
   destination_uri        = module.destination.destination_uri
   filter                 = "resource.type = gce_instance"
@@ -34,7 +34,7 @@ module "log_export" {
 
 module "destination" {
   source  = "terraform-google-modules/log-export/google//modules/storage"
-  version = "~> 8.0"
+  version = "~> 9.0"
 
   project_id               = var.project_id
   storage_bucket_name      = "storage_project_${random_string.suffix.result}"
@@ -49,5 +49,6 @@ module "destination" {
       with_state = "ANY"
     }
   }]
+  soft_delete_policy_retention_days = 15
 }
 

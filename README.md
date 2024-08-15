@@ -11,11 +11,15 @@ are:
 - A **Destination** (Cloud Storage bucket, Cloud Pub/Sub topic, BigQuery dataset)
 
 ## Compatibility
-This module is meant for use with Terraform 0.13+ and tested using Terraform 1.0+. If you find incompatibilities using Terraform >=0.13, please open an issue.
- If you haven't
-[upgraded](https://www.terraform.io/upgrade-guides/0-13.html) and need a Terraform
-0.12.x-compatible version of this module, the last released version
-intended for Terraform 0.12.x is [v5.1.0](https://registry.terraform.io/modules/terraform-google-modules/-log-export/google/v5.1.0).
+This module is meant for use with Terraform 1.3+ and tested using Terraform 1.0+. If you find incompatibilities using Terraform >=1.3, please open an issue.
+
+## Version
+
+Current version is 9.X. Upgrade guides:
+
+- [4.X -> 5.0](/docs/upgrading_to_v5.0.md)
+- [6.X -> 7.0](/docs/upgrading_to_v7.0.md)
+- [8.X -> 9.0](/docs/upgrading_to_v9.0.md)
 
 ## Usage
 
@@ -25,7 +29,7 @@ example that will configure a Cloud Storage destination and a log export at the 
 ```hcl
 module "log_export" {
   source                 = "terraform-google-modules/log-export/google"
-  version                = "~> 7.0"
+  version                = "~> 9.0"
   destination_uri        = "${module.destination.destination_uri}"
   filter                 = "severity >= ERROR"
   log_sink_name          = "storage_example_logsink"
@@ -36,7 +40,7 @@ module "log_export" {
 
 module "destination" {
   source                   = "terraform-google-modules/log-export/google//modules/storage"
-  version                  = "~> 7.0"
+  version                  = "~> 9.0"
   project_id               = "sample-project"
   storage_bucket_name      = "storage_example_bucket"
   log_sink_writer_identity = "${module.log_export.writer_identity}"
@@ -78,8 +82,8 @@ so that all dependencies are met.
 
 ## Requirements
 ### Terraform plugins
-- [Terraform](https://www.terraform.io/downloads.html) >= 0.13.0
-- [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) plugin ~> v3.5.x
+- [Terraform](https://www.terraform.io/downloads.html) >= 1.3
+- [terraform-provider-google](https://github.com/terraform-providers/terraform-provider-google) plugin ~> v5.22
 
 ### Configure a Service Account
 In order to execute this module you must have a Service Account with the following:
