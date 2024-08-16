@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [9.0.0](https://github.com/terraform-google-modules/terraform-google-log-export/compare/v8.1.0...v9.0.0) (2024-08-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* **TPG>=5.22:** added support for soft delete policy in storage sub-module ([#224](https://github.com/terraform-google-modules/terraform-google-log-export/issues/224))
+
+### Features
+
+* **TPG>=5.22:** added support for soft delete policy in storage sub-module ([#224](https://github.com/terraform-google-modules/terraform-google-log-export/issues/224)) ([05ea76f](https://github.com/terraform-google-modules/terraform-google-log-export/commit/05ea76f02d22ba456b7cc4fac5339d4722a96882))
+
 ## [8.1.0](https://github.com/terraform-google-modules/terraform-google-log-export/compare/v8.0.0...v8.1.0) (2024-05-10)
 
 
