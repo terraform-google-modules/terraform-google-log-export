@@ -36,11 +36,12 @@ module "destination" {
   source  = "terraform-google-modules/log-export/google//modules/pubsub"
   version = "~> 8.0"
 
-  project_id               = var.project_id
-  topic_labels             = { topic_key : "topic_label" }
-  topic_name               = "pubsub-project-${random_string.suffix.result}"
-  log_sink_writer_identity = module.log_export.writer_identity
-  create_subscriber        = true
-  subscription_labels      = { subscription_key : "subscription_label" }
+  project_id                       = var.project_id
+  topic_labels                     = { topic_key : "topic_label" }
+  topic_name                       = "pubsub-project-${random_string.suffix.result}"
+  log_sink_writer_identity         = module.log_export.writer_identity
+  create_subscriber                = true
+  subscription_labels              = { subscription_key : "subscription_label" }
+  push_subscription_expiration_ttl = "300000.5s"
 }
 
