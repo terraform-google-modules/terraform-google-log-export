@@ -67,14 +67,15 @@ resource "google_logging_project_sink" "sink" {
 
 # Folder-level
 resource "google_logging_folder_sink" "sink" {
-  count            = local.is_folder_level ? 1 : 0
-  name             = var.log_sink_name
-  description      = var.description
-  folder           = var.parent_resource_id
-  filter           = var.filter
-  include_children = var.include_children
-  destination      = var.destination_uri
-  disabled         = var.disabled
+  count              = local.is_folder_level ? 1 : 0
+  name               = var.log_sink_name
+  description        = var.description
+  folder             = var.parent_resource_id
+  filter             = var.filter
+  include_children   = var.include_children
+  intercept_children = var.intercept_children
+  destination        = var.destination_uri
+  disabled           = var.disabled
   dynamic "bigquery_options" {
     for_each = local.bigquery_options
     content {
@@ -95,14 +96,15 @@ resource "google_logging_folder_sink" "sink" {
 
 # Org-level
 resource "google_logging_organization_sink" "sink" {
-  count            = local.is_org_level ? 1 : 0
-  name             = var.log_sink_name
-  description      = var.description
-  org_id           = var.parent_resource_id
-  filter           = var.filter
-  include_children = var.include_children
-  destination      = var.destination_uri
-  disabled         = var.disabled
+  count              = local.is_org_level ? 1 : 0
+  name               = var.log_sink_name
+  description        = var.description
+  org_id             = var.parent_resource_id
+  filter             = var.filter
+  include_children   = var.include_children
+  intercept_children = var.intercept_children
+  destination        = var.destination_uri
+  disabled           = var.disabled
   dynamic "bigquery_options" {
     for_each = local.bigquery_options
     content {

@@ -31,6 +31,12 @@ variable "include_children" {
   default     = false
 }
 
+variable "intercept_children" {
+  description = "Only valid if 'organization' or 'folder' is chosen as var.parent_resource.type. Whether or not to intercept logs from child projects. If true, matching logs will not match with sinks in child resources, except _Required sinks. This sink will be visible to child resources when listing sinks."
+  type        = bool
+  default     = false
+}
+
 variable "log_sink_name" {
   description = "The name of the log sink to be created."
   type        = string
