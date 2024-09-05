@@ -20,6 +20,7 @@ Current version is 9.X. Upgrade guides:
 - [4.X -> 5.0](/docs/upgrading_to_v5.0.md)
 - [6.X -> 7.0](/docs/upgrading_to_v7.0.md)
 - [8.X -> 9.0](/docs/upgrading_to_v9.0.md)
+- [9.X -> 10.0](/docs/upgrading_to_v10.0.md)
 
 ## Usage
 
