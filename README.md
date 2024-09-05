@@ -20,6 +20,7 @@ Current version is 9.X. Upgrade guides:
 - [4.X -> 5.0](/docs/upgrading_to_v5.0.md)
 - [6.X -> 7.0](/docs/upgrading_to_v7.0.md)
 - [8.X -> 9.0](/docs/upgrading_to_v9.0.md)
+- [9.X -> 10.0](/docs/upgrading_to_v10.0.md)
 
 ## Usage
 
@@ -29,7 +30,7 @@ example that will configure a Cloud Storage destination and a log export at the 
 ```hcl
 module "log_export" {
   source                 = "terraform-google-modules/log-export/google"
-  version                = "~> 9.0"
+  version                = "~> 10.0"
   destination_uri        = "${module.destination.destination_uri}"
   filter                 = "severity >= ERROR"
   log_sink_name          = "storage_example_logsink"
@@ -40,7 +41,7 @@ module "log_export" {
 
 module "destination" {
   source                   = "terraform-google-modules/log-export/google//modules/storage"
-  version                  = "~> 9.0"
+  version                  = "~> 10.0"
   project_id               = "sample-project"
   storage_bucket_name      = "storage_example_bucket"
   log_sink_writer_identity = "${module.log_export.writer_identity}"
@@ -63,6 +64,7 @@ so that all dependencies are met.
 | exclusions | (Optional) A list of sink exclusion filters. | <pre>list(object({<br>    name        = string,<br>    description = string,<br>    filter      = string,<br>    disabled    = bool<br>  }))</pre> | `[]` | no |
 | filter | The filter to apply when exporting logs. Only log entries that match the filter are exported. Default is '' which exports all logs. | `string` | `""` | no |
 | include\_children | Only valid if 'organization' or 'folder' is chosen as var.parent\_resource.type. Determines whether or not to include children organizations/folders in the sink export. If true, logs associated with child projects are also exported; otherwise only logs relating to the provided organization/folder are included. | `bool` | `false` | no |
+| intercept\_children | Only valid if 'organization' or 'folder' is chosen as var.parent\_resource.type. Whether or not to intercept logs from child projects. If true, matching logs will not match with sinks in child resources, except \_Required sinks. This sink will be visible to child resources when listing sinks. | `bool` | `false` | no |
 | log\_sink\_name | The name of the log sink to be created. | `string` | n/a | yes |
 | parent\_resource\_id | The ID of the GCP resource in which you create the log sink. If var.parent\_resource\_type is set to 'project', then this is the Project ID (and etc). | `string` | n/a | yes |
 | parent\_resource\_type | The GCP resource in which you create the log sink. The value must not be computed, and must be one of the following: 'project', 'folder', 'billing\_account', or 'organization'. | `string` | `"project"` | no |
