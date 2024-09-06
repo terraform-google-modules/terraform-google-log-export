@@ -102,6 +102,11 @@ spec:
     type: map(string)
     default: {}
     required: false
+  - name: push_subscription_expiration_ttl
+    description: The expiration policy ttl value to the pubsub push subscription.
+    type: string
+    default: null
+    required: false
   - name: topic_labels
     description: A set of key/value label pairs to assign to the pubsub topic.
     type: map(string)

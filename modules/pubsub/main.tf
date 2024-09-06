@@ -109,4 +109,11 @@ resource "google_pubsub_subscription" "pubsub_push_subscription" {
   push_config {
     push_endpoint = var.push_endpoint
   }
+
+  dynamic "expiration_policy" {
+    for_each = var.push_subscription_expiration_ttl == null ? [] : [1]
+    content {
+      ttl = var.push_subscription_expiration_ttl
+    }
+  }
 }
