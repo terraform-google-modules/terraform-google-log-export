@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 
 module "log_export" {
   source  = "terraform-google-modules/log-export/google"
-  version = "~> 8.0"
+  version = "~> 10.0"
 
   destination_uri      = module.destination.destination_uri
   log_sink_name        = "test-splunk-sink"
@@ -27,7 +27,7 @@ module "log_export" {
 
 module "destination" {
   source  = "terraform-google-modules/log-export/google//modules/pubsub"
-  version = "~> 8.0"
+  version = "~> 10.0"
 
   project_id               = var.project_id
   topic_name               = "splunk-sink"
