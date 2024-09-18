@@ -25,6 +25,8 @@ resource "google_project" "computed" {
   folder_id       = var.parent_resource_folder
   project_id      = "log-exports-computed-${random_string.suffix.result}"
   billing_account = var.parent_resource_billing_account
+  deletion_policy = "DELETE"
+
 }
 
 resource "google_project_service" "project" {
