@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 module "bq-log-alerting" {
   source  = "terraform-google-modules/log-export/google//modules/bq-log-alerting"
-  version = "~> 8.0"
+  version = "~> 10.0"
 
   logging_project   = var.logging_project
   bigquery_location = var.bigquery_location
