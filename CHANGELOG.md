@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.0.0](https://github.com/terraform-google-modules/terraform-google-log-export/compare/v9.0.0...v10.0.0) (2024-09-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* Terraform version 1.3+ required and allow max provider version 6.X ([#235](https://github.com/terraform-google-modules/terraform-google-log-export/issues/235))
+* **TPG >= 5.27:** Add intercept_children support for log sinks ([#229](https://github.com/terraform-google-modules/terraform-google-log-export/issues/229))
+
+### Features
+
+* add support for expiration policy ttl in push topic subscriptio… ([#226](https://github.com/terraform-google-modules/terraform-google-log-export/issues/226)) ([59e738a](https://github.com/terraform-google-modules/terraform-google-log-export/commit/59e738ac6752533c22a51d76be7fbe1dd4c8cbda))
+* **TPG >= 5.27:** Add intercept_children support for log sinks ([#229](https://github.com/terraform-google-modules/terraform-google-log-export/issues/229)) ([da7a7d4](https://github.com/terraform-google-modules/terraform-google-log-export/commit/da7a7d446321986aa18031371936da6cae48a7d1))
+
+
+### Bug Fixes
+
+* Terraform version 1.3+ required and allow max provider version 6.X ([#235](https://github.com/terraform-google-modules/terraform-google-log-export/issues/235)) ([4ad56e1](https://github.com/terraform-google-modules/terraform-google-log-export/commit/4ad56e18aaa2f92589bcfb03d3890a4e6e6db63e))
+
 ## [9.0.0](https://github.com/terraform-google-modules/terraform-google-log-export/compare/v8.1.0...v9.0.0) (2024-08-16)
 
 
