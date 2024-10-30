@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [11.0.0](https://github.com/terraform-google-modules/terraform-google-log-export/compare/v10.0.0...v11.0.0) (2024-10-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* **deps:** Update Terraform terraform-google-modules/scheduled-function/google to v6 ([#237](https://github.com/terraform-google-modules/terraform-google-log-export/issues/237))
+
+### Bug Fixes
+
+* **deps:** Update Terraform terraform-google-modules/scheduled-function/google to v6 ([#237](https://github.com/terraform-google-modules/terraform-google-log-export/issues/237)) ([e94ae41](https://github.com/terraform-google-modules/terraform-google-log-export/commit/e94ae41416f32d59ff35f495f0702b978e9f908a))
+
 ## [10.0.0](https://github.com/terraform-google-modules/terraform-google-log-export/compare/v9.0.0...v10.0.0) (2024-09-20)
 
 
