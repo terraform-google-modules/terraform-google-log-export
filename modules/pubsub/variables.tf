@@ -76,3 +76,9 @@ variable "kms_key_name" {
   type        = string
   default     = null
 }
+
+variable "message_storage_policy" {
+  type        = map(any)
+  description = "A map of storage policies. Default - inherit from organization's Resource Location Restriction policy."
+  default     = {}
+}
