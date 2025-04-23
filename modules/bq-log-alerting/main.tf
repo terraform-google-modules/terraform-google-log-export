@@ -92,7 +92,7 @@ module "bq-log-alerting" {
   function_entry_point           = "cronPubSub"
   function_source_directory      = "${path.module}/logging/cloud_function"
   function_name                  = "generate-alerts"
-  function_runtime               = "nodejs14"
+  function_runtime               = "nodejs20"
   function_service_account_email = google_service_account.gcf_service_account.email
   function_timeout_s             = var.function_timeout
   function_available_memory_mb   = var.function_memory
