@@ -85,7 +85,6 @@ func TestLogBucketProjectModule(t *testing.T) {
 			assert.Equal(tc.writerIdentity, logSinkDetails.Get("writerIdentity").String(), "log sink writerIdentity should match")
 
 			// assert linked dataset name & BigQuery Dataset ID
-			// projectNumber := gcloud.Runf(t, "projects describe %s", tc.projId).Get("projectNumber").String()
 			bigqueryDatasetID := fmt.Sprintf("bigquery.googleapis.com/projects/%s/datasets/%s", tc.projId, tc.linkedDsID)
 			linkedDs := gcloud.Runf(t, "logging links describe %s --bucket=%s --location=%s --project=%s", tc.linkedDsID, tc.bktName, "global", tc.projId)
 			assert.Equal(tc.linkedDsName, linkedDs.Get("name").String(), "log bucket linked dataset name should match")
