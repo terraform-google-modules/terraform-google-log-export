@@ -72,7 +72,7 @@ control 'gcp' do
     its('description') { should eq 'read from BQ view to generate alerts' }
     its('timeout') { should eq '540s' }
     its('available_memory_mb') { should eq 256 }
-    its('runtime') { should eq 'nodejs14' }
+    its('runtime') { should eq 'nodejs20' }
     its('environment_variables') {
       should include(
         'CSCC_SOURCE' => source_name,
