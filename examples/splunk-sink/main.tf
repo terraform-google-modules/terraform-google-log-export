@@ -17,7 +17,7 @@
 
 module "log_export" {
   source  = "terraform-google-modules/log-export/google"
-  version = "~> 10.0"
+  version = "~> 11.0"
 
   destination_uri      = module.destination.destination_uri
   log_sink_name        = "test-splunk-sink"
@@ -27,7 +27,7 @@ module "log_export" {
 
 module "destination" {
   source  = "terraform-google-modules/log-export/google//modules/pubsub"
-  version = "~> 10.0"
+  version = "~> 11.0"
 
   project_id               = var.project_id
   topic_name               = "splunk-sink"
