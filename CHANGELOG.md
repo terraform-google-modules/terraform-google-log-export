@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [11.1.0](https://github.com/terraform-google-modules/terraform-google-log-export/compare/v11.0.0...v11.1.0) (2025-09-12)
+
+
+### Features
+
+* **deps:** Update Terraform Google Provider to v7 (major) ([#254](https://github.com/terraform-google-modules/terraform-google-log-export/issues/254)) ([c230974](https://github.com/terraform-google-modules/terraform-google-log-export/commit/c23097401d487c3297dc84aecf472f0175018a55))
+
 ## [11.0.0](https://github.com/terraform-google-modules/terraform-google-log-export/compare/v10.0.0...v11.0.0) (2025-04-24)
 
 
