@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [12.0.0](https://github.com/terraform-google-modules/terraform-google-log-export/compare/v11.1.0...v12.0.0) (2026-11-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* **deps:** Update dependency @google-cloud/bigquery to v9 ([#264](https://github.com/terraform-google-modules/terraform-google-log-export/issues/264))
+* **deps:** Update Terraform terraform-google-modules/scheduled-function/google to v8 ([#259](https://github.com/terraform-google-modules/terraform-google-log-export/issues/259))
+
+### Features
+
+* **deps:** Update Terraform Google Provider to v8 ([#265](https://github.com/terraform-google-modules/terraform-google-log-export/issues/265)) ([8043c8c](https://github.com/terraform-google-modules/terraform-google-log-export/commit/8043c8c92dd899386c360d7a39bb877b48df2f65))
+
+
+### Bug Fixes
+
+* **deps:** Update dependency @google-cloud/bigquery to v9 ([#264](https://github.com/terraform-google-modules/terraform-google-log-export/issues/264)) ([b5632a0](https://github.com/terraform-google-modules/terraform-google-log-export/commit/b5632a0a9b5c96cd983599d2cc1dc0de4c02aaa9))
+* **deps:** Update Terraform terraform-google-modules/scheduled-function/google to v8 ([#259](https://github.com/terraform-google-modules/terraform-google-log-export/issues/259)) ([f149aa1](https://github.com/terraform-google-modules/terraform-google-log-export/commit/f149aa16f847fadf57a1d9761055664df8a812e9))
+
 ## [11.1.0](https://github.com/terraform-google-modules/terraform-google-log-export/compare/v11.0.0...v11.1.0) (2025-09-12)
 
 
