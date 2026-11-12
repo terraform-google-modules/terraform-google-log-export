@@ -149,3 +149,18 @@ resource "google_logging_billing_account_sink" "sink" {
     }
   }
 }
+
+#-----------------#
+# Writer identity #
+#-----------------#
+# A new sink's writer identity can be a Logging service agent that's created
+# along with the sink, and IAM can take a few seconds to recognize it. Granting
+# it access right away fails with "Service account ... does not exist", so the
+# writer_identity output is only available after this delay.
+resource "time_sleep" "wait_for_writer_identity" {
+  create_duration = "30s"
+
+  triggers = {
+    writer_identity = local.log_sink_writer_identity
+  }
+}
