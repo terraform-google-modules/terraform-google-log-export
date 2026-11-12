@@ -36,6 +36,6 @@ output "parent_resource_id" {
 
 output "writer_identity" {
   description = "The service account that logging uses to write log entries to the destination."
-  value       = local.log_sink_writer_identity
+  value       = time_sleep.wait_for_writer_identity.triggers["writer_identity"]
 }
 
