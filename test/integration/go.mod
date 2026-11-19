@@ -2,7 +2,7 @@ module github.com/terraform-google-modules/terraform-google-log-export/test/inte
 
 go 1.25.8
 
-toolchain go1.26.10
+toolchain go1.26.11
 
 require (
 	github.com/GoogleCloudPlatform/cloud-foundation-toolkit/infra/blueprint-test v0.18.0
